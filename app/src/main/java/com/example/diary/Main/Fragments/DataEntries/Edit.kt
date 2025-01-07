@@ -1,7 +1,7 @@
 package com.example.diary.Main.Fragments.DataEntries
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +16,7 @@ import com.example.diary.databinding.FragmentEditBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.w3c.dom.Text
 
 class Edit: Fragment() {
     private lateinit var bind:FragmentEditBinding
