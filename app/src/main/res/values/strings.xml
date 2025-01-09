@@ -6,4 +6,12 @@
     <string name="title">Title</string>
     <string name="how_s_your_day">How\'s your Day...</string>
     <string name="completed">Completed</string>
+    <string name="icon">ICON</string>
+    <string name="pass">\t\t********</string>
+    <string name="verify">Verify</string>
+    <string name="have_an_account">Have an account?</string>
+    <string name="tsignup">\tRegister</string>
+    <string name="forget_password">Forget password?</string>
+    <string name="name_your_diary">\t\tName your Diary</string>
+    <string name="register">Register</string>
 </resources>

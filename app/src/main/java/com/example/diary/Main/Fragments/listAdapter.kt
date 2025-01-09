@@ -16,7 +16,6 @@ import com.example.diary.DataBase.DataCC
 import com.example.diary.DataBase.EdataBase
 import com.example.diary.Main.Fragments.DataEntries.Edit
 import com.example.diary.R
-import com.google.android.material.animation.AnimationUtils
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -81,7 +80,7 @@ class listAdapter : ListAdapter<DataCC, listAdapter.RecyclerVHolder>(utilclass()
     }
 
     private fun anim(item:CardView){
-        animation = android.view.animation.AnimationUtils.loadAnimation(context,R.anim.zoom_fadein)
+        animation = android.view.animation.AnimationUtils.loadAnimation(context,R.anim.slide_up)
         item.startAnimation(animation)
     }
 

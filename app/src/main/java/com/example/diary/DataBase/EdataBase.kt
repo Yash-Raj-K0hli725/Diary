@@ -22,8 +22,8 @@ abstract class EdataBase : RoomDatabase() {
                 {
                     if (Instance == null) {
                         Instance = Room.databaseBuilder(
-                            context.applicationContext, EdataBase::class.java, "MainDB"
-                        ).createFromAsset("DataCC.db").build()
+                            context.applicationContext, EdataBase::class.java, "prePOP"
+                        ).createFromAsset("prePopulated.db").build()
                     }
                 }
             }
