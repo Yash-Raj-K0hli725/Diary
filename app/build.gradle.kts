@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
+    id("kotlin-parcelize")
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -34,12 +36,14 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    dataBinding{
+    dataBinding {
         enable = true
     }
 }
 
 dependencies {
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     //Room
     //ROOM
     val room_version = "2.6.1"
@@ -77,10 +81,14 @@ dependencies {
     // Saved state module for ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
     //
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("it.xabaras.android:recyclerview-swipedecorator:1.4")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
+    //
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.17")
+    //
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.3")
+    implementation("androidx.navigation:navigation-ui-ktx:2.8.3")
+    //
     implementation("com.airbnb.android:lottie:6.6.1")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

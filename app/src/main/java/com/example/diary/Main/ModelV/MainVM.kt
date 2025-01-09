@@ -11,7 +11,7 @@ import com.example.diary.R
 
 
 class MainVM(context: Context) : ViewModel() {
-    private val database: EdataBase = EdataBase.getData(context)
+    val database: EdataBase = EdataBase.getData(context)
     var read = database.EDBDao().getDataInfo()
 
     lateinit var SFM: FragmentManager

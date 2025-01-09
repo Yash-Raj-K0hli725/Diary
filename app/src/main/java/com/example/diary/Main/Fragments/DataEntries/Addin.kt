@@ -20,7 +20,6 @@ import java.util.Date
 
 class Addin : Fragment() {
     lateinit var bind: FragmentAddinBinding
-    lateinit var database: EdataBase
     lateinit var sharedVM: MainVM
     var Title = ""
     var Textt = "NoText"
@@ -29,7 +28,6 @@ class Addin : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         bind = DataBindingUtil.inflate(inflater, R.layout.fragment_addin, container, false)
-        database = EdataBase.getData(requireContext())
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
         return bind.root
     }
@@ -52,17 +50,6 @@ class Addin : Fragment() {
                 Textt = bind.Data.text.toString()
             }
             val data = DataCC(0, Title, Textt, Date())
-//            if(sharedVM.addinPermission){
-//                sharedVM.addinPermission = false
-//                sharedVM.addinItem = data
-//                CoroutineScope(Dispatchers.IO).launch {
-//                    database.EDBDao().InsertData(data)
-//                }
-//            }
-//            else{
-//                val reData = DataCC(sharedVM.addinItem!!.id,Title,Textt,Date())
-//                CoroutineScope(Dispatchers.IO).launch {
-//                    database.EDBDao().UpdateData(reData)
             sharedVM.addinPermission = true
             sharedVM.addinItem = data
         }

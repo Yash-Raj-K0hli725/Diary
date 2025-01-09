@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navo"
+    app:startDestination="@id/login">
+
+    <fragment
+        android:id="@+id/login"
+        android:name="com.example.diary.Login.Login"
+        android:label="Login"
+        tools:layout="@layout/fragment_login"
+        >
+        <action
+            android:id="@+id/action_login_to_mainFrameList"
+            app:destination="@id/mainFrameList"
+            app:popUpTo="@id/login"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFrameList"
+        android:name="com.example.diary.Main.Fragments.MainFrameList"
+        android:label="MainFrameList"
+        tools:layout="@layout/fragment_main_frame_list"
+        >
+        <action
+            android:id="@+id/action_mainFrameList_to_addin"
+            app:destination="@id/addin" />
+        <action
+            android:id="@+id/action_mainFrameList_to_edit"
+            app:destination="@id/edit" />
+    </fragment>
+    <fragment
+        android:id="@+id/addin"
+        android:name="com.example.diary.Main.Fragments.DataEntries.Addin"
+        android:label="Addin"
+        tools:layout="@layout/fragment_addin"/>
+    <fragment
+        android:id="@+id/edit"
+        android:name="com.example.diary.Main.Fragments.DataEntries.Edit"
+        android:label="Edit"
+        tools:layout="@layout/fragment_edit">
+        <argument
+            android:name="Item"
+            app:argType="com.example.diary.DataBase.DataCC" />
+    </fragment>
+</navigation>

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentManager
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -23,11 +24,10 @@ import kotlinx.coroutines.launch
 
 class listAdapter : ListAdapter<DataCC, listAdapter.RecyclerVHolder>(utilclass()) {
     //Variable
-    lateinit var SFM: FragmentManager
     lateinit var EDB: EdataBase
     lateinit var context: Context
     lateinit var bind: View
-    lateinit var animation:Animation
+    lateinit var SFM:FragmentManager
     //Overrides
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerVHolder {
         val gView = LayoutInflater.from(parent.context).inflate(R.layout.recyclelay, parent, false)
@@ -40,13 +40,13 @@ class listAdapter : ListAdapter<DataCC, listAdapter.RecyclerVHolder>(utilclass()
         holder.itemView.apply {
             findViewById<TextView>(R.id.Title).text = currentItem.Title
             findViewById<TextView>(R.id.Date).text = currentItem.Date.toString()
-            anim(findViewById(R.id.card))
+            holder.itemView.findViewById<CardView>(R.id.card).setOnClickListener {
+                val action = MainFrameListDirections.actionMainFrameListToEdit(currentItem)
+                holder.itemView.findNavController().navigate(action)
+            }
         }
         if (currentItem.Text.isNotEmpty()) {
             holder.itemView.findViewById<TextView>(R.id.Data).text = currentItem.Text
-        }
-        holder.itemView.findViewById<CardView>(R.id.card).setOnClickListener {
-            UpdateItem(position)
         }
     }
     //Functions
@@ -57,12 +57,8 @@ class listAdapter : ListAdapter<DataCC, listAdapter.RecyclerVHolder>(utilclass()
     }
 
     fun UpdateItem(postion: Int) {
-        val CI = getItem(postion)
-        val frag = Edit()
-        frag.fetchData(CI)
-        SFM.beginTransaction().replace(R.id.MFrameHolder, frag)
-            .addToBackStack(null)
-            .commit()
+
+
     }
 
     private fun alert(CI: DataCC) {
@@ -79,15 +75,10 @@ class listAdapter : ListAdapter<DataCC, listAdapter.RecyclerVHolder>(utilclass()
         notifyDataSetChanged()
     }
 
-    private fun anim(item:CardView){
-        animation = android.view.animation.AnimationUtils.loadAnimation(context,R.anim.slide_up)
-        item.startAnimation(animation)
-    }
-
-    fun setData( sfm: FragmentManager, edb: EdataBase, cc: Context) {
-        this.SFM = sfm
+    fun setData(edb: EdataBase, cc: Context,sfm:FragmentManager) {
         this.EDB = edb
         this.context = cc
+        this.SFM = sfm
     }
 
     inner class RecyclerVHolder(view: View) : RecyclerView.ViewHolder(view)

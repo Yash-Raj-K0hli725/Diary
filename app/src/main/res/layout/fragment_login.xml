@@ -12,7 +12,13 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/register"
             android:scaleType="centerCrop"
-            android:src="@drawable/abstract_back" />
+            android:src="@drawable/abstract_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
@@ -20,9 +26,9 @@
             android:background="@drawable/login_back"
             android:elevation="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/verticleG"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/verticleG"
             app:layout_constraintVertical_bias="0.5"
             tools:context=".Login.Login">
 
@@ -48,11 +54,13 @@
                 android:background="@drawable/input_back"
                 android:gravity="center_vertical"
                 android:hint="@string/pass"
+                android:paddingStart="17dp"
                 android:inputType="textPassword"
 
                 app:layout_constraintBottom_toTopOf="@id/guideline1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="RtlSymmetry" />
 
             <TextView
                 android:id="@+id/Lbutton"
@@ -83,31 +91,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alata"
-                    android:text="@string/have_an_account"
+                    android:text="@string/having_trouble"
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/register"
+                    android:id="@+id/forget"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@string/tsignup"
+                    android:text="@string/forget_password"
                     android:textColor="#268FFF"
                     android:textSize="12sp" />
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/forget"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="40dp"
-                android:fontFamily="@font/alata"
-                android:text="@string/forget_password"
-                android:textColor="#268FFF"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"

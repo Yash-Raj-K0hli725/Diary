@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.PorterDuffXfermode
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,9 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.diary.DataBase.EdataBase
 import com.example.diary.Main.Fragments.DataEntries.Addin
 import com.example.diary.Main.Fragments.SwipeGestures.VPadapter
@@ -31,18 +35,21 @@ import kotlinx.coroutines.launch
 class MainFrameList : Fragment() {
     lateinit var bind: FragmentMainFrameListBinding
     lateinit var sharedVM: MainVM
-    lateinit var database:EdataBase
+    lateinit var database: EdataBase
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bind = DataBindingUtil.inflate(inflater, R.layout.fragment_main_frame_list, container, false)
+        bind =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_main_frame_list, container, false)
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
         database = EdataBase.getData(requireContext())
+
         //ViewPager
         val lis = listOf(RListItems(), Reminders())
-        val Vpadapter = VPadapter(this,lis)
+        val Vpadapter = VPadapter(this, lis)
         bind.MFVP2.adapter = Vpadapter
+
         bind.Licon.setOnClickListener {
             bind.MFVP2.currentItem = 0
         }
@@ -79,6 +86,7 @@ class MainFrameList : Fragment() {
                     }
                 }
             }
+
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
         })
@@ -88,7 +96,7 @@ class MainFrameList : Fragment() {
     }
 
     override fun onResume() {
-        if(sharedVM.addinPermission){
+        if (sharedVM.addinPermission) {
             CoroutineScope(Dispatchers.IO).launch {
                 database.EDBDao().InsertData(sharedVM.addinItem!!)
             }
@@ -100,14 +108,10 @@ class MainFrameList : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         bind.add.setOnClickListener {
             if (bind.MFVP2.currentItem == 0) {
-                requireActivity()
-                    .supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.MFrameHolder, Addin())
-                    .addToBackStack(null)
-                    .commit()
+                view.findNavController().navigate(MainFrameListDirections.actionMainFrameListToAddin())
             }
         }
     }

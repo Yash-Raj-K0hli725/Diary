@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +27,6 @@ class RListItems : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         //Instances
-        val sfm = requireActivity().supportFragmentManager
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
         bind = DataBindingUtil.inflate(inflater,R.layout.fragment_r_list_items,container,false)
         dataBase = EdataBase.getData(requireContext())
@@ -54,7 +54,7 @@ class RListItems : Fragment() {
 
         sharedVM.read.observe(viewLifecycleOwner){
             Adapter.submitList(it)
-            Adapter.setData(sfm,dataBase,requireContext())
+            Adapter.setData(dataBase,requireContext(),requireActivity().supportFragmentManager)
         }
 
         return bind.root
