@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.diary.DataBase.DataCC
 import com.example.diary.DataBase.EdataBase
 import com.example.diary.Main.ModelV.MainVM
@@ -34,8 +35,8 @@ class Addin : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bind.save.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
+        bind.back.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 

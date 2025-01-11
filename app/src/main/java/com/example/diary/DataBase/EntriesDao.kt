@@ -1,6 +1,5 @@
 package com.example.diary.DataBase
 
-import android.provider.ContactsContract.Data
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
@@ -41,5 +40,8 @@ interface EntriesDao {
     fun getReminderInfo():LiveData<List<DataOO>>
 
     @Query("SELECT * FROM LoginData")
-    fun getLoginInfo():LiveData<LoginData>
+    suspend fun fetchPassword():LoginData
+
+    @Query("SELECT COUNT(*) FROM LoginData")
+    suspend fun checkLogin():Int
 }
