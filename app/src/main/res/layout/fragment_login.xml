@@ -124,21 +124,33 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/registerPanel"
-            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/verticleG2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            app:layout_constraintStart_toEndOf="@id/verticleG2"
             tools:context=".Login.Register">
+
             <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/login_back"
-                android:scaleX = "-1"
-                />
+                android:scaleX="-1"
+                android:src="@drawable/login_back" />
+
+            <TextView
+                android:id="@+id/skipBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/skip"
+                android:textColor="#268FFF"
+                android:textSize="16sp"
+                android:layout_margin="25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:layout_width="100dp"
@@ -169,8 +181,8 @@
                     android:layout_marginEnd="40dp"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/input_back"
-                    android:gravity="center_vertical"
                     android:fontFamily="@font/alata"
+                    android:gravity="center_vertical"
                     android:hint="@string/name_your_diary"
                     android:inputType="textPersonName"
                     android:paddingStart="17dp"
@@ -185,8 +197,8 @@
                     android:layout_marginEnd="40dp"
                     android:autofillHints="password"
                     android:background="@drawable/input_back"
-                    android:gravity="center_vertical"
                     android:fontFamily="@font/alata"
+                    android:gravity="center_vertical"
                     android:hint="@string/set_a_password"
                     android:inputType="textPassword"
                     android:paddingStart="17dp"

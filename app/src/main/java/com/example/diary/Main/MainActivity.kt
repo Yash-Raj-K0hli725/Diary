@@ -6,6 +6,9 @@ import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.datastore.core.DataStore
+import androidx.datastore.createDataStore
+import androidx.datastore.preferences.createDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -15,6 +18,7 @@ import com.example.diary.Main.ModelV.MainVM
 import com.example.diary.Main.ModelV.MainVMFactory
 import com.example.diary.R
 import com.example.diary.databinding.ActivityMainBinding
+import java.util.prefs.Preferences
 
 class MainActivity : AppCompatActivity() {
     lateinit var database: EdataBase
@@ -27,7 +31,8 @@ class MainActivity : AppCompatActivity() {
         bind = DataBindingUtil.setContentView(this, R.layout.activity_main)
         database = EdataBase.getData(this)
          val navFinder = findNavController(R.id.hoster)
-        //this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        //
+        sharedVM.Settings = createDataStore(name = "Settings")
 
         //
         //BackPress_Handing

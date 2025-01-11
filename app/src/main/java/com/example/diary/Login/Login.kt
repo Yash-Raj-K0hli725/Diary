@@ -38,7 +38,14 @@ class Login : Fragment() {
         bind = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
 
-
+        CoroutineScope(Dispatchers.Main).launch {
+            if(!sharedVM.isSkipped()){
+                RegisterOrLogin()
+            }
+            else{
+                view?.findNavController()?.navigate(R.id.action_login_to_mainFrameList)
+            }
+        }
         // Inflate the layout for this fragment
         return bind.root
     }
@@ -47,8 +54,6 @@ class Login : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //checks entry
-        RegisterOrLogin()
-
     }
 
     fun RegisterOrLogin() {
@@ -64,13 +69,25 @@ class Login : Fragment() {
             R.anim.slide_right
         )
 
+
         CoroutineScope(Dispatchers.Main).launch {
+
             val haveAccount = sharedVM.database.EDBDao().checkLogin()
             Log.d("Yash","$haveAccount")
+
             if (haveAccount == 0) {
+
+                bind.skipBtn.setOnClickListener {
+                    CoroutineScope(Dispatchers.IO).launch{
+                        sharedVM.skipBtn(true)
+                    }
+                    view?.findNavController()?.navigate(R.id.action_login_to_mainFrameList)
+                }
+
                 bind.loginPanel.visibility = View.GONE
                 bind.registerPanel.visibility = View.VISIBLE
                 bind.registerPanel.startAnimation(slideLeft)
+
 
                 bind.Rbutton.setOnClickListener {
                     if (checkRegister()) {

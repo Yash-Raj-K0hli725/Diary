@@ -44,7 +44,8 @@ android {
 dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    //Room
+    //DataStore
+    implementation("androidx.datastore:datastore-preferences:1.0.0-alpha04")
     //ROOM
     val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")

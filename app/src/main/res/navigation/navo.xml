@@ -14,8 +14,7 @@
         <action
             android:id="@+id/action_login_to_mainFrameList"
             app:destination="@id/mainFrameList"
-            app:enterAnim="@anim/slide_right"
-            app:exitAnim="@anim/fade_out"
+            app:enterAnim="@anim/nav_default_enter_anim"
             app:popUpTo="@id/login"
             app:popUpToInclusive="true" />
     </fragment>
