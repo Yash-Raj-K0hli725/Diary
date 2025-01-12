@@ -31,7 +31,7 @@ class RListItems : Fragment() {
         bind = DataBindingUtil.inflate(inflater,R.layout.fragment_r_list_items,container,false)
         dataBase = EdataBase.getData(requireContext())
         //
-        sharedVM.updatespermission = true
+//        sharedVM.updatespermission = true
 
         //RecycleView
         val Adapter = listAdapter()

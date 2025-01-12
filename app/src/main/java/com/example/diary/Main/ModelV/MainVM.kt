@@ -23,7 +23,7 @@ class MainVM(context: Context) : ViewModel() {
     //DataStore
     lateinit var Settings: DataStore<androidx.datastore.preferences.core.Preferences>
     //UpdateFragment
-    var updatespermission: Boolean = true
+    //var updatespermission: Boolean = true
 
     //AddinFragment
     var addinItem: DataCC? = null

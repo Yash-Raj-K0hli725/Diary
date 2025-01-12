@@ -1,6 +1,8 @@
 package com.example.diary.Main
 
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowInsets
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.enableEdgeToEdge
@@ -32,12 +34,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        //
+       if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+           window.insetsController?.hide(WindowInsets.Type.statusBars())
+       }
         //Initialization of ViewModel
         sharedVM = ViewModelProvider(this, MainVMFactory(this))[MainVM::class.java]
+
         //Initialization of dataBinding
         bind = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        //Initialization of DataBase
-        //database = EdataBase.getData(this)
+
         //Creating DataStore
         sharedVM.Settings = createDataStore(name = "Settings")
         //
