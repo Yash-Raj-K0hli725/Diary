@@ -1,21 +1,17 @@
 package com.example.diary.Login
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.os.persistableBundleOf
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import com.example.diary.DataBase.DataCC
-import com.example.diary.DataBase.EdataBase
 import com.example.diary.DataBase.LoginData
 import com.example.diary.Main.ModelV.MainVM
 import com.example.diary.R
@@ -23,8 +19,6 @@ import com.example.diary.databinding.FragmentLoginBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class Login : Fragment() {
@@ -38,22 +32,13 @@ class Login : Fragment() {
         bind = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
 
-        CoroutineScope(Dispatchers.Main).launch {
-            if(!sharedVM.isSkipped()){
-                RegisterOrLogin()
-            }
-            else{
-                view?.findNavController()?.navigate(R.id.action_login_to_mainFrameList)
-            }
-        }
         // Inflate the layout for this fragment
         return bind.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //checks entry
+        RegisterOrLogin()
     }
 
     fun RegisterOrLogin() {
@@ -63,11 +48,14 @@ class Login : Fragment() {
             requireContext(),
             R.anim.slide_left
         )
+        slideLeft.interpolator = DecelerateInterpolator(1.8f)
+
 
         val slideRight = android.view.animation.AnimationUtils.loadAnimation(
             requireContext(),
             R.anim.slide_right
         )
+        slideRight.interpolator = DecelerateInterpolator(1.8f)
 
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -88,7 +76,6 @@ class Login : Fragment() {
                 bind.registerPanel.visibility = View.VISIBLE
                 bind.registerPanel.startAnimation(slideLeft)
 
-
                 bind.Rbutton.setOnClickListener {
                     if (checkRegister()) {
                         val diaryName = bind.diaryName.text.toString()
@@ -102,20 +89,16 @@ class Login : Fragment() {
                         bind.loginPanel.visibility = View.VISIBLE
                     }
                 }
-                bind.Lbutton.setOnClickListener{
-                    CoroutineScope(Dispatchers.Main).launch {
-                        PassCheck()
-                    }
-                }
             } else {
                 bind.loginPanel.visibility = View.VISIBLE
                 bind.loginPanel.startAnimation(slideRight)
-                bind.Lbutton.setOnClickListener{
-                    CoroutineScope(Dispatchers.Main).launch {
-                        PassCheck()
-                    }
+                }
+            bind.Lbutton.setOnClickListener{
+                CoroutineScope(Dispatchers.Main).launch {
+                    PassCheck()
                 }
             }
+
         }
 
     }
@@ -142,7 +125,10 @@ class Login : Fragment() {
         }
 
         else {
-            Snackbar.make(requireView(), "Incorrect Password", Snackbar.LENGTH_SHORT)
+            Snackbar.make(
+                requireView(),
+                "Incorrect Password",
+                Snackbar.LENGTH_SHORT)
                 .show()
         }
     }

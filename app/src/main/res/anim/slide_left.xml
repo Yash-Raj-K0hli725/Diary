@@ -3,11 +3,11 @@
 <translate
     android:fromXDelta="200dp"
     android:toXDelta="0dp"
-    android:duration = "600"
+    android:duration = "800"
     />
     <alpha
         android:fromAlpha="0"
         android:toAlpha="1"
-        android:duration = "300"
+        android:duration = "600"
         />
 </set>
