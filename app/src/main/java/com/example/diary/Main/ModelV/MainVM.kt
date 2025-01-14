@@ -4,15 +4,10 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.preferencesKey
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.diary.DataBase.DataCC
 import com.example.diary.DataBase.EdataBase
-import com.example.diary.Main.Fragments.MainFrameList
-import com.example.diary.R
 import kotlinx.coroutines.flow.first
-import java.util.prefs.Preferences
 
 
 class MainVM(context: Context) : ViewModel() {
@@ -22,8 +17,6 @@ class MainVM(context: Context) : ViewModel() {
 
     //DataStore
     lateinit var Settings: DataStore<androidx.datastore.preferences.core.Preferences>
-    //UpdateFragment
-    //var updatespermission: Boolean = true
 
     //AddinFragment
     var addinItem: DataCC? = null

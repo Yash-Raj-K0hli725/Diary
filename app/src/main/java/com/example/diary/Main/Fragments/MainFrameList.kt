@@ -1,26 +1,15 @@
 package com.example.diary.Main.Fragments
 
-import android.graphics.ColorFilter
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
-import android.graphics.PorterDuffXfermode
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.compose.ui.graphics.Color
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.example.diary.DataBase.EdataBase
-import com.example.diary.Main.Fragments.DataEntries.Addin
+import com.example.diary.Main.Fragments.DataEntries.addReminder
 import com.example.diary.Main.Fragments.SwipeGestures.VPadapter
 import com.example.diary.Main.ModelV.MainVM
 import com.example.diary.R
@@ -112,6 +101,9 @@ class MainFrameList : Fragment() {
         bind.add.setOnClickListener {
             if (bind.MFVP2.currentItem == 0) {
                 view.findNavController().navigate(MainFrameListDirections.actionMainFrameListToAddin())
+            }
+            else{
+                addReminder().show(childFragmentManager,addReminder.tag)
             }
         }
     }

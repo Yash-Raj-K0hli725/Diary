@@ -4,19 +4,13 @@ import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.datastore.core.DataStore
-import androidx.datastore.createDataStore
 import androidx.datastore.preferences.createDataStore
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.airbnb.lottie.animation.content.Content
 import com.example.diary.DataBase.EdataBase
 import com.example.diary.Main.ModelV.MainVM
 import com.example.diary.Main.ModelV.MainVMFactory
@@ -25,7 +19,6 @@ import com.example.diary.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.prefs.Preferences
 
 class MainActivity : AppCompatActivity() {
     lateinit var database: EdataBase

@@ -15,4 +15,6 @@
     <string name="having_trouble">Having trouble?</string>
     <string name="set_a_password">Set a Password</string>
     <string name="skip"><![CDATA[SKIP >>>]]></string>
+    <string name="set_reminder">set reminder</string>
+    <string name="done">DONE</string>
 </resources>

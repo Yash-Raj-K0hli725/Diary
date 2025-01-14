@@ -2,7 +2,17 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Diary" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
+        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialogTheme</item>
+
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <style name="Theme.Diary" parent="Base.Theme.Diary" />
