@@ -9,39 +9,47 @@ import androidx.room.Update
 
 @Dao
 interface EntriesDao {
+
+    //notesList
     @Insert
     suspend fun InsertData(data:DataCC)
-
-    @Insert
-    suspend fun insertReminders(reminder:DataOO)
-
-    @Insert
-    suspend fun insertLoginInfo(login:LoginData)
-
-    @Delete
-    suspend fun DeleteData(data:DataCC)
-
-    @Delete
-    suspend fun delete(reminder:DataOO)
 
     @Update
     suspend fun UpdateData(data:DataCC)
 
-    @Update
-    suspend fun updateReminders(reminder:DataOO)
-
-    @Update
-    suspend fun updateLogin(login:LoginData)
+    @Delete
+    suspend fun DeleteData(data:DataCC)
 
     @Query("SELECT * FROM DataCC")
     fun getDataInfo():LiveData<List<DataCC>>
+    //
+
+    //remindersList
+    @Insert
+    suspend fun insertReminders(reminder:DataOO)
+
+    @Update
+    suspend fun updateReminders(reminder:DataOO)
+
+    @Delete
+    suspend fun delete(reminder:DataOO)
 
     @Query("SELECT * FROM DataOO")
     fun getReminderInfo():LiveData<List<DataOO>>
+
+    //
+    //LoginInfo
+    @Insert
+    suspend fun insertLoginInfo(login:LoginData)
+
+    @Update
+    suspend fun updateLogin(login:LoginData)
 
     @Query("SELECT * FROM LoginData")
     suspend fun fetchPassword():LoginData
 
     @Query("SELECT COUNT(*) FROM LoginData")
     suspend fun checkLogin():Int
+
+    //
 }

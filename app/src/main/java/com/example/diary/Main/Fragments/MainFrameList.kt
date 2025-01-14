@@ -12,6 +12,7 @@ import com.example.diary.DataBase.EdataBase
 import com.example.diary.Main.Fragments.DataEntries.addReminder
 import com.example.diary.Main.Fragments.SwipeGestures.VPadapter
 import com.example.diary.Main.ModelV.MainVM
+import com.example.diary.Main.Reminder_list.Reminders
 import com.example.diary.R
 import com.example.diary.databinding.FragmentMainFrameListBinding
 import com.google.android.material.tabs.TabLayout

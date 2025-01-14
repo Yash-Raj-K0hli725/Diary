@@ -2,6 +2,7 @@ package com.example.diary.DataBase
 
 import androidx.room.TypeConverter
 import java.sql.Time
+import java.time.LocalTime
 import java.util.Date
 
 class Converters {
@@ -14,11 +15,11 @@ class Converters {
         return Date(value)
     }
     @TypeConverter
-    fun fromTimetoLong(value: Time):Long{
-        return value.time
+    fun fromLongtoTime(value:Long):Time{
+        return Time(value)
     }
     @TypeConverter
-    fun fromTimetoLong(value: Long):Time{
-        return Time(value)
+    fun fromTimetoLong(value:Time):Long{
+        return value.time
     }
 }

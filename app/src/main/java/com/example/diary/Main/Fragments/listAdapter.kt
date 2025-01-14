@@ -27,7 +27,8 @@ class listAdapter : ListAdapter<DataCC, listAdapter.RecyclerVHolder>(utilclass()
     lateinit var EDB: EdataBase
     lateinit var context: Context
     lateinit var bind: View
-    lateinit var SFM:FragmentManager
+    lateinit var SFM: FragmentManager
+
     //Overrides
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerVHolder {
         val gView = LayoutInflater.from(parent.context).inflate(R.layout.recyclelay, parent, false)
@@ -56,11 +57,6 @@ class listAdapter : ListAdapter<DataCC, listAdapter.RecyclerVHolder>(utilclass()
         alert(CI)
     }
 
-    fun UpdateItem(postion: Int) {
-
-
-    }
-
     private fun alert(CI: DataCC) {
         val alertDialog0 = AlertDialog.Builder(context).setTitle("Delete")
             .setMessage("Are You Sure you want to delete \"${CI.Title}\"")
@@ -75,7 +71,7 @@ class listAdapter : ListAdapter<DataCC, listAdapter.RecyclerVHolder>(utilclass()
         notifyDataSetChanged()
     }
 
-    fun setData(edb: EdataBase, cc: Context,sfm:FragmentManager) {
+    fun setData(edb: EdataBase, cc: Context, sfm: FragmentManager) {
         this.EDB = edb
         this.context = cc
         this.SFM = sfm
@@ -83,6 +79,7 @@ class listAdapter : ListAdapter<DataCC, listAdapter.RecyclerVHolder>(utilclass()
 
     inner class RecyclerVHolder(view: View) : RecyclerView.ViewHolder(view)
 }
+
 //Comparator class
 class utilclass : DiffUtil.ItemCallback<DataCC>() {
     override fun areItemsTheSame(oldItem: DataCC, newItem: DataCC): Boolean {
