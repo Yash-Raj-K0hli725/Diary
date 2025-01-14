@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.ViewModel
 import com.example.diary.DataBase.DataCC
+import com.example.diary.DataBase.DataOO
 import com.example.diary.DataBase.EdataBase
 import kotlinx.coroutines.flow.first
 
@@ -21,6 +22,10 @@ class MainVM(context: Context) : ViewModel() {
     //AddinFragment
     var addinItem: DataCC? = null
     var addinPermission: Boolean = false
+
+    //updateReminders
+    var  reminderUpdatePermission =  true
+    var tempStorage: DataOO? = null
 
     suspend fun skipBtn(value:Boolean){
         val isEnable = preferencesKey<Boolean>("skip")

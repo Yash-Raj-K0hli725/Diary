@@ -5,10 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diary.DataBase.DataOO
+import com.example.diary.Main.Fragments.DataEntries.addReminder
 import com.example.diary.Main.ModelV.MainVM
 import com.example.diary.R
 import kotlinx.coroutines.CoroutineScope
@@ -19,6 +22,7 @@ import java.sql.Time
 class R_listAdapter : ListAdapter<DataOO, R_listAdapter.listVH>(diffUtil()) {
 
     lateinit var shareVM: MainVM
+    lateinit var cfm: FragmentManager
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): listVH {
         val oncreateview = LayoutInflater.from(parent.context)
@@ -36,6 +40,11 @@ class R_listAdapter : ListAdapter<DataOO, R_listAdapter.listVH>(diffUtil()) {
                     updateCheckBox(currentItem)
                 }
             }
+            findViewById<CardView>(R.id.reminderCard).setOnClickListener {
+                    val addReminder = addReminder(currentItem)
+                    addReminder.show(cfm,addReminder.tag)
+            }
+
             findViewById<TextView>(R.id.reminderText).text = currentItem.Title
         }
     }
@@ -47,8 +56,9 @@ class R_listAdapter : ListAdapter<DataOO, R_listAdapter.listVH>(diffUtil()) {
         shareVM.database.EDBDao().updateReminders(tempData)
     }
 
-    fun getData(vm: MainVM) {
+    fun getData(vm: MainVM,cfm:FragmentManager) {
         this.shareVM = vm
+        this.cfm = cfm
     }
 
     //ViewHoldeClass_forListAdapter

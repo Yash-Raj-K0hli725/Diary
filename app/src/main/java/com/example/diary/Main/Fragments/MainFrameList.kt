@@ -104,7 +104,7 @@ class MainFrameList : Fragment() {
                 view.findNavController().navigate(MainFrameListDirections.actionMainFrameListToAddin())
             }
             else{
-                addReminder().show(childFragmentManager,addReminder.tag)
+                addReminder(null).show(childFragmentManager,addReminder.tag)
             }
         }
     }
