@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.diary.DataBase.EdataBase
-import com.example.diary.Main.Fragments.DataEntries.addReminder
 import com.example.diary.Main.Fragments.SwipeGestures.VPadapter
 import com.example.diary.Main.ModelV.MainVM
 import com.example.diary.Main.Reminder_list.Reminders
@@ -104,7 +103,7 @@ class MainFrameList : Fragment() {
                 view.findNavController().navigate(MainFrameListDirections.actionMainFrameListToAddin())
             }
             else{
-                addReminder(null).show(childFragmentManager,addReminder.tag)
+                view.findNavController().navigate(MainFrameListDirections.actionMainFrameListToAddReminder(null))
             }
         }
     }

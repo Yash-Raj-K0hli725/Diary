@@ -23,16 +23,14 @@ class MainVM(context: Context) : ViewModel() {
     var addinItem: DataCC? = null
     var addinPermission: Boolean = false
 
-    //updateReminders
-    var  reminderUpdatePermission =  true
-    var tempStorage: DataOO? = null
-
     suspend fun skipBtn(value:Boolean){
         val isEnable = preferencesKey<Boolean>("skip")
             Settings.edit {
                 it[isEnable] = value
             }
     }
+
+
 
     suspend fun isSkipped():Boolean{
         val dataKey = preferencesKey<Boolean>("skip")

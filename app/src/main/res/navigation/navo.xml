@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_mainFrameList_to_edit"
             app:destination="@id/edit" />
+        <action
+            android:id="@+id/action_mainFrameList_to_addReminder"
+            app:destination="@id/addReminder" />
     </fragment>
     <fragment
         android:id="@+id/addin"
@@ -45,4 +48,14 @@
             android:name="Item"
             app:argType="com.example.diary.DataBase.DataCC" />
     </fragment>
+    <dialog
+        android:id="@+id/addReminder"
+        android:name="com.example.diary.Main.Fragments.DataEntries.add_Edit_Reminder"
+        android:label="addReminder"
+        tools:layout="@layout/fragment_add_reminder">
+        <argument
+            android:name="data"
+            app:argType="com.example.diary.DataBase.DataOO"
+            app:nullable="true" />
+    </dialog>
 </navigation>

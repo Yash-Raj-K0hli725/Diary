@@ -1,7 +1,6 @@
 package com.example.diary.Main.Fragments.DataEntries
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +17,10 @@ import kotlinx.coroutines.launch
 import java.sql.Time
 
 
-class addReminder(private val data:DataOO?) : BottomSheetDialogFragment() {
+class add_Edit_Reminder : BottomSheetDialogFragment() {
         lateinit var bind:FragmentAddReminderBinding
         lateinit var sharedVM:MainVM
+        var data:DataOO? = null
         private var updatePermission = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,10 +28,11 @@ class addReminder(private val data:DataOO?) : BottomSheetDialogFragment() {
     ): View {
         bind = DataBindingUtil.inflate(inflater, R.layout.fragment_add_reminder,container,false)
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
+        data = add_Edit_ReminderArgs.fromBundle(requireArguments()).data
 
         if(data!=null){
-            bind.task.setText(data.Title)
-            bind.checked.isChecked = data.Condition.toBoolean()
+            bind.task.setText(data?.Title)
+            bind.checked.isChecked = data?.Condition.toBoolean()
             updatePermission = true
 
         }
@@ -83,7 +84,7 @@ class addReminder(private val data:DataOO?) : BottomSheetDialogFragment() {
 
     private fun updatesCheck():Boolean{
         return  bind.task.text.toString() != data!!.Title
-                || bind.checked.isChecked != data.Condition.toBoolean()
+                || bind.checked.isChecked != data!!.Condition.toBoolean()
     }
 
     companion object {
