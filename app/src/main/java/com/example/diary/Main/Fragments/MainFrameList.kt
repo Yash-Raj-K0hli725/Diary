@@ -33,7 +33,19 @@ class MainFrameList : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_main_frame_list, container, false)
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
         database = EdataBase.getData(requireContext())
-
+        //
+        CoroutineScope(Dispatchers.Main).launch {
+            if (!sharedVM.isSkipped()){
+                bind.setLock.setImageResource(R.drawable.locked)
+            }
+            else{
+                bind.setLock.setImageResource(R.drawable.unlocked)
+                bind.setLock.setOnClickListener {
+                    view?.findNavController()
+                        ?.navigate(MainFrameListDirections.actionMainFrameListToSetPassword())
+                }
+            }
+        }
         //ViewPager
         val lis = listOf(RListItems(), Reminders())
         val Vpadapter = VPadapter(this, lis)

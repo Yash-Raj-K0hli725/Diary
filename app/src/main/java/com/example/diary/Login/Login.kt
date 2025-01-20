@@ -108,14 +108,11 @@ class Login : Fragment() {
         val idk: Boolean = sharedVM.database.EDBDao()
             .fetchPassword().Pass == bind.password.text.toString()
         //
-        Log.d("Yash","Pressed")
-
         if (idk) {
             requireView().findNavController()
                 .navigate(R.id.action_login_to_mainFrameList)
 
         }
-
         else if (bind.password.text.isEmpty()) {
             Snackbar.make(
                 requireView(),

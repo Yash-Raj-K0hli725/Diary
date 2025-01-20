@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_mainFrameList_to_addReminder"
             app:destination="@id/addReminder" />
+        <action
+            android:id="@+id/action_mainFrameList_to_setPassword"
+            app:destination="@id/setPassword" />
     </fragment>
     <fragment
         android:id="@+id/addin"
@@ -58,4 +61,10 @@
             app:argType="com.example.diary.DataBase.DataOO"
             app:nullable="true" />
     </dialog>
+
+    <fragment
+        android:id="@+id/setPassword"
+        android:name="com.example.diary.Login.SetPassword"
+        android:label="SetPassword"
+        tools:layout="@layout/fragment_set_password"/>
 </navigation>

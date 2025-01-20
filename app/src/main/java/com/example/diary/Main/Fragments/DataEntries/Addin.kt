@@ -30,6 +30,7 @@ class Addin : Fragment() {
     ): View {
         bind = DataBindingUtil.inflate(inflater, R.layout.fragment_addin, container, false)
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
+        bind.Timern.text = Date().toString()
         return bind.root
     }
 

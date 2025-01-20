@@ -33,6 +33,7 @@ class Edit : Fragment() {
         //setData
         bind.Data.setText(currentItem.Text)
         bind.Titlee.setText(currentItem.Title)
+        bind.Time.text = currentItem.Date.toString()
         //end
         return bind.root
     }
