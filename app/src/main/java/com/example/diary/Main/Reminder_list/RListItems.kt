@@ -1,4 +1,4 @@
-package com.example.diary.Main.Fragments
+package com.example.diary.Main.Reminder_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diary.DataBase.EdataBase
 import com.example.diary.Main.Fragments.SwipeGestures.SGestures
+import com.example.diary.Main.Fragments.listAdapter
 import com.example.diary.Main.ModelV.MainVM
 import com.example.diary.R
 import com.example.diary.databinding.FragmentRListItemsBinding

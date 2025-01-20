@@ -38,12 +38,14 @@ class Login : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         RegisterOrLogin()
+
     }
 
     fun RegisterOrLogin() {
 
-        //Animatons
+        //Animations
         val slideLeft = android.view.animation.AnimationUtils.loadAnimation(
             requireContext(),
             R.anim.slide_left
@@ -56,7 +58,6 @@ class Login : Fragment() {
             R.anim.slide_right
         )
         slideRight.interpolator = DecelerateInterpolator(1.8f)
-
 
         CoroutineScope(Dispatchers.Main).launch {
 
@@ -80,7 +81,7 @@ class Login : Fragment() {
                     if (checkRegister()) {
                         val diaryName = bind.diaryName.text.toString()
                         val password = bind.rPass.text.toString()
-                        val loginInfo = LoginData(password, diaryName, 2013)
+                        val loginInfo = LoginData(password, diaryName, 102)
                         CoroutineScope(Dispatchers.IO).launch {
                             sharedVM.database.EDBDao().insertLoginInfo(loginInfo)
                         }

@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import com.example.diary.DataBase.EdataBase
 import com.example.diary.Main.Fragments.SwipeGestures.VPadapter
 import com.example.diary.Main.ModelV.MainVM
+import com.example.diary.Main.Reminder_list.RListItems
 import com.example.diary.Main.Reminder_list.Reminders
 import com.example.diary.R
 import com.example.diary.databinding.FragmentMainFrameListBinding
@@ -25,6 +26,7 @@ class MainFrameList : Fragment() {
     lateinit var bind: FragmentMainFrameListBinding
     lateinit var sharedVM: MainVM
     lateinit var database: EdataBase
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,15 +37,19 @@ class MainFrameList : Fragment() {
         database = EdataBase.getData(requireContext())
         //
         CoroutineScope(Dispatchers.Main).launch {
-            if (!sharedVM.isSkipped()){
+            if (!sharedVM.isSkipped()) {
                 bind.setLock.setImageResource(R.drawable.locked)
-            }
-            else{
-                bind.setLock.setImageResource(R.drawable.unlocked)
+                val loggedDetail = sharedVM.database.EDBDao().fetchPassword()
                 bind.setLock.setOnClickListener {
-                    view?.findNavController()
-                        ?.navigate(MainFrameListDirections.actionMainFrameListToSetPassword())
+                    bind.setLock.setImageResource(R.drawable.unlocked)
+                    bindUnlock()
+                    CoroutineScope(Dispatchers.IO).launch {
+                        sharedVM.database.EDBDao().removeLogin(loggedDetail)
+                    }
                 }
+            }
+            else {
+                    bindUnlock()
             }
         }
         //ViewPager
@@ -78,7 +84,6 @@ class MainFrameList : Fragment() {
             override fun onTabUnselected(tab: TabLayout.Tab) {
                 when (tab.position) {
                     0 -> {
-
                         bind.Licon.setImageResource(R.drawable.ic_notes_out)
                     }
 
@@ -94,6 +99,15 @@ class MainFrameList : Fragment() {
 
         //end
         return bind.root
+    }
+
+    fun bindUnlock(){
+        bind.setLock.setImageResource(R.drawable.unlocked)
+        bind.setLock.setOnClickListener {
+            view?.findNavController()
+                ?.navigate(MainFrameListDirections.actionMainFrameListToSetPassword())
+        }
+
     }
 
     override fun onResume() {
@@ -112,10 +126,11 @@ class MainFrameList : Fragment() {
 
         bind.add.setOnClickListener {
             if (bind.MFVP2.currentItem == 0) {
-                view.findNavController().navigate(MainFrameListDirections.actionMainFrameListToAddin())
-            }
-            else{
-                view.findNavController().navigate(MainFrameListDirections.actionMainFrameListToAddReminder(null))
+                view.findNavController()
+                    .navigate(MainFrameListDirections.actionMainFrameListToAddin())
+            } else {
+                view.findNavController()
+                    .navigate(MainFrameListDirections.actionMainFrameListToAddReminder(null))
             }
         }
     }

@@ -45,6 +45,9 @@ interface EntriesDao {
     @Update
     suspend fun updateLogin(login:LoginData)
 
+    @Delete
+    suspend fun removeLogin(login:LoginData)
+
     @Query("SELECT * FROM LoginData")
     suspend fun fetchPassword():LoginData
 

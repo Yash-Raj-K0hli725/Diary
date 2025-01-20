@@ -2,11 +2,11 @@ package com.example.diary.Login
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.diary.DataBase.LoginData
@@ -16,16 +16,15 @@ import com.example.diary.databinding.FragmentSetPasswordBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 class SetPassword : Fragment() {
-    lateinit var bind:FragmentSetPasswordBinding
-    lateinit var sharedVM:MainVM
+    lateinit var bind: FragmentSetPasswordBinding
+    lateinit var sharedVM: MainVM
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bind = DataBindingUtil.inflate(inflater,R.layout.fragment_set_password,container,false)
+        bind = DataBindingUtil.inflate(inflater, R.layout.fragment_set_password, container, false)
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
 
         // Inflate the layout for this fragment
@@ -36,17 +35,34 @@ class SetPassword : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         bind.Rbutton.setOnClickListener {
-            if (checkRegister()) {
-                val diaryName = bind.diaryName.text.toString()
-                val password = bind.rPass.text.toString()
-                val loginInfo = LoginData(password, diaryName,102)
-                CoroutineScope(Dispatchers.IO).launch {
-                    sharedVM.database.EDBDao().insertLoginInfo(loginInfo)
-                    sharedVM.skipBtn(false)
+
+            CoroutineScope(Dispatchers.Main).launch {
+                if (checkRegister() && sharedVM.database.EDBDao().checkLogin() == 0) {
+                    val diaryName = bind.diaryName.text.toString()
+                    val password = bind.rPass.text.toString()
+                    val loginInfo = LoginData(password, diaryName, 102)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        sharedVM.database.EDBDao().insertLoginInfo(loginInfo)
+                        sharedVM.skipBtn(false)
+                    }
+                    view.findNavController().popBackStack()
                 }
-                view.findNavController().popBackStack()
+                else if (checkRegister() && sharedVM.database.EDBDao().checkLogin() != 0) {
+                    val diaryName = bind.diaryName.text.toString()
+                    val password = bind.rPass.text.toString()
+                    val loginInfo = LoginData(password, diaryName, 102)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        sharedVM.database.EDBDao().updateLogin(loginInfo)
+                        sharedVM.skipBtn(false)
+                    }
+                    view.findNavController().popBackStack()
+                }
+                else {
+                    Log.d("Yash", "idk")
+                }
             }
         }
+
     }
 
     fun checkRegister(): Boolean {
