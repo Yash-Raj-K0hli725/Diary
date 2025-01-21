@@ -1,5 +1,6 @@
 package com.example.diary.Main.ModelV
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.edit
@@ -23,6 +24,7 @@ class MainVM(context: Context) : ViewModel() {
     var addinItem: DataCC? = null
     var addinPermission: Boolean = false
 
+    @SuppressLint("SuspiciousIndentation")
     suspend fun skipBtn(value:Boolean){
         val isEnable = preferencesKey<Boolean>("skip")
             Settings.edit {

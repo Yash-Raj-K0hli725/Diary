@@ -1,4 +1,4 @@
-package com.example.diary.Main.Reminder_list
+package com.example.diary.Main.DiaryEntries
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diary.DataBase.EdataBase
 import com.example.diary.Main.Fragments.SwipeGestures.SGestures
-import com.example.diary.Main.Fragments.listAdapter
 import com.example.diary.Main.ModelV.MainVM
 import com.example.diary.R
 import com.example.diary.databinding.FragmentRListItemsBinding
@@ -30,8 +29,6 @@ class RListItems : Fragment() {
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
         bind = DataBindingUtil.inflate(inflater,R.layout.fragment_r_list_items,container,false)
         dataBase = EdataBase.getData(requireContext())
-        //
-//        sharedVM.updatespermission = true
 
         //RecycleView
         val Adapter = listAdapter()

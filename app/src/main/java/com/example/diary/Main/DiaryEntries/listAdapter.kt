@@ -1,10 +1,9 @@
-package com.example.diary.Main.Fragments
+package com.example.diary.Main.DiaryEntries
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diary.DataBase.DataCC
 import com.example.diary.DataBase.EdataBase
-import com.example.diary.Main.Fragments.DataEntries.Edit
+import com.example.diary.Main.Fragments.MainFrameListDirections
 import com.example.diary.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
@@ -42,8 +41,9 @@ class listAdapter : ListAdapter<DataCC, listAdapter.RecyclerVHolder>(utilclass()
             findViewById<TextView>(R.id.Title).text = currentItem.Title
             findViewById<TextView>(R.id.Date).text = currentItem.Date.toString()
             holder.itemView.findViewById<CardView>(R.id.card).setOnClickListener {
-                val action = MainFrameListDirections.actionMainFrameListToEdit(currentItem)
-                holder.itemView.findNavController().navigate(action)
+
+                holder.itemView.findNavController()
+                    .navigate(MainFrameListDirections.actionMainFrameListToEdit(currentItem))
             }
         }
         if (currentItem.Text.isNotEmpty()) {

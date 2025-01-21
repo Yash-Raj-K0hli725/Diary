@@ -39,11 +39,13 @@ class Login : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        RegisterOrLogin()
+        CoroutineScope(Dispatchers.Main).launch{
+            RegisterOrLogin()
+        }
 
     }
 
-    fun RegisterOrLogin() {
+    suspend fun RegisterOrLogin() {
 
         //Animations
         val slideLeft = android.view.animation.AnimationUtils.loadAnimation(
@@ -59,13 +61,9 @@ class Login : Fragment() {
         )
         slideRight.interpolator = DecelerateInterpolator(1.8f)
 
-        CoroutineScope(Dispatchers.Main).launch {
-
             val haveAccount = sharedVM.database.EDBDao().checkLogin()
-            Log.d("Yash","$haveAccount")
 
             if (haveAccount == 0) {
-
                 bind.skipBtn.setOnClickListener {
                     CoroutineScope(Dispatchers.IO).launch{
                         sharedVM.skipBtn(true)
@@ -99,9 +97,6 @@ class Login : Fragment() {
                     PassCheck()
                 }
             }
-
-        }
-
     }
 
     suspend fun PassCheck() {

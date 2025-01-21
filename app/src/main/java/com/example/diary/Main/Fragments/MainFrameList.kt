@@ -11,7 +11,7 @@ import androidx.navigation.findNavController
 import com.example.diary.DataBase.EdataBase
 import com.example.diary.Main.Fragments.SwipeGestures.VPadapter
 import com.example.diary.Main.ModelV.MainVM
-import com.example.diary.Main.Reminder_list.RListItems
+import com.example.diary.Main.DiaryEntries.RListItems
 import com.example.diary.Main.Reminder_list.Reminders
 import com.example.diary.R
 import com.example.diary.databinding.FragmentMainFrameListBinding
@@ -34,24 +34,12 @@ class MainFrameList : Fragment() {
         bind =
             DataBindingUtil.inflate(inflater, R.layout.fragment_main_frame_list, container, false)
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
-        database = EdataBase.getData(requireContext())
         //
+
         CoroutineScope(Dispatchers.Main).launch {
-            if (!sharedVM.isSkipped()) {
-                bind.setLock.setImageResource(R.drawable.locked)
-                val loggedDetail = sharedVM.database.EDBDao().fetchPassword()
-                bind.setLock.setOnClickListener {
-                    bind.setLock.setImageResource(R.drawable.unlocked)
-                    bindUnlock()
-                    CoroutineScope(Dispatchers.IO).launch {
-                        sharedVM.database.EDBDao().removeLogin(loggedDetail)
-                    }
-                }
-            }
-            else {
-                    bindUnlock()
-            }
+            bindLockSettings()
         }
+
         //ViewPager
         val lis = listOf(RListItems(), Reminders())
         val Vpadapter = VPadapter(this, lis)
@@ -101,9 +89,30 @@ class MainFrameList : Fragment() {
         return bind.root
     }
 
-    fun bindUnlock(){
+    suspend fun bindLockSettings() {
+
+        if (sharedVM.isSkipped()) {
+            bindUnlock()
+
+        }
+        else {
+            bind.setLock.setImageResource(R.drawable.locked)
+            val loggedDetail = sharedVM.database.EDBDao().fetchPassword()
+            bind.setLock.setOnClickListener {
+                bind.setLock.setImageResource(R.drawable.unlocked)
+                CoroutineScope(Dispatchers.IO).launch {
+                    sharedVM.database.EDBDao().removeLogin(loggedDetail)
+                }
+                bindUnlock()
+            }
+        }
+
+    }
+
+    fun bindUnlock() {
         bind.setLock.setImageResource(R.drawable.unlocked)
         bind.setLock.setOnClickListener {
+
             view?.findNavController()
                 ?.navigate(MainFrameListDirections.actionMainFrameListToSetPassword())
         }

@@ -1,9 +1,11 @@
 package com.example.diary.Main.Fragments.DataEntries
 
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.diary.DataBase.DataOO
@@ -15,27 +17,46 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.sql.Time
+import java.util.Calendar
 
 
 class add_Edit_Reminder : BottomSheetDialogFragment() {
-        lateinit var bind:FragmentAddReminderBinding
-        lateinit var sharedVM:MainVM
-        var data:DataOO? = null
-        private var updatePermission = false
+    lateinit var bind: FragmentAddReminderBinding
+    lateinit var sharedVM: MainVM
+    var data: DataOO? = null
+    private var updatePermission = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bind = DataBindingUtil.inflate(inflater, R.layout.fragment_add_reminder,container,false)
+        bind = DataBindingUtil.inflate(inflater, R.layout.fragment_add_reminder, container, false)
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
         data = add_Edit_ReminderArgs.fromBundle(requireArguments()).data
 
-        if(data!=null){
+        if (data != null) {
             bind.task.setText(data?.Title)
             bind.checked.isChecked = data?.Condition.toBoolean()
             updatePermission = true
 
         }
+
+        val calendar = android.icu.util.Calendar.getInstance()
+        val hours = calendar.get(Calendar.HOUR)
+        val minutes = calendar.get(Calendar.MINUTE)
+        val picker = TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
+
+            Toast.makeText(
+                requireContext(), "This Feature is yet to be implemented", Toast.LENGTH_SHORT
+            ).show()
+
+        }, hours, minutes, false)
+
+
+        bind.setReminder.setOnClickListener {
+            picker.show()
+        }
+
+
         // Inflate the layout for this fragment
         return bind.root
     }
@@ -44,12 +65,11 @@ class add_Edit_Reminder : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         bind.DONE.setOnClickListener {
-            if(!updatePermission){
+            if (!updatePermission) {
                 CoroutineScope(Dispatchers.IO).launch {
                     addTask()
                 }
-            }
-            else{
+            } else {
                 CoroutineScope(Dispatchers.IO).launch {
                     editTask()
                 }
@@ -58,36 +78,37 @@ class add_Edit_Reminder : BottomSheetDialogFragment() {
     }
 
 
-    suspend fun addTask(){
-        if(checkInputs()){
+    suspend fun addTask() {
+        if (checkInputs()) {
             val checkBox = bind.checked.isChecked
             val txt = bind.task.text.toString()
-            val addTask = DataOO(0,txt,checkBox.toString(),Time(System.currentTimeMillis()))
+            val addTask = DataOO(0, txt, checkBox.toString(), Time(System.currentTimeMillis()))
             sharedVM.database.EDBDao().insertReminders(addTask)
             dismiss()
         }
     }
 
-    suspend fun editTask(){
-        if(updatesCheck()){
+    suspend fun editTask() {
+        if (updatesCheck()) {
             val checkBox = bind.checked.isChecked
             val txt = bind.task.text.toString()
-            val addTask = DataOO(data!!.id,txt,checkBox.toString(),Time(System.currentTimeMillis()))
+            val addTask =
+                DataOO(data!!.id, txt, checkBox.toString(), Time(System.currentTimeMillis()))
             sharedVM.database.EDBDao().updateReminders(addTask)
             dismiss()
         }
     }
 
-    private fun checkInputs():Boolean{
-       return  bind.task.text.isNotEmpty()
+    private fun checkInputs(): Boolean {
+        return bind.task.text.isNotEmpty()
     }
 
-    private fun updatesCheck():Boolean{
-        return  bind.task.text.toString() != data!!.Title
+    private fun updatesCheck(): Boolean {
+        return bind.task.text.toString() != data!!.Title
                 || bind.checked.isChecked != data!!.Condition.toBoolean()
     }
 
     companion object {
-            val tag = "ADD_REMINDER"
+        val tag = "ADD_REMINDER"
     }
 }

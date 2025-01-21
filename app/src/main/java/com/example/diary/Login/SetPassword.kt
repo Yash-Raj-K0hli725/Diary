@@ -37,31 +37,31 @@ class SetPassword : Fragment() {
         bind.Rbutton.setOnClickListener {
 
             CoroutineScope(Dispatchers.Main).launch {
-                if (checkRegister() && sharedVM.database.EDBDao().checkLogin() == 0) {
-                    val diaryName = bind.diaryName.text.toString()
-                    val password = bind.rPass.text.toString()
-                    val loginInfo = LoginData(password, diaryName, 102)
-                    CoroutineScope(Dispatchers.IO).launch {
-                        sharedVM.database.EDBDao().insertLoginInfo(loginInfo)
-                        sharedVM.skipBtn(false)
-                    }
-                    view.findNavController().popBackStack()
-                }
-                else if (checkRegister() && sharedVM.database.EDBDao().checkLogin() != 0) {
-                    val diaryName = bind.diaryName.text.toString()
-                    val password = bind.rPass.text.toString()
-                    val loginInfo = LoginData(password, diaryName, 102)
-                    CoroutineScope(Dispatchers.IO).launch {
-                        sharedVM.database.EDBDao().updateLogin(loginInfo)
-                        sharedVM.skipBtn(false)
-                    }
-                    view.findNavController().popBackStack()
-                }
-                else {
-                    Log.d("Yash", "idk")
+                if (!checksIfUserEligible()) {
+                    registerUser()
+
                 }
             }
         }
+
+    }
+
+
+    suspend fun checksIfUserEligible(): Boolean {
+        return checkRegister() && sharedVM.database.EDBDao().checkLogin() != 0
+    }
+
+    suspend fun registerUser() {
+
+        val diaryName = bind.diaryName.text.toString()
+        val password = bind.rPass.text.toString()
+        val loginInfo = LoginData(password, diaryName, 102)
+        val registerUser = CoroutineScope(Dispatchers.IO).launch {
+            sharedVM.database.EDBDao().insertLoginInfo(loginInfo)
+            sharedVM.skipBtn(false)
+        }
+        registerUser.join()
+        view?.findNavController()?.popBackStack()
 
     }
 
