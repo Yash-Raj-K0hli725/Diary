@@ -10,17 +10,39 @@
         android:background="#252525"
         tools:context=".Main.Fragments.DataEntries.Addin">
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="40dp"
-            android:scaleX="1.4"
-            android:scaleY="1.6"
-            android:src="@drawable/ic_back"
+            android:orientation="horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleX="1.4"
+                android:scaleY="1.4"
+                android:padding="2dp"
+                android:src="@drawable/ic_back"
+                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:text="@string/back"
+                android:textColor="@color/white"
+                android:layout_gravity="center_vertical"
+                android:textSize="17sp"
+                />
+
+        </LinearLayout>
+
+
 
         <TextView
             android:id="@+id/Timern"

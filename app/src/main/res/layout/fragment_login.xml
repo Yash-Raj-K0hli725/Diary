@@ -35,6 +35,7 @@
             tools:context=".Login.Login">
 
             <TextView
+                android:id="@+id/textView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:fontFamily="@font/alata"
@@ -46,23 +47,29 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <EditText
-                android:id="@+id/password"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passHolder"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:autofillHints="password"
-                android:background="@drawable/input_back"
-                android:gravity="center_vertical"
-                android:hint="@string/pass"
-                android:inputType="textPassword"
-                android:paddingStart="17dp"
-
-                app:layout_constraintBottom_toTopOf="@id/guideline1"
+               app:boxBackgroundMode="outline"
+                app:layout_constraintBottom_toTopOf="@+id/guideline1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="RtlSymmetry" />
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password"
+                    android:hint="@string/pass"
+                    android:textSize="14sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ems="12"
+                    android:inputType="numberPassword"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/Lbutton"
@@ -87,7 +94,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/Lbutton">
+                app:layout_constraintTop_toBottomOf="@id/Lbutton"
+                tools:layout_editor_absoluteY="462dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -118,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.55" />
+                app:layout_constraintGuide_begin="402dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -174,37 +182,49 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
-                <EditText
-                    android:id="@+id/diaryName"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="40dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/input_back"
-                    android:fontFamily="@font/alata"
-                    android:gravity="center_vertical"
-                    android:hint="@string/name_your_diary"
-                    android:inputType="textPersonName"
-                    android:paddingStart="17dp"
-                    android:textSize="14sp"
-                    tools:ignore="RtlSymmetry" />
+                    android:layout_height="match_parent"
+                    app:boxBackgroundMode="outline"
+                    >
 
-                <EditText
-                    android:id="@+id/rPass"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/diaryName"
+                        android:hint="@string/name_your_diary"
+                        android:textSize="14sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="@font/alata"
+                        android:ems="12"
+                        android:inputType="textPersonName"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="40dp"
-                    android:autofillHints="password"
-                    android:background="@drawable/input_back"
-                    android:fontFamily="@font/alata"
-                    android:gravity="center_vertical"
-                    android:hint="@string/set_a_password"
-                    android:inputType="textPassword"
-                    android:paddingStart="17dp"
-                    android:textSize="14sp"
-                    tools:ignore="RtlSymmetry" />
+                    android:layout_height="match_parent"
+                    app:boxBackgroundMode="outline"
+                    app:passwordToggleEnabled="true"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rPass"
+                        android:hint="@string/set_a_password"
+                        android:textSize="14sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:fontFamily="@font/alata"
+                        android:ems="12"
+                        android:inputType="numberPassword"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 

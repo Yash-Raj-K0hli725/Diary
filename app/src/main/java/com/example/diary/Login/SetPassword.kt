@@ -37,18 +37,13 @@ class SetPassword : Fragment() {
         bind.Rbutton.setOnClickListener {
 
             CoroutineScope(Dispatchers.Main).launch {
-                if (!checksIfUserEligible()) {
+                if (checkRegister()) {
                     registerUser()
 
                 }
             }
         }
 
-    }
-
-
-    suspend fun checksIfUserEligible(): Boolean {
-        return checkRegister() && sharedVM.database.EDBDao().checkLogin() != 0
     }
 
     suspend fun registerUser() {
@@ -66,7 +61,7 @@ class SetPassword : Fragment() {
     }
 
     fun checkRegister(): Boolean {
-        return bind.rPass.text.isNotEmpty() && bind.diaryName.text.isNotEmpty()
+        return bind.rPass.text!!.isNotEmpty() && bind.diaryName.text!!.isNotEmpty()
     }
 
 }

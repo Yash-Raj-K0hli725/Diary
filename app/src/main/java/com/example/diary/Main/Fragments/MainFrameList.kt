@@ -25,7 +25,6 @@ import kotlinx.coroutines.launch
 class MainFrameList : Fragment() {
     lateinit var bind: FragmentMainFrameListBinding
     lateinit var sharedVM: MainVM
-    lateinit var database: EdataBase
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -102,6 +101,7 @@ class MainFrameList : Fragment() {
                 bind.setLock.setImageResource(R.drawable.unlocked)
                 CoroutineScope(Dispatchers.IO).launch {
                     sharedVM.database.EDBDao().removeLogin(loggedDetail)
+                    sharedVM.skipBtn(true)
                 }
                 bindUnlock()
             }
@@ -122,7 +122,7 @@ class MainFrameList : Fragment() {
     override fun onResume() {
         if (sharedVM.addinPermission) {
             CoroutineScope(Dispatchers.IO).launch {
-                database.EDBDao().InsertData(sharedVM.addinItem!!)
+                sharedVM.database.EDBDao().InsertData(sharedVM.addinItem!!)
             }
             sharedVM.addinPermission = false
         }

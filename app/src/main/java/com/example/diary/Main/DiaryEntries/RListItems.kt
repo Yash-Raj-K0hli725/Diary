@@ -47,9 +47,9 @@ class RListItems : Fragment() {
         touchHelper.attachToRecyclerView(bind.RecycleList)
 
         bind.RecycleList.adapter = Adapter
-        bind.RecycleList.layoutManager = LinearLayoutManager(activity?.baseContext)
+        bind.RecycleList.layoutManager = LinearLayoutManager(requireContext())
 
-        sharedVM.read.observe(viewLifecycleOwner){
+        sharedVM.database.EDBDao().getDataInfo().observe(viewLifecycleOwner){
             Adapter.submitList(it)
             Adapter.setData(dataBase,requireContext(),requireActivity().supportFragmentManager)
         }

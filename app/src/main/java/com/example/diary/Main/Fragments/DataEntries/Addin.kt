@@ -9,13 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.diary.DataBase.DataCC
-import com.example.diary.DataBase.EdataBase
 import com.example.diary.Main.ModelV.MainVM
 import com.example.diary.R
 import com.example.diary.databinding.FragmentAddinBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.Date
 
 
@@ -23,7 +19,7 @@ class Addin : Fragment() {
     lateinit var bind: FragmentAddinBinding
     lateinit var sharedVM: MainVM
     var Title = ""
-    var Textt = "NoText"
+    var Textt = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

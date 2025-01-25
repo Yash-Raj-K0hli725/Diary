@@ -109,7 +109,7 @@ class Login : Fragment() {
                 .navigate(R.id.action_login_to_mainFrameList)
 
         }
-        else if (bind.password.text.isEmpty()) {
+        else if (bind.password.text!!.isEmpty()) {
             Snackbar.make(
                 requireView(),
                 "Password field cannot be empty",
@@ -127,6 +127,6 @@ class Login : Fragment() {
     }
 
     fun checkRegister(): Boolean {
-        return bind.rPass.text.isNotEmpty() && bind.diaryName.text.isNotEmpty()
+        return bind.rPass.text!!.isNotEmpty() && bind.diaryName.text!!.isNotEmpty()
     }
 }

@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
@@ -40,8 +42,8 @@ class listAdapter : ListAdapter<DataCC, listAdapter.RecyclerVHolder>(utilclass()
         holder.itemView.apply {
             findViewById<TextView>(R.id.Title).text = currentItem.Title
             findViewById<TextView>(R.id.Date).text = currentItem.Date.toString()
+            findViewById<ImageView>(R.id.tornpage).setImageResource(randoBack())
             holder.itemView.findViewById<CardView>(R.id.card).setOnClickListener {
-
                 holder.itemView.findNavController()
                     .navigate(MainFrameListDirections.actionMainFrameListToEdit(currentItem))
             }
@@ -69,6 +71,14 @@ class listAdapter : ListAdapter<DataCC, listAdapter.RecyclerVHolder>(utilclass()
             .setNegativeButton("No") { _, _ ->
             }.show()
         notifyDataSetChanged()
+    }
+
+    fun randoBack():Int{
+        val tornPages = arrayOf(R.drawable.paper1
+            ,R.drawable.paper2
+            ,R.drawable.paper3
+            ,R.drawable.paper4)
+        return tornPages.random()
     }
 
     fun setData(edb: EdataBase, cc: Context, sfm: FragmentManager) {

@@ -20,6 +20,7 @@ class Edit : Fragment() {
     private lateinit var bind: FragmentEditBinding
     private lateinit var sharedVM: MainVM
     private lateinit var currentItem: DataCC
+    private lateinit var args: EditArgs
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,8 +28,8 @@ class Edit : Fragment() {
         //Instances
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
         bind = DataBindingUtil.inflate(inflater, R.layout.fragment_edit, container, false)
-        val args = EditArgs.fromBundle(requireArguments()).item
-        currentItem = args
+        args = EditArgs.fromBundle(requireArguments())
+        currentItem = args.item
 
         //setData
         bind.Data.setText(currentItem.Text)
@@ -46,7 +47,7 @@ class Edit : Fragment() {
     }
 
     fun check(): Boolean {
-        return bind.Data.text.isNotEmpty() || bind.Titlee.text.isNotEmpty()
+        return bind.Data.text.toString() != args.item.Text  || bind.Titlee.text.toString() != args.item.Title
     }
 
     override fun onDestroy() {
