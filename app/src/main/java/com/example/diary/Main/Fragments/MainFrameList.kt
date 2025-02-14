@@ -1,17 +1,18 @@
 package com.example.diary.Main.Fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.example.diary.DataBase.EdataBase
+import com.example.diary.Main.DiaryEntries.RListItems
 import com.example.diary.Main.Fragments.SwipeGestures.VPadapter
 import com.example.diary.Main.ModelV.MainVM
-import com.example.diary.Main.DiaryEntries.RListItems
 import com.example.diary.Main.Reminder_list.Reminders
 import com.example.diary.R
 import com.example.diary.databinding.FragmentMainFrameListBinding
@@ -22,7 +23,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainFrameList : Fragment() {
+class MainFrameList : Fragment(), onDialogDismiss {
     lateinit var bind: FragmentMainFrameListBinding
     lateinit var sharedVM: MainVM
 
@@ -34,11 +35,9 @@ class MainFrameList : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_main_frame_list, container, false)
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
         //
-
-        CoroutineScope(Dispatchers.Main).launch {
-            bindLockSettings()
+        CoroutineScope(Dispatchers.IO).launch {
+            updateSwitchesCondition()
         }
-
         //ViewPager
         val lis = listOf(RListItems(), Reminders())
         val Vpadapter = VPadapter(this, lis)
@@ -88,37 +87,6 @@ class MainFrameList : Fragment() {
         return bind.root
     }
 
-    suspend fun bindLockSettings() {
-
-        if (sharedVM.isSkipped()) {
-            bindUnlock()
-
-        }
-        else {
-            bind.setLock.setImageResource(R.drawable.locked)
-            val loggedDetail = sharedVM.database.EDBDao().fetchPassword()
-            bind.setLock.setOnClickListener {
-                bind.setLock.setImageResource(R.drawable.unlocked)
-                CoroutineScope(Dispatchers.IO).launch {
-                    sharedVM.database.EDBDao().removeLogin(loggedDetail)
-                    sharedVM.skipBtn(true)
-                }
-                bindUnlock()
-            }
-        }
-
-    }
-
-    fun bindUnlock() {
-        bind.setLock.setImageResource(R.drawable.unlocked)
-        bind.setLock.setOnClickListener {
-
-            view?.findNavController()
-                ?.navigate(MainFrameListDirections.actionMainFrameListToSetPassword())
-        }
-
-    }
-
     override fun onResume() {
         if (sharedVM.addinPermission) {
             CoroutineScope(Dispatchers.IO).launch {
@@ -126,6 +94,8 @@ class MainFrameList : Fragment() {
             }
             sharedVM.addinPermission = false
         }
+        Toast.makeText(requireContext(),"Yash",Toast.LENGTH_SHORT).show()
+        Log.d("Yash","onResume")
         super.onResume()
     }
 
@@ -142,5 +112,31 @@ class MainFrameList : Fragment() {
                     .navigate(MainFrameListDirections.actionMainFrameListToAddReminder(null))
             }
         }
+
+        bind.setLock.setOnCheckedChangeListener { _, isChecked ->
+            CoroutineScope(Dispatchers.Main).launch {
+                if(isChecked && sharedVM.isSkipped()){
+                    view.findNavController()
+                        .navigate(MainFrameListDirections.actionMainFrameListToSetPassword())
+                }
+                else{
+                    view.findNavController().navigate(R.id.action_mainFrameList_to_popUp)
+                }
+            }
+        }
     }
+
+    override fun onDismissDialog() {
+        Log.d("Yash","Hello There")
+    }
+
+    suspend fun updateSwitchesCondition(){
+        if(sharedVM.isSkipped()){
+            bind.setLock.isChecked = false
+        }
+        else{
+            bind.setLock.isChecked = true
+        }
+    }
+
 }

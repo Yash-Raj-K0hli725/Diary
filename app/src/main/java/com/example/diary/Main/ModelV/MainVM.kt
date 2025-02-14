@@ -7,7 +7,6 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.preferencesKey
 import androidx.lifecycle.ViewModel
 import com.example.diary.DataBase.DataCC
-import com.example.diary.DataBase.DataOO
 import com.example.diary.DataBase.EdataBase
 import kotlinx.coroutines.flow.first
 

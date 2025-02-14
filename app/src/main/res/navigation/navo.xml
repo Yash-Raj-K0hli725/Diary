@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navo"
-    app:startDestination="@id/login">
+    app:startDestination="@id/register">
 
     <fragment
         android:id="@+id/login"
@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_mainFrameList_to_setPassword"
             app:destination="@id/setPassword" />
+        <action
+            android:id="@+id/action_mainFrameList_to_popUp"
+            app:destination="@id/popUp" />
     </fragment>
     <fragment
         android:id="@+id/addin"
@@ -67,4 +70,19 @@
         android:name="com.example.diary.Login.SetPassword"
         android:label="SetPassword"
         tools:layout="@layout/fragment_set_password"/>
+    <fragment
+        android:id="@+id/register"
+        android:name="com.example.diary.Login.Register"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_register_to_login"
+            app:destination="@id/login"
+            app:popUpTo="@id/register"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <dialog
+        android:id="@+id/popUp"
+        android:name="com.example.diary.Main.Fragments.popUp"
+        android:label="popUp" />
 </navigation>

@@ -7,7 +7,7 @@
     <string name="how_s_your_day">How\'s your Day…</string>
     <string name="completed">Completed</string>
     <string name="icon">ICON</string>
-    <string name="pass">Enter your password</string>
+    <string name="pass">Password</string>
     <string name="verify">Verify</string>
     <string name="forget_password">\tForget password</string>
     <string name="name_your_diary">\tName your Diary</string>
@@ -18,4 +18,9 @@
     <string name="set_reminder">set reminder</string>
     <string name="done">DONE</string>
     <string name="back">Back</string>
+    <string name="diary">DIARY</string>
+    <string name="day">DAY</string>
+    <string name="your">YOUR</string>
+    <string name="make">MAKE</string>
+    <string name="empty_error">Input fields cannot be empty</string>
 </resources>
