@@ -14,7 +14,7 @@ buildscript {
     dependencies {
         classpath("com.google.gms:google-services:4.4.2")
         classpath("com.android.tools.build:gradle:8.5.1")
-        val navVersion = "2.8.5"
+        val navVersion = "2.8.9"
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion")
     }
     repositories {

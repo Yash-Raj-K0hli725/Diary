@@ -78,23 +78,27 @@ class add_Edit_Reminder : BottomSheetDialogFragment() {
     }
 
 
-    suspend fun addTask() {
+     fun addTask() {
         if (checkInputs()) {
             val checkBox = bind.checked.isChecked
             val txt = bind.task.text.toString()
             val addTask = DataOO(0, txt, checkBox.toString(), Time(System.currentTimeMillis()))
-            sharedVM.database.EDBDao().insertReminders(addTask)
+            sharedVM.insertReminder(addTask)
             dismiss()
         }
     }
 
-    suspend fun editTask() {
+     fun editTask() {
         if (updatesCheck()) {
             val checkBox = bind.checked.isChecked
             val txt = bind.task.text.toString()
-            val addTask =
-                DataOO(data!!.id, txt, checkBox.toString(), Time(System.currentTimeMillis()))
-            sharedVM.database.EDBDao().updateReminders(addTask)
+            val updateTask = DataOO(
+                data!!.id,
+                txt,
+                checkBox.toString(),
+                Time(System.currentTimeMillis())
+            )
+            sharedVM.updateReminder(updateTask)
             dismiss()
         }
     }

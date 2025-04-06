@@ -39,12 +39,12 @@ class completedListAdapter:ListAdapter<DataOO,completedListAdapter.completedList
         }
     }
 
-    suspend fun updateCheckBox(currentItem:DataOO){
+     fun updateCheckBox(currentItem:DataOO){
         val condi:Boolean = !currentItem.Condition.toBoolean()
-        val tempData = DataOO(currentItem.id,currentItem.Title,condi.toString(),
+        val reminder = DataOO(currentItem.id,currentItem.Title,condi.toString(),
             Time(System.currentTimeMillis())
         )
-        shareVM.database.EDBDao().updateReminders(tempData)
+        shareVM.updateReminder(reminder)
     }
 
     fun getData(vm: MainVM) {

@@ -1,6 +1,5 @@
 package com.example.diary.Main.Fragments
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,17 +7,16 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.diary.Main.ModelV.MainVM
 import com.example.diary.R
 import com.example.diary.databinding.FragmentPopUpBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class popUp : DialogFragment(){
-    lateinit var sharedVM:MainVM
-    lateinit var bind:FragmentPopUpBinding
+class popUp : DialogFragment() {
+    lateinit var sharedVM: MainVM
+    lateinit var bind: FragmentPopUpBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,9 +24,10 @@ class popUp : DialogFragment(){
     ): View {
         dialog?.window?.apply {
             // Remove default background
-            setBackgroundDrawableResource(android.R.color.transparent)}
+            setBackgroundDrawableResource(android.R.color.transparent)
+        }
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
-        bind = DataBindingUtil.inflate(inflater,R.layout.fragment_pop_up,container,false)
+        bind = DataBindingUtil.inflate(inflater, R.layout.fragment_pop_up, container, false)
 
         // Inflate the layout for this fragment
         return bind.root
@@ -37,21 +36,21 @@ class popUp : DialogFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bind.confirmAction.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
+            lifecycleScope.launch{
                 removePassword()
             }
         }
     }
 
-    private suspend fun removePassword(){
-        val loggedDetail = sharedVM.database.EDBDao().fetchPassword()
+    private suspend fun removePassword() {
+        val loggedDetail = sharedVM.fetchPassword()
         val inputPassword = bind.removePassInput.text.toString()
-        if(inputPassword == loggedDetail.Pass){
-                sharedVM.database.EDBDao().removeLogin(loggedDetail)
-                sharedVM.skipBtn(true)
-                dismiss()
-        }
-        else{
+        if (inputPassword == loggedDetail.Pass) {
+            sharedVM.removeLoginInfo()
+            sharedVM.skipBtn(true)
+            sharedVM.liveSkip.value = true
+            dismiss()
+        } else {
             //wrongPassword
         }
     }
@@ -59,9 +58,4 @@ class popUp : DialogFragment(){
     companion object {
         const val Tag = "POPUP"
     }
-
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-    }
-
 }

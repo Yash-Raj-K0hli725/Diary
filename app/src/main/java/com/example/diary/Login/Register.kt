@@ -31,18 +31,16 @@ class Register : Fragment() {
         val errorMessage = bind.regErrorMessage
         bind.regBtn.setOnClickListener{
             if(istextfieldsEmpty()){
-                CoroutineScope(Dispatchers.IO).launch {
-                    registerUser()
-                }
+
+                registerUser()
+
                 view?.findNavController()?.navigate(RegisterDirections.actionRegisterToLogin())
             }
             else{
                     errorMessage.animate().alpha(1f).setDuration(400L).withEndAction {
-                        errorMessage.alpha = 1f
                     }.start()
                 Handler(Looper.getMainLooper()).postDelayed({
                     errorMessage.animate().alpha(0f).setDuration(600L).withEndAction {
-                        errorMessage.alpha = 0f
                     }.start()
                 },1300L)
             }
@@ -51,11 +49,11 @@ class Register : Fragment() {
         return bind.root
     }
 
-    private suspend fun registerUser(){
+    private  fun registerUser(){
             val name = bind.regDiaryName.text.toString()
             val password = bind.regPassword.text.toString()
             val registerDetails = LoginData(password,name,Math.random().toInt())
-            sharedVM.database.EDBDao().insertLoginInfo(registerDetails)
+            sharedVM.signUpUser(registerDetails)
     }
 
     fun istextfieldsEmpty():Boolean{

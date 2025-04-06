@@ -1,6 +1,7 @@
 package com.example.diary.Main.Fragments.DataEntries
 
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,9 +56,9 @@ class Edit : Fragment() {
             val texto = bind.Data.text.toString()
             val titlo = bind.Titlee.text.toString()
             val idd = currentItem.id
-            val Datacc = DataCC(idd, titlo, texto, currentItem.Date)
+            val notes = DataCC(idd, titlo, texto, currentItem.Date)
             CoroutineScope(Dispatchers.IO).launch {
-                sharedVM.database.EDBDao().UpdateData(Datacc)
+                sharedVM.updateNotes(notes)
             }
         }
         super.onDestroy()

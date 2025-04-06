@@ -1,14 +1,14 @@
 package com.example.diary.Main.Fragments
 
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.diary.Main.DiaryEntries.RListItems
 import com.example.diary.Main.Fragments.SwipeGestures.VPadapter
@@ -19,11 +19,9 @@ import com.example.diary.databinding.FragmentMainFrameListBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainFrameList : Fragment(), onDialogDismiss {
+class MainFrameList : Fragment() {
     lateinit var bind: FragmentMainFrameListBinding
     lateinit var sharedVM: MainVM
 
@@ -31,17 +29,20 @@ class MainFrameList : Fragment(), onDialogDismiss {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bind =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_main_frame_list, container, false)
+
+        bind = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_main_frame_list, container, false
+        )
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
-        //
-        CoroutineScope(Dispatchers.IO).launch {
-            updateSwitchesCondition()
+
+        sharedVM.liveSkip.observe(viewLifecycleOwner) {
+            updateLockTint(it)
         }
-        //ViewPager
-        val lis = listOf(RListItems(), Reminders())
-        val Vpadapter = VPadapter(this, lis)
-        bind.MFVP2.adapter = Vpadapter
+
+        //ViewPager-->
+        val vp2FragList = listOf(RListItems(), Reminders())
+        val vp2Adapter = VPadapter(this, vp2FragList)
+        bind.MFVP2.adapter = vp2Adapter
 
         bind.Licon.setOnClickListener {
             bind.MFVP2.currentItem = 0
@@ -49,15 +50,12 @@ class MainFrameList : Fragment(), onDialogDismiss {
         bind.Ricon.setOnClickListener {
             bind.MFVP2.currentItem = 1
         }
-        //
-        //TabLayout
         TabLayoutMediator(bind.tab, bind.MFVP2) { _, _ ->
         }.attach()
         bind.tab.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
                     0 -> {
-                        // Toast.makeText(requireContext(),"${tab.position}",Toast.LENGTH_SHORT).show()
                         bind.Licon.setImageResource(R.drawable.ic_notes_filled)
                     }
 
@@ -82,23 +80,18 @@ class MainFrameList : Fragment(), onDialogDismiss {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
         })
+        //<--
 
-        //end
         return bind.root
     }
 
     override fun onResume() {
         if (sharedVM.addinPermission) {
-            CoroutineScope(Dispatchers.IO).launch {
-                sharedVM.database.EDBDao().InsertData(sharedVM.addinItem!!)
-            }
+            sharedVM.createNotes(sharedVM.addinItem!!)
             sharedVM.addinPermission = false
         }
-        Toast.makeText(requireContext(),"Yash",Toast.LENGTH_SHORT).show()
-        Log.d("Yash","onResume")
         super.onResume()
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -113,30 +106,24 @@ class MainFrameList : Fragment(), onDialogDismiss {
             }
         }
 
-        bind.setLock.setOnCheckedChangeListener { _, isChecked ->
-            CoroutineScope(Dispatchers.Main).launch {
-                if(isChecked && sharedVM.isSkipped()){
+        bind.setLock.setOnClickListener {
+            lifecycleScope.launch {
+                if (sharedVM.isSkipped()) {
                     view.findNavController()
                         .navigate(MainFrameListDirections.actionMainFrameListToSetPassword())
-                }
-                else{
+                } else {
                     view.findNavController().navigate(R.id.action_mainFrameList_to_popUp)
                 }
             }
         }
     }
 
-    override fun onDismissDialog() {
-        Log.d("Yash","Hello There")
-    }
-
-    suspend fun updateSwitchesCondition(){
-        if(sharedVM.isSkipped()){
-            bind.setLock.isChecked = false
-        }
-        else{
-            bind.setLock.isChecked = true
+    private fun updateLockTint(bool: Boolean) {
+        val lock = bind.setLock
+        if (!bool) {
+            lock.setColorFilter(Color.argb(200, 24, 133, 246))
+        } else {
+            lock.setColorFilter(Color.argb(200, 100, 98, 98))
         }
     }
-
 }

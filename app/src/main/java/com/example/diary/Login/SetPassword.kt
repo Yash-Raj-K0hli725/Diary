@@ -52,7 +52,7 @@ class SetPassword : Fragment() {
         val password = bind.rPass.text.toString()
         val loginInfo = LoginData(password, diaryName, 102)
         val registerUser = CoroutineScope(Dispatchers.IO).launch {
-            sharedVM.database.EDBDao().insertLoginInfo(loginInfo)
+            sharedVM.signUpUser(loginInfo)
             sharedVM.skipBtn(false)
         }
         registerUser.join()

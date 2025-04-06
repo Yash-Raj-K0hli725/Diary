@@ -40,7 +40,7 @@ class Reminders : Fragment() {
         listAdapter.getData(shareVM)
         completedListAdapter.getData(shareVM)
 
-        shareVM.database.EDBDao().getReminderInfo().observe(viewLifecycleOwner){reminders->
+        shareVM.readReminder().observe(viewLifecycleOwner){reminders->
            listAdapter.submitList(checkIncompletion(reminders))
            completedListAdapter.submitList(checkCompletion(reminders))
         }

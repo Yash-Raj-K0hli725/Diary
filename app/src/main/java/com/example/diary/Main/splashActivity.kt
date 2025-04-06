@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.diary.R
@@ -16,10 +17,10 @@ class customSplashActivity:AppCompatActivity() {
     private lateinit var bind:CustomlayoutActivityBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         bind = DataBindingUtil.setContentView(this,R.layout.customlayout_activity)
         val dayFadeOut = android.view.animation.AnimationUtils.loadAnimation(this,R.anim.splash_day)
         bind.splashDay.startAnimation(dayFadeOut)
-
         Handler(Looper.getMainLooper()).postDelayed({
             changeSplashText()
         },1300)

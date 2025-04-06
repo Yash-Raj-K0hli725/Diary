@@ -19,7 +19,6 @@ import com.example.diary.databinding.FragmentRListItemsBinding
 
 class RListItems : Fragment() {
     private lateinit var bind:FragmentRListItemsBinding
-    private lateinit var dataBase:EdataBase
     private lateinit var sharedVM:MainVM
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +27,6 @@ class RListItems : Fragment() {
         //Instances
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
         bind = DataBindingUtil.inflate(inflater,R.layout.fragment_r_list_items,container,false)
-        dataBase = EdataBase.getData(requireContext())
 
         //RecycleView
         val Adapter = listAdapter()
@@ -49,9 +47,9 @@ class RListItems : Fragment() {
         bind.RecycleList.adapter = Adapter
         bind.RecycleList.layoutManager = LinearLayoutManager(requireContext())
 
-        sharedVM.database.EDBDao().getDataInfo().observe(viewLifecycleOwner){
+        sharedVM.readNotes().observe(viewLifecycleOwner){
             Adapter.submitList(it)
-            Adapter.setData(dataBase,requireContext(),requireActivity().supportFragmentManager)
+            Adapter.setData(sharedVM,requireContext())
         }
 
         return bind.root
