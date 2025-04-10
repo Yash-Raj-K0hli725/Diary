@@ -1,15 +1,15 @@
 package com.example.diary.Main.Fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import com.example.diary.DataBase.DataCC
 import com.example.diary.Main.DiaryEntries.RListItems
 import com.example.diary.Main.Fragments.SwipeGestures.VPadapter
 import com.example.diary.Main.ModelV.MainVM
@@ -19,7 +19,8 @@ import com.example.diary.databinding.FragmentMainFrameListBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.coroutines.launch
+import java.sql.Time
+import java.util.Calendar
 
 class MainFrameList : Fragment() {
     lateinit var bind: FragmentMainFrameListBinding
@@ -35,67 +36,17 @@ class MainFrameList : Fragment() {
         )
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
 
-        sharedVM.liveSkip.observe(viewLifecycleOwner) {
-            updateLockTint(it)
-        }
-
         //ViewPager-->
-        val vp2FragList = listOf(RListItems(), Reminders())
-        val vp2Adapter = VPadapter(this, vp2FragList)
-        bind.MFVP2.adapter = vp2Adapter
-
-        bind.Licon.setOnClickListener {
-            bind.MFVP2.currentItem = 0
-        }
-        bind.Ricon.setOnClickListener {
-            bind.MFVP2.currentItem = 1
-        }
-        TabLayoutMediator(bind.tab, bind.MFVP2) { _, _ ->
-        }.attach()
-        bind.tab.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                when (tab.position) {
-                    0 -> {
-                        bind.Licon.setImageResource(R.drawable.ic_notes_filled)
-                    }
-
-                    1 -> {
-                        bind.Ricon.setImageResource(R.drawable.ic_check_filled)
-                    }
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-                when (tab.position) {
-                    0 -> {
-                        bind.Licon.setImageResource(R.drawable.ic_notes_out)
-                    }
-
-                    1 -> {
-                        bind.Ricon.setImageResource(R.drawable.ic_check_oout)
-                    }
-                }
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-        })
+        setUpViewPager2()
         //<--
+        setGreetings()
 
         return bind.root
     }
 
-    override fun onResume() {
-        if (sharedVM.addinPermission) {
-            sharedVM.createNotes(sharedVM.addinItem!!)
-            sharedVM.addinPermission = false
-        }
-        super.onResume()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setData()
         bind.add.setOnClickListener {
             if (bind.MFVP2.currentItem == 0) {
                 view.findNavController()
@@ -106,24 +57,57 @@ class MainFrameList : Fragment() {
             }
         }
 
-        bind.setLock.setOnClickListener {
-            lifecycleScope.launch {
-                if (sharedVM.isSkipped()) {
-                    view.findNavController()
-                        .navigate(MainFrameListDirections.actionMainFrameListToSetPassword())
-                } else {
-                    view.findNavController().navigate(R.id.action_mainFrameList_to_popUp)
-                }
-            }
-        }
     }
 
-    private fun updateLockTint(bool: Boolean) {
-        val lock = bind.setLock
-        if (!bool) {
-            lock.setColorFilter(Color.argb(200, 24, 133, 246))
-        } else {
-            lock.setColorFilter(Color.argb(200, 100, 98, 98))
-        }
+    private fun setData() {
+        val navController = requireActivity().findNavController(R.id.hoster)
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<DataCC>("addin")
+            ?.observe(
+                viewLifecycleOwner
+            ) {
+                it?.let {
+                    sharedVM.createNotes(it)
+                }
+            }
+
+    }
+
+    private fun setGreetings() {
+        val greetings = bind.txtGoodMorning
+        val calendar = Calendar.getInstance()
+        val time = Time(calendar.timeInMillis).hours
+        if (time > 20)
+            greetings.setText(R.string.good_night)
+        else if (time > 16)
+            greetings.setText(R.string.good_evening)
+        else if (time > 12)
+            greetings.setText(R.string.good_afternoon)
+        else
+            greetings.setText(R.string.good_morning)
+    }
+
+    private fun setUpViewPager2() {
+        val vp2Adapter = VPadapter(this, listOf(RListItems(), Reminders()))
+        bind.MFVP2.adapter = vp2Adapter
+
+        val tabIcons = listOf(R.drawable.ic_home, R.drawable.ic_notification)
+        TabLayoutMediator(bind.tab, bind.MFVP2) { tabs, position ->
+            tabs.icon = ContextCompat.getDrawable(requireContext(), tabIcons[position])
+        }.attach()
+        bind.tab.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when (tab.position) {
+                    0 -> bind.add.setImageResource(R.drawable.ic_feather)
+                    1 -> bind.add.setImageResource(R.drawable.ic_add)
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
     }
 }

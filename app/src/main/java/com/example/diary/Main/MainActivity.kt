@@ -20,6 +20,7 @@ import com.example.diary.Main.ModelV.MainVM
 import com.example.diary.Main.ModelV.MainVMFactory
 import com.example.diary.R
 import com.example.diary.databinding.ActivityMainBinding
+import com.google.android.material.bottomappbar.BottomAppBar
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -32,8 +33,8 @@ class MainActivity : AppCompatActivity() {
         //Initialization of dataBinding
         bind = DataBindingUtil.setContentView(this, R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(bind.main){v,inset->
-            val systembars = inset.getInsets(WindowInsetsCompat.Type.statusBars())
-            v.setPadding(systembars.left,systembars.top,systembars.right,systembars.bottom)
+            val navBar = inset.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            bind.main.updatePadding(bottom = navBar)
             inset
         }
         //Initialization of ViewModel
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         val navGraph = navFinder.navInflater.inflate(R.navigation.navo)
         if (sharedVM.isSkipped()) {
             navGraph.setStartDestination(R.id.mainFrameList)
-        } else if (sharedVM.checkIfUserExist() != 0 ) {
+        } else if (sharedVM.checkIfUserExist()){
             navGraph.setStartDestination(R.id.login)
         } else {
             //nothing as Default

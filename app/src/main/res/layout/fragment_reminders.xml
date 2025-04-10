@@ -15,7 +15,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/incompleteReminders"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:paddingTop="32dp"
+                android:clipToPadding="false"
+                />
 
             <TextView
                 android:id="@+id/diffComplete"
@@ -32,7 +35,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/completeReminders"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="100dp"
+                android:clipToPadding="false"
+                >
 
             </androidx.recyclerview.widget.RecyclerView>
 

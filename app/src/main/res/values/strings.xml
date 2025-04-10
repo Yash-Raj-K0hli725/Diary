@@ -23,4 +23,11 @@
     <string name="your">YOUR</string>
     <string name="make">MAKE</string>
     <string name="empty_error">Input fields cannot be empty</string>
+    <string name="none">none</string>
+    <string name="good_morning">Good Morning!</string>
+    <string name="good_evening">Good Evening!</string>
+    <string name="good_afternoon">Good Afternoon!</string>
+    <string name="good_night">Good Night!</string>
+    <string name="hi">Hi</string>
+    <string name="last_notes">Last notes</string>
 </resources>

@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class MainVM(context: Context) : ViewModel() {
@@ -42,11 +43,6 @@ class MainVM(context: Context) : ViewModel() {
         return preference[dataKey] ?: false
     }
     //<--
-
-    //AddinFragment
-    var addinItem: DataCC? = null
-    var addinPermission: Boolean = false
-
     //Notes-->
     fun createNotes(notes: DataCC) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -110,11 +106,10 @@ class MainVM(context: Context) : ViewModel() {
         }
     }
 
-    suspend fun checkIfUserExist(): Int {
-        val job = viewModelScope.async(Dispatchers.IO) {
-            repos.checkIfUserExist()
-        }
-        return job.await()
+    suspend fun checkIfUserExist():Boolean{
+        return viewModelScope.async(Dispatchers.IO) {
+            return@async repos.checkIfUserExist()>0
+        }.await()
     }
     //<--
 

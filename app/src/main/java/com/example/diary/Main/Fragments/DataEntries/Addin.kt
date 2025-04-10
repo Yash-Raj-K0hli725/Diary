@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.diary.DataBase.DataCC
 import com.example.diary.Main.ModelV.MainVM
@@ -18,8 +20,6 @@ import java.util.Date
 class Addin : Fragment() {
     lateinit var bind: FragmentAddinBinding
     lateinit var sharedVM: MainVM
-    var Title = ""
-    var Textt = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,25 +32,37 @@ class Addin : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         bind.back.setOnClickListener {
+            confirmDairyEntry()
             findNavController().popBackStack()
         }
-    }
 
-    private fun check(): Boolean {
+        val backPressedDispatcher = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                confirmDairyEntry()
+                findNavController().popBackStack()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            backPressedDispatcher
+        )
+    }
+    private fun checkInputs(): Boolean {
         return (bind.Data.text.isNotEmpty() || bind.Title.text.isNotEmpty())
     }
 
-    override fun onDestroy() {
-        if (check()) {
-            Title = bind.Title.text.toString()
-            if (bind.Data.text.isNotEmpty()) {
-                Textt = bind.Data.text.toString()
-            }
-            val data = DataCC(0, Title, Textt, Date())
-            sharedVM.addinPermission = true
-            sharedVM.addinItem = data
+    private fun confirmDairyEntry() {
+        val navController = requireActivity().findNavController(R.id.hoster)
+        val data = if (checkInputs()) {
+            val title = bind.Title.text.toString()
+            val text = bind.Data.text.toString()
+            DataCC(0, title, text, Date())
+        } else {
+            null
         }
-        super.onDestroy()
+        navController.previousBackStackEntry?.savedStateHandle?.set("addin", data)
     }
 }

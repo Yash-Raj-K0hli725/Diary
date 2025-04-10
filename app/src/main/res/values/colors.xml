@@ -2,8 +2,20 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="soothingBlack">#252525</color>
     <color name="fade">#646262</color>
     <color name="colored">#7AD8FE</color>
     <color name="Red">#FF0000</color>
     <color name="enable">#1885F6</color>
+
+    <!--    base Theme-->
+    <color name="primary">#ABE5BC</color>
+    <color name="secondary">#CFADE8</color>
+    <color name="tertiary">#FDFAF3</color>
+    <!---->
+    <color name="card1">#FFA776</color>
+    <color name="card2">#FFD787</color>
+    <color name="card3">#FFA89A</color>
+    <color name="card4">#CFADE8</color>
+
 </resources>
