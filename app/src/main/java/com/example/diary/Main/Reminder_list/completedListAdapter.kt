@@ -21,7 +21,7 @@ class completedListAdapter:ListAdapter<DataOO,completedListAdapter.completedList
     inner class completedListVH(view: View):RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): completedListVH {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.reminder_items,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.reminder_item,parent,false)
         return completedListVH(view)
     }
 

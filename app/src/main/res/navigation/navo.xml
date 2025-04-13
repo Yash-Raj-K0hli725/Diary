@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFrameList"
-        android:name="com.example.diary.Main.Fragments.MainFrameList"
+        android:name="com.example.diary.Main.Fragments.Home.MainFrameList"
         android:label="MainFrameList"
         tools:layout="@layout/fragment_main_frame_list"
         >
@@ -83,6 +83,6 @@
     </fragment>
     <dialog
         android:id="@+id/popUp"
-        android:name="com.example.diary.Main.Fragments.popUp"
+        android:name="com.example.diary.Main.Fragments.Home.popUp"
         android:label="popUp" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.diary.Main.Fragments
+package com.example.diary.Main.Fragments.Home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,9 +9,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.diary.DataBase.DataCC
-import com.example.diary.Main.DiaryEntries.RListItems
-import com.example.diary.Main.Fragments.SwipeGestures.VPadapter
+import com.example.diary.Main.Fragments.DiaryEntries.DiaryFrag
 import com.example.diary.Main.ModelV.MainVM
 import com.example.diary.Main.Reminder_list.Reminders
 import com.example.diary.R
@@ -30,7 +30,6 @@ class MainFrameList : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         bind = DataBindingUtil.inflate(
             inflater, R.layout.fragment_main_frame_list, container, false
         )
@@ -49,11 +48,11 @@ class MainFrameList : Fragment() {
         setData()
         bind.add.setOnClickListener {
             if (bind.MFVP2.currentItem == 0) {
-                view.findNavController()
-                    .navigate(MainFrameListDirections.actionMainFrameListToAddin())
+                findNavController().navigate(MainFrameListDirections.actionMainFrameListToAddin())
             } else {
-                view.findNavController()
-                    .navigate(MainFrameListDirections.actionMainFrameListToAddReminder(null))
+                findNavController().navigate(
+                    MainFrameListDirections.actionMainFrameListToAddReminder(null)
+                )
             }
         }
 
@@ -87,7 +86,7 @@ class MainFrameList : Fragment() {
     }
 
     private fun setUpViewPager2() {
-        val vp2Adapter = VPadapter(this, listOf(RListItems(), Reminders()))
+        val vp2Adapter = VPadapter(this, listOf(DiaryFrag(), Reminders()))
         bind.MFVP2.adapter = vp2Adapter
 
         val tabIcons = listOf(R.drawable.ic_home, R.drawable.ic_notification)

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Main.customSplashActivity">
+        android:backgroundTint="@color/tertiary"
+        tools:context=".Activities.SplashActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -23,8 +26,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
-                android:text="@string/make"
                 android:letterSpacing="0.15"
+                android:text="@string/make"
                 android:textColor="#000000"
                 android:textSize="40sp"
                 android:textStyle="italic|bold"
@@ -44,11 +47,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
                     android:fontFamily="@font/inter_medium"
                     android:includeFontPadding="false"
-                    android:text="@string/your"
-                    android:layout_marginEnd="10dp"
                     android:letterSpacing="0.2"
+                    android:text="@string/your"
                     android:textColor="#000000"
                     android:textSize="40sp"
                     android:textStyle="italic|bold" />
@@ -61,12 +64,12 @@
                         android:id="@+id/splash_day"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/inter_medium"
-                        android:text="@string/day"
-                        android:letterSpacing="0.35"
                         android:layout_gravity="center_vertical"
-                        android:textColor="#B3B3B3"
+                        android:fontFamily="@font/inter_medium"
                         android:includeFontPadding="false"
+                        android:letterSpacing="0.35"
+                        android:text="@string/day"
+                        android:textColor="#B3B3B3"
                         android:textSize="40sp"
                         android:textStyle="italic|bold" />
 
@@ -75,10 +78,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_medium"
-                        android:text="@string/diary"
-                        android:letterSpacing="0.35"
-                        android:textColor="#000000"
                         android:includeFontPadding="false"
+                        android:letterSpacing="0.35"
+                        android:text="@string/diary"
+                        android:textColor="#000000"
                         android:textSize="40sp"
                         android:textStyle="italic|bold"
                         android:visibility="invisible" />
@@ -89,6 +92,7 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide1"
             android:layout_width="wrap_content"

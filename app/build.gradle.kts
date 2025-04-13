@@ -36,24 +36,22 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    dataBinding {
-        enable = true
-    }
+    dataBinding.enable = true
+    viewBinding.enable = true
 }
 
 dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-   
+
     //DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0-alpha04")
     //ROOM
     val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
-    ksp("androidx.room:room-compiler:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
-    // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
 
     //ViewModel
     val lifecycle_version = "2.8.6"

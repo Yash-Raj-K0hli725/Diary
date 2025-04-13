@@ -1,4 +1,4 @@
-package com.example.diary.Main
+package com.example.diary.Activities
 
 import android.os.Build
 import android.os.Bundle
@@ -7,7 +7,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
@@ -20,7 +19,6 @@ import com.example.diary.Main.ModelV.MainVM
 import com.example.diary.Main.ModelV.MainVMFactory
 import com.example.diary.R
 import com.example.diary.databinding.ActivityMainBinding
-import com.google.android.material.bottomappbar.BottomAppBar
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {

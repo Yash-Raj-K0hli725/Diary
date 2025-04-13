@@ -1,10 +1,9 @@
-package com.example.diary.Main.DiaryEntries
+package com.example.diary.Main.Fragments.DiaryEntries
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,11 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.diary.Main.Fragments.SwipeGestures.SGestures
 import com.example.diary.Main.ModelV.MainVM
 import com.example.diary.R
-import com.example.diary.databinding.FragmentRListItemsBinding
+import com.example.diary.databinding.FragmentDiaryEntriesBinding
 
 
-class RListItems : Fragment() {
-    private lateinit var bind: FragmentRListItemsBinding
+class DiaryFrag : Fragment() {
+    private lateinit var bind: FragmentDiaryEntriesBinding
     private lateinit var sharedVM: MainVM
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,10 +25,10 @@ class RListItems : Fragment() {
     ): View {
         //Instances
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
-        bind = DataBindingUtil.inflate(inflater, R.layout.fragment_r_list_items, container, false)
+        bind = DataBindingUtil.inflate(inflater, R.layout.fragment_diary_entries, container, false)
 
         //RecycleView
-        val Adapter = listAdapter()
+        val Adapter = EntriesListAdapter()
         //swipeTouch
         val swipeGesture = object : SGestures(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -61,11 +60,12 @@ class RListItems : Fragment() {
 
     private fun setRandomImages(): Int {
         return listOf(
+            R.drawable.thumb1,
             R.drawable.thumb2,
+            R.drawable.thumb3,
             R.drawable.thumb4,
             R.drawable.thumb5,
-            R.drawable.thumb6,
-            R.drawable.thumb7,
+            R.drawable.thumb6
         ).random()
     }
 

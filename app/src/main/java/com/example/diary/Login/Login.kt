@@ -1,14 +1,18 @@
 package com.example.diary.Login
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import android.widget.TextView.OnEditorActionListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.diary.Main.ModelV.MainVM
 import com.example.diary.R
 import com.example.diary.databinding.FragmentLoginBinding
@@ -17,6 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class Login : Fragment() {
     lateinit var bind: FragmentLoginBinding
@@ -28,11 +33,9 @@ class Login : Fragment() {
     ): View {
         bind = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
-        bind.main.visibility = View.VISIBLE
-        bind.main.animate().alpha(1f).setStartDelay(600L).setDuration(600L).start()
-        bind.welcomeSplash.animate().alpha(0f).setStartDelay(500L).setDuration(500L).withEndAction {
-            bind.welcomeSplash.visibility = View.GONE
-        }.start()
+        // bind.welcomeSplash.animate().alpha(0f).setStartDelay(500L).setDuration(500L).withEndAction {
+        //  bind.welcomeSplash.visibility = View.GONE
+        // }.start()
 
         // Inflate the layout for this fragment
         return bind.root
@@ -40,41 +43,50 @@ class Login : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        bind.confirmBtn.setOnClickListener{
-            CoroutineScope(Dispatchers.Main).launch {
-                passCheck()
-            }
-        }
-
+        bindingViews()
     }
 
-   private suspend fun passCheck() {
-        val checkFlag = lifecycleScope.async {
+    private suspend fun passCheck() {
+        val checkFlag = lifecycleScope.async(Dispatchers.IO) {
             sharedVM.fetchPassword().Pass == bind.password.text.toString()
         }
-        checkFlag.join()
         //
         if (checkFlag.await()) {
-            requireView().findNavController()
-                .navigate(R.id.action_login_to_mainFrameList)
+            findNavController().navigate(R.id.action_login_to_mainFrameList)
 
-        }
-        else if (bind.password.text!!.isEmpty()) {
+        } else if (bind.password.text!!.isEmpty()) {
             Snackbar.make(
                 requireView(),
                 "Password field cannot be empty",
                 Snackbar.LENGTH_SHORT
             ).show()
-        }
-
-        else {
+        } else {
             Snackbar.make(
                 requireView(),
                 "Incorrect Password",
-                Snackbar.LENGTH_SHORT)
+                Snackbar.LENGTH_SHORT
+            )
                 .show()
         }
+    }
+
+    private fun bindingViews() {
+
+        bind.confirm.setOnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                passCheck()
+            }
+        }
+        bind.main.animate().alpha(1f).setDuration(400).start()
+
+        bind.password.setOnEditorActionListener(object : OnEditorActionListener {
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                if (v!!.text!!.isNotEmpty() && actionId == EditorInfo.IME_ACTION_DONE){
+                    findNavController().navigate(R.id.action_login_to_mainFrameList)
+                }
+                return true
+            }
+        })
     }
 
 }

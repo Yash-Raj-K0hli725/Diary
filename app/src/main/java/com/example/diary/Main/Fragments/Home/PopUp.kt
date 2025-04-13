@@ -1,4 +1,4 @@
-package com.example.diary.Main.Fragments
+package com.example.diary.Main.Fragments.Home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -56,6 +56,6 @@ class popUp : DialogFragment() {
     }
 
     companion object {
-        const val Tag = "POPUP"
+        const val tag = "Remove Password Confirmations"
     }
 }

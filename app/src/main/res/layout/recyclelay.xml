@@ -55,7 +55,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-30dp"
-                android:background="@drawable/tag"
+                android:background="@drawable/bg_time"
                 android:fontFamily="@font/alata"
                 android:maxLength="11"
                 android:paddingStart="10dp"

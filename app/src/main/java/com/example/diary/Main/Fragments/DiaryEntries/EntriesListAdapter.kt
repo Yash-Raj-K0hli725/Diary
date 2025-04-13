@@ -1,4 +1,4 @@
-package com.example.diary.Main.DiaryEntries
+package com.example.diary.Main.Fragments.DiaryEntries
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diary.DataBase.DataCC
-import com.example.diary.Main.Fragments.MainFrameListDirections
+import com.example.diary.Main.Fragments.Home.MainFrameListDirections
 import com.example.diary.Main.ModelV.MainVM
 import com.example.diary.R
 import com.example.diary.databinding.RecyclelayBinding
 import com.google.android.material.snackbar.Snackbar
 
-class listAdapter : ListAdapter<DataCC, listAdapter.RecyclerVHolder>(UtilClass()) {
+class EntriesListAdapter : ListAdapter<DataCC, EntriesListAdapter.RecyclerVHolder>(UtilClass()) {
     //Variable
     lateinit var sharedVM: MainVM
     lateinit var context: Context

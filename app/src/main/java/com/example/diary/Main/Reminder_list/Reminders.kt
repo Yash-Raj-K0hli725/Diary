@@ -1,7 +1,6 @@
 package com.example.diary.Main.Reminder_list
 
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +25,7 @@ class Reminders : Fragment() {
         bind = DataBindingUtil.inflate(inflater,R.layout.fragment_reminders,container,false)
         shareVM = ViewModelProvider(requireActivity())[MainVM::class.java]
 
-        val listAdapter = R_listAdapter()
+        val listAdapter = ReminderListAdapter()
         bind.incompleteReminders.adapter = listAdapter
         bind.incompleteReminders.layoutManager = GridLayoutManager(requireContext(),2)
 
@@ -34,7 +33,7 @@ class Reminders : Fragment() {
         val completedListAdapter = completedListAdapter()
         bind.completeReminders.adapter = completedListAdapter
         bind.completeReminders.layoutManager = LinearLayoutManager(requireContext())
-        bind.diffComplete.visibility = View.VISIBLE
+        bind.txtCompleted.visibility = View.VISIBLE
         //
         //share's ViewModel to list
         listAdapter.getData(shareVM)

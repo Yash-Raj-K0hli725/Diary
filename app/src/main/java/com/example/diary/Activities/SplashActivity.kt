@@ -1,4 +1,4 @@
-package com.example.diary.Main
+package com.example.diary.Activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -10,15 +10,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.diary.R
-import com.example.diary.databinding.CustomlayoutActivityBinding
+import com.example.diary.databinding.ActivitySplashScreenBinding
 
 @SuppressLint("CustomSplashScreen")
-class customSplashActivity:AppCompatActivity() {
-    private lateinit var bind:CustomlayoutActivityBinding
+class SplashActivity:AppCompatActivity() {
+   lateinit var bind:ActivitySplashScreenBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        bind = DataBindingUtil.setContentView(this,R.layout.customlayout_activity)
+        bind = DataBindingUtil.setContentView(this,R.layout.activity_splash_screen)
         val dayFadeOut = android.view.animation.AnimationUtils.loadAnimation(this,R.anim.splash_day)
         bind.splashDay.startAnimation(dayFadeOut)
         Handler(Looper.getMainLooper()).postDelayed({
@@ -29,7 +29,7 @@ class customSplashActivity:AppCompatActivity() {
             splashAnim() },3000)
     }
     fun splashAnim(){
-        val intent = Intent(this,MainActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         overridePendingTransition(R.anim.fade,R.anim.fade_out)
         finish()
