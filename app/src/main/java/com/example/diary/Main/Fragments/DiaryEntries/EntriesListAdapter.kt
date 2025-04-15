@@ -21,8 +21,7 @@ class EntriesListAdapter : ListAdapter<DataCC, EntriesListAdapter.RecyclerVHolde
     //Variable
     lateinit var sharedVM: MainVM
     lateinit var context: Context
-    lateinit var bind: View
-
+    lateinit var view:View
     //Overrides
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerVHolder {
         val gView = RecyclelayBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -31,6 +30,7 @@ class EntriesListAdapter : ListAdapter<DataCC, EntriesListAdapter.RecyclerVHolde
 
     override fun onBindViewHolder(holder: RecyclerVHolder, position: Int) {
         val currentItem = getItem(position)
+        view = holder.itemView
         holder.bind.apply {
             Title.text = currentItem.Title
             Date.text = currentItem.Date.toString()
@@ -57,7 +57,7 @@ class EntriesListAdapter : ListAdapter<DataCC, EntriesListAdapter.RecyclerVHolde
             .setMessage("Are You Sure you want to delete \"${selectedItem.Title}\"")
             .setPositiveButton("Yes") { _, _ ->
                 sharedVM.deleteNotes(selectedItem)
-                Snackbar.make(bind, "Item Successfully Deleted", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(view, "Item Successfully Deleted", Snackbar.LENGTH_SHORT).show()
             }
             .setNegativeButton("No") { _, _ ->
             }.show()

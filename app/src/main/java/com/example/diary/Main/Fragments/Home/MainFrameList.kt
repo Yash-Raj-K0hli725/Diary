@@ -36,7 +36,35 @@ class MainFrameList : Fragment() {
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
 
         //ViewPager-->
-        setUpViewPager2()
+        val vp2Adapter = VPadapter(this, listOf(DiaryFrag(), Reminders()))
+        bind.MFVP2.adapter = vp2Adapter
+
+        val tabIcons = listOf(R.drawable.ic_home, R.drawable.ic_notification)
+
+        TabLayoutMediator(bind.tab, bind.MFVP2) { tabs, position ->
+            tabs.icon = ContextCompat.getDrawable(requireContext(), tabIcons[position])
+        }.attach()
+        bind.tab.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when (tab.position) {
+                    0 -> {
+                        bind.add.setImageResource(R.drawable.ic_feather)
+                    }
+
+                    1 -> {
+                        bind.add.setImageResource(R.drawable.ic_add)
+                    }
+
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
         //<--
         setGreetings()
 
@@ -55,6 +83,7 @@ class MainFrameList : Fragment() {
                 )
             }
         }
+
 
     }
 
@@ -75,7 +104,7 @@ class MainFrameList : Fragment() {
         val greetings = bind.txtGoodMorning
         val calendar = Calendar.getInstance()
         val time = Time(calendar.timeInMillis).hours
-        if (time > 20)
+        if (time > 20 || time < 4)
             greetings.setText(R.string.good_night)
         else if (time > 16)
             greetings.setText(R.string.good_evening)
@@ -85,28 +114,4 @@ class MainFrameList : Fragment() {
             greetings.setText(R.string.good_morning)
     }
 
-    private fun setUpViewPager2() {
-        val vp2Adapter = VPadapter(this, listOf(DiaryFrag(), Reminders()))
-        bind.MFVP2.adapter = vp2Adapter
-
-        val tabIcons = listOf(R.drawable.ic_home, R.drawable.ic_notification)
-        TabLayoutMediator(bind.tab, bind.MFVP2) { tabs, position ->
-            tabs.icon = ContextCompat.getDrawable(requireContext(), tabIcons[position])
-        }.attach()
-        bind.tab.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                when (tab.position) {
-                    0 -> bind.add.setImageResource(R.drawable.ic_feather)
-                    1 -> bind.add.setImageResource(R.drawable.ic_add)
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-        })
-    }
 }
