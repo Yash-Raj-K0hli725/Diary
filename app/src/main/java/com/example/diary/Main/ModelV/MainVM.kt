@@ -24,11 +24,11 @@ class MainVM(context: Context) : ViewModel() {
     val repos = Repos(context)
     lateinit var Settings: DataStore<Preferences>
 
-    //LiveData-->
+    //<--LiveData-->
     val liveSkip = MutableLiveData<Boolean>()
-    //<--
+    //<---->
 
-    //DataStore-->
+    //<--DataStore-->
     suspend fun skipBtn(value: Boolean) {
         val isSkip = preferencesKey<Boolean>("skip")
         Settings.edit {
@@ -42,8 +42,7 @@ class MainVM(context: Context) : ViewModel() {
         liveSkip.value = preference[dataKey] ?: false
         return preference[dataKey] ?: false
     }
-    //<--
-    //Notes-->
+    //<--Notes-->
     fun createNotes(notes: DataCC) {
         viewModelScope.launch(Dispatchers.IO) {
             repos.createNotes(notes)

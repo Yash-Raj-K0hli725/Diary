@@ -1,6 +1,7 @@
 package com.example.diary.Main.Fragments.Home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,21 +84,16 @@ class MainFrameList : Fragment() {
                 )
             }
         }
-
-
     }
 
     private fun setData() {
         val navController = requireActivity().findNavController(R.id.hoster)
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<DataCC>("addin")
-            ?.observe(
-                viewLifecycleOwner
-            ) {
+            ?.observe(viewLifecycleOwner) {
                 it?.let {
                     sharedVM.createNotes(it)
                 }
             }
-
     }
 
     private fun setGreetings() {

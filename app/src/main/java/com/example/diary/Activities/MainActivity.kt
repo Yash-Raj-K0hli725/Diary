@@ -1,5 +1,7 @@
 package com.example.diary.Activities
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
@@ -25,16 +27,19 @@ class MainActivity : AppCompatActivity() {
     lateinit var navFinder: NavController
     lateinit var bind: ActivityMainBinding
     private lateinit var sharedVM: MainVM
+
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         //Initialization of dataBinding
         bind = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(bind.main){v,inset->
+        ViewCompat.setOnApplyWindowInsetsListener(bind.main) { v, inset ->
             val navBar = inset.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
             bind.main.updatePadding(bottom = navBar)
             inset
         }
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         //Initialization of ViewModel
         sharedVM = ViewModelProvider(this, MainVMFactory(this))[MainVM::class.java]
         sharedVM.Settings = createDataStore(name = "Settings")
@@ -54,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (!navFinder.popBackStack()) {
-                        finish()
+                    finish()
                 }
             }
         })
@@ -65,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         val navGraph = navFinder.navInflater.inflate(R.navigation.navo)
         if (sharedVM.isSkipped()) {
             navGraph.setStartDestination(R.id.mainFrameList)
-        } else if (sharedVM.checkIfUserExist()){
+        } else if (sharedVM.checkIfUserExist()) {
             navGraph.setStartDestination(R.id.login)
         } else {
             //nothing as Default

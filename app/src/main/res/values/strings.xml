@@ -30,4 +30,6 @@
     <string name="good_night">Good Night!</string>
     <string name="hi">Hi</string>
     <string name="last_notes">Last notes</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
 </resources>

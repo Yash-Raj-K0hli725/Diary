@@ -19,5 +19,11 @@
         <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
     </style>
 
+    <style name="customOptionMenu" parent="@style/Widget.Material3.PopupMenu">
+        <item name="cornerRadius">10dp</item>
+        <item name="cornerFamily">rounded</item>
+        <item name="backgroundTint">@color/card4</item>
+    </style>
+
     <style name="Theme.Diary" parent="Base.Theme.Diary" />
 </resources>
