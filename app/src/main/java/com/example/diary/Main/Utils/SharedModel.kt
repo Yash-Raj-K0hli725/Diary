@@ -1,4 +1,4 @@
-package com.example.diary.Main.ModelV
+package com.example.diary.Main.Utils
 
 import android.annotation.SuppressLint
 import android.app.Application

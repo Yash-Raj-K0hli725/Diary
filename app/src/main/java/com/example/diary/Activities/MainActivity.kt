@@ -17,7 +17,7 @@ import androidx.datastore.preferences.createDataStore
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.example.diary.Main.ModelV.SharedModel
+import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch

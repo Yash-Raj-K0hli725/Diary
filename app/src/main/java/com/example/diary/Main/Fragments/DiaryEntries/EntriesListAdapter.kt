@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diary.DataBase.DataCC
 import com.example.diary.Main.Fragments.Home.MainFrameListDirections
-import com.example.diary.Main.ModelV.SharedModel
+import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.EntriesImageHeaderBinding
 import com.example.diary.databinding.EntryItemsBinding

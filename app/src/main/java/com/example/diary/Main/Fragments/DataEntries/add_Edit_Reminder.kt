@@ -8,9 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.example.diary.DataBase.DataOO
-import com.example.diary.Main.ModelV.SharedModel
+import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.FragmentAddReminderBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

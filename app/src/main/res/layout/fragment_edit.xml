@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="17dp"
         android:fontFamily="@font/alata"
-        android:hint="@string/title"
+        android:hint="@string/title_hint"
         android:textColor="@color/white"
         android:textColorHint="#BDBCBC"
         android:textSize="28sp"

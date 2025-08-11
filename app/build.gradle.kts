@@ -66,6 +66,9 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.lottie)
     //<----->
+//    <--Encrypted shared pref-->
+    implementation("androidx.security:security-crypto:1.1.0-alpha03")
+//    <---->
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
