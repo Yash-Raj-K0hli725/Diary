@@ -43,6 +43,8 @@ android {
 dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    //blurview
+    implementation("com.github.Dimezis:BlurView:version-2.0.5")
 
     //DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0-alpha04")

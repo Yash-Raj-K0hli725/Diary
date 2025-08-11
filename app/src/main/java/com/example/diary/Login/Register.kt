@@ -21,39 +21,29 @@ class Register : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bind = DataBindingUtil.inflate(inflater,R.layout.fragment_register,container,false)
+
         sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
-        bind.regInpPassword.hint = "Password"
-        bind.regInpDiaryName.hint = "Name your diary"
+        bind = FragmentRegisterBinding.inflate(inflater,container,false )
+        bind.apply {
+            blurView.setupWith(requireActivity().findViewById(android.R.id.content)).setBlurRadius(5f).setBlurAutoUpdate(true)
+        }
         // Inflate the layout for this fragment
         return bind.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bind.btnDone.setOnClickListener{
-            if(fieldCheck()){
-                registerUser()
-                findNavController().navigate(RegisterDirections.actionRegisterToLogin())
-            }
-            else{
-                bind.regPasswordLayout.apply {
-                    error = "Fields cannot be empty"
-                    Handler().postDelayed({error = null},2000)
-                }
-            }
-        }
     }
 
-    private fun registerUser(){
-            val name = bind.regInpDiaryName.text.toString().trim()
-            val password = bind.regInpPassword.text.toString().trim()
-            val registerDetails = LoginData(password,name,Math.random().toInt())
-            sharedVM.signUpUser(registerDetails)
-    }
-
-    private fun fieldCheck():Boolean{
-        return bind.regInpPassword.text!!.isNotEmpty() && bind.regInpDiaryName.text!!.isNotEmpty()
-    }
+//    private fun registerUser(){
+//            val name = bind.regInpDiaryName.text.toString().trim()
+//            val password = bind.regInpPassword.text.toString().trim()
+//            val registerDetails = LoginData(password,name,Math.random().toInt())
+//            sharedVM.signUpUser(registerDetails)
+//    }
+//
+//    private fun fieldCheck():Boolean{
+//        return bind.regInpPassword.text!!.isNotEmpty() && bind.regInpDiaryName.text!!.isNotEmpty()
+//    }
 
 }

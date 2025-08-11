@@ -32,4 +32,8 @@
     <string name="last_notes">Last notes</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
+    <string name="welcome">Welcome</string>
+    <string name="welcome_subtitle">Give your diary a name and secure it with a password</string>
+    <string name="name">Diary Name</string>
+    <string name="password">Password</string>
 </resources>
