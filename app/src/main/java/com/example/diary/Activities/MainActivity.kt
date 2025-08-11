@@ -7,18 +7,17 @@ import android.os.Bundle
 import android.view.WindowInsets
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
 import androidx.datastore.preferences.createDataStore
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.example.diary.Main.ModelV.MainVM
-import com.example.diary.Main.ModelV.MainVMFactory
+import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
@@ -26,7 +25,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     lateinit var navFinder: NavController
     lateinit var bind: ActivityMainBinding
-    private lateinit var sharedVM: MainVM
+    private val sharedVM: SharedModel by viewModels()
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,8 +40,7 @@ class MainActivity : AppCompatActivity() {
         }
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         //Initialization of ViewModel
-        sharedVM = ViewModelProvider(this, MainVMFactory(this))[MainVM::class.java]
-        sharedVM.Settings = createDataStore(name = "Settings")
+         sharedVM.Settings = createDataStore(name = "Settings")
         //setting Navigation StartDestination_Programmatically
         navFinder = findNavController(R.id.hoster)
         //Creating DataStore

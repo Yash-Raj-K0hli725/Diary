@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diary.DataBase.DataOO
-import com.example.diary.Main.ModelV.MainVM
+import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import java.sql.Time
 
 class completedListAdapter:ListAdapter<DataOO,completedListAdapter.completedListVH>(completeddiffUtil()) {
-    lateinit var shareVM: MainVM
+    lateinit var shareVM: SharedModel
     inner class completedListVH(view: View):RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): completedListVH {
@@ -47,7 +47,7 @@ class completedListAdapter:ListAdapter<DataOO,completedListAdapter.completedList
         shareVM.updateReminder(reminder)
     }
 
-    fun getData(vm: MainVM) {
+    fun getData(vm: SharedModel) {
         this.shareVM = vm
 
     }

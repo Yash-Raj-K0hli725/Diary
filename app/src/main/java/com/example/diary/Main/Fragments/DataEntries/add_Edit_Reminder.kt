@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.example.diary.DataBase.DataOO
-import com.example.diary.Main.ModelV.MainVM
+import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.FragmentAddReminderBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -22,7 +22,7 @@ import java.util.Calendar
 
 class add_Edit_Reminder : BottomSheetDialogFragment() {
     lateinit var bind: FragmentAddReminderBinding
-    lateinit var sharedVM: MainVM
+     private val sharedVM: SharedModel by viewModels()
     var data: DataOO? = null
     private var updatePermission = false
     override fun onCreateView(
@@ -30,7 +30,6 @@ class add_Edit_Reminder : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         bind = DataBindingUtil.inflate(inflater, R.layout.fragment_add_reminder, container, false)
-        sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
         data = add_Edit_ReminderArgs.fromBundle(requireArguments()).data
 
         if (data != null) {

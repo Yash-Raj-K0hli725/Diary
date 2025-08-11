@@ -1,19 +1,18 @@
 package com.example.diary.Main.Fragments.Home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.diary.DataBase.DataCC
 import com.example.diary.Main.Fragments.DiaryEntries.DiaryFrag
-import com.example.diary.Main.ModelV.MainVM
+import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.Main.Reminder_list.Reminders
 import com.example.diary.R
 import com.example.diary.databinding.FragmentMainFrameListBinding
@@ -25,7 +24,7 @@ import java.util.Calendar
 
 class MainFrameList : Fragment() {
     lateinit var bind: FragmentMainFrameListBinding
-    lateinit var sharedVM: MainVM
+     private val sharedVM: SharedModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +33,7 @@ class MainFrameList : Fragment() {
         bind = DataBindingUtil.inflate(
             inflater, R.layout.fragment_main_frame_list, container, false
         )
-        sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
+
 
         //ViewPager-->
         val vp2Adapter = VPadapter(this, listOf(DiaryFrag(), Reminders()))

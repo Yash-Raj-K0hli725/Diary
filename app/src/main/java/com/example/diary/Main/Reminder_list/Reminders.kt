@@ -10,20 +10,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diary.DataBase.DataOO
-import com.example.diary.Main.ModelV.MainVM
+import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.FragmentRemindersBinding
 
 class Reminders : Fragment() {
 
     lateinit var bind:FragmentRemindersBinding
-    lateinit var shareVM:MainVM
+    lateinit var shareVM:SharedModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         bind = DataBindingUtil.inflate(inflater,R.layout.fragment_reminders,container,false)
-        shareVM = ViewModelProvider(requireActivity())[MainVM::class.java]
+        shareVM = ViewModelProvider(requireActivity())[SharedModel::class.java]
 
         val listAdapter = ReminderListAdapter()
         bind.incompleteReminders.adapter = listAdapter

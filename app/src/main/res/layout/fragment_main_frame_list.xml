@@ -183,7 +183,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/nu_bottomAppBarLay"
             app:rippleColor="@color/white"
-            app:shapeAppearance="@style/ThemeOverlay.Material3.FloatingActionButton.Primary" />
+            app:shapeAppearance="@style/ThemeOverlay.Material3.FloatingActionButton.Primary"
+            app:tint="@color/soothingBlack" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

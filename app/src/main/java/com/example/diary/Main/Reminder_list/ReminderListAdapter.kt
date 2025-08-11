@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diary.DataBase.DataOO
 import com.example.diary.Main.Fragments.Home.MainFrameListDirections
-import com.example.diary.Main.ModelV.MainVM
+import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.databinding.ReminderItemBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +17,7 @@ import java.sql.Time
 
 class ReminderListAdapter : ListAdapter<DataOO, ReminderListAdapter.listVH>(diffUtil()) {
 
-    lateinit var shareVM: MainVM
+    lateinit var shareVM: SharedModel
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): listVH {
         return listVH(
@@ -58,7 +58,7 @@ class ReminderListAdapter : ListAdapter<DataOO, ReminderListAdapter.listVH>(diff
         shareVM.updateReminder(reminder)
     }
 
-    fun getData(vm: MainVM) {
+    fun getData(vm: SharedModel) {
         this.shareVM = vm
     }
 

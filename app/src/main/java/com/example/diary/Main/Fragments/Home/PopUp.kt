@@ -6,16 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.diary.Main.ModelV.MainVM
+import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.FragmentPopUpBinding
 import kotlinx.coroutines.launch
 
 
 class popUp : DialogFragment() {
-    lateinit var sharedVM: MainVM
+     private val sharedVM: SharedModel by viewModels()
     lateinit var bind: FragmentPopUpBinding
 
     override fun onCreateView(
@@ -26,7 +26,6 @@ class popUp : DialogFragment() {
             // Remove default background
             setBackgroundDrawableResource(android.R.color.transparent)
         }
-        sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
         bind = DataBindingUtil.inflate(inflater, R.layout.fragment_pop_up, container, false)
 
         // Inflate the layout for this fragment

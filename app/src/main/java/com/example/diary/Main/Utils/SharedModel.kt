@@ -1,14 +1,14 @@
-package com.example.diary.Main.ModelV
+package com.example.diary.Main.Utils
 
-import android.content.Context
-import android.util.Log
+import android.annotation.SuppressLint
+import android.app.Application
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.preferencesKey
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.diary.DataBase.DataCC
 import com.example.diary.DataBase.DataOO
@@ -17,10 +17,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
-class MainVM(context: Context) : ViewModel() {
+class SharedModel(application: Application) : AndroidViewModel(application) {
+    @SuppressLint("StaticFieldLeak")
+    private val context = application.applicationContext
     val repos = Repos(context)
     lateinit var Settings: DataStore<Preferences>
 
@@ -42,6 +43,7 @@ class MainVM(context: Context) : ViewModel() {
         liveSkip.value = preference[dataKey] ?: false
         return preference[dataKey] ?: false
     }
+
     //<--Notes-->
     fun createNotes(notes: DataCC) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -79,14 +81,14 @@ class MainVM(context: Context) : ViewModel() {
         }
     }
 
-    fun readReminder():LiveData<List<DataOO>>{
+    fun readReminder(): LiveData<List<DataOO>> {
         return repos.readReminder()
     }
     //<--
 
     //LoginInfo-->
 
-    fun signUpUser(signUpDetails:LoginData){
+    fun signUpUser(signUpDetails: LoginData) {
         viewModelScope.launch {
             repos.signUp(signUpDetails)
         }
@@ -105,9 +107,9 @@ class MainVM(context: Context) : ViewModel() {
         }
     }
 
-    suspend fun checkIfUserExist():Boolean{
+    suspend fun checkIfUserExist(): Boolean {
         return viewModelScope.async(Dispatchers.IO) {
-            return@async repos.checkIfUserExist()>0
+            return@async repos.checkIfUserExist() > 0
         }.await()
     }
     //<--

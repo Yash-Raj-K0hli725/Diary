@@ -1,4 +1,4 @@
-package com.example.diary.Main.ModelV
+package com.example.diary.Main.Utils
 
 import android.content.Context
 import androidx.lifecycle.LiveData
