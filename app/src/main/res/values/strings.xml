@@ -13,7 +13,7 @@
     <string name="register">Register</string>
     <string name="having_trouble">Having trouble?</string>
     <string name="set_a_password">Set a Password</string>
-    <string name="skip"><![CDATA[SKIP >>>]]></string>
+    <string name="skip">Skip...</string>
     <string name="set_reminder">set reminder</string>
     <string name="done">DONE</string>
     <string name="back">Back</string>
@@ -39,4 +39,7 @@
     <string name="register_footer">Your thoughts, your space, your story</string>
     <string name="register_title">Create Your Diary</string>
     <string name="title_hint">Today\'s story..</string>
+    <string name="login_welcome">Welcome Back</string>
+    <string name="unlock_diary">Unlock Diary</string>
+    <string name="enter_your_pin_to_continue_writing">Enter your PIN to continue writing</string>
 </resources>

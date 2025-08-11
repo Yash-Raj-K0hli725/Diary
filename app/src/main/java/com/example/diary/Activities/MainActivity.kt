@@ -31,16 +31,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        //Initialization of dataBinding
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         bind = DataBindingUtil.setContentView(this, R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(bind.main) { v, inset ->
             val navBar = inset.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
             bind.main.updatePadding(bottom = navBar)
             inset
         }
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
         //Initialization of ViewModel
-         sharedVM.Settings = createDataStore(name = "Settings")
+        sharedVM.Settings = createDataStore(name = "Settings")
         //setting Navigation StartDestination_Programmatically
         navFinder = findNavController(R.id.hoster)
         //Creating DataStore
@@ -64,14 +64,13 @@ class MainActivity : AppCompatActivity() {
         //end
     }
 
-    suspend fun checkNavGraph() {
+    private fun checkNavGraph() {
         val navGraph = navFinder.navInflater.inflate(R.navigation.navo)
-        if (sharedVM.isSkipped()) {
-            navGraph.setStartDestination(R.id.mainFrameList)
-        } else if (sharedVM.checkIfUserExist()) {
+//        if (sharedVM.isSkipped()) {
+//            navGraph.setStartDestination(R.id.mainFrameList)
+//        } else
+        if (sharedVM.checkIfUserExist()) {
             navGraph.setStartDestination(R.id.login)
-        } else {
-            //nothing as Default
         }
         navFinder.setGraph(navGraph, null)
     }

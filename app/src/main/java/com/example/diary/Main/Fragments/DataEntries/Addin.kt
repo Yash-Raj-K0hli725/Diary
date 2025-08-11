@@ -33,7 +33,6 @@ class Addin : Fragment() {
             val cDate = cal.get(Calendar.DATE).toString()
             val cMonth = SimpleDateFormat("MMMM", Locale.getDefault()).format(cal.time)
             date.text = "$cMonth $cDate"
-
             day.text = SimpleDateFormat("EEEE", Locale.getDefault()).format(cal.time)
         }
         return bind.root
@@ -43,13 +42,13 @@ class Addin : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         bind.back.setOnClickListener {
-            confirmDairyEntry()
+//            confirmDairyEntry()
             findNavController().popBackStack()
         }
 
         val backPressedDispatcher = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                confirmDairyEntry()
+//                confirmDairyEntry()
                 findNavController().popBackStack()
             }
         }
@@ -60,19 +59,19 @@ class Addin : Fragment() {
         )
     }
 
-    private fun checkInputs(): Boolean {
-        return (bind.data.text.isNotEmpty() || bind.Title.text.isNotEmpty())
-    }
+//    private fun checkInputs(): Boolean {
+//        return (bind.data.text.isNotEmpty() || bind.Title.text.isNotEmpty())
+//    }
 
-    private fun confirmDairyEntry() {
-        val navController = requireActivity().findNavController(R.id.hoster)
-        val data = if (checkInputs()) {
-            val title = bind.Title.text.toString()
-            val text = bind.data.text.toString()
-            DataCC(0, title, text, Date())
-        } else {
-            null
-        }
-        navController.previousBackStackEntry?.savedStateHandle?.set("addin", data)
-    }
+//    private fun confirmDairyEntry() {
+//        val navController = requireActivity().findNavController(R.id.hoster)
+//        val data = if (checkInputs()) {
+//            val title = bind.Title.text.toString()
+//            val text = bind.data.text.toString()
+//            DataCC(0, title, text, Date())
+//        } else {
+//            null
+//        }
+//        navController.previousBackStackEntry?.savedStateHandle?.set("addin", data)
+//    }
 }

@@ -14,7 +14,6 @@ import com.example.diary.DataBase.DataCC
 import com.example.diary.DataBase.DataOO
 import com.example.diary.DataBase.LoginData
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -22,6 +21,9 @@ import kotlinx.coroutines.launch
 class SharedModel(application: Application) : AndroidViewModel(application) {
     @SuppressLint("StaticFieldLeak")
     private val context = application.applicationContext
+    private val userSession: UserSession by lazy {
+        UserSession(context)
+    }
     val repos = Repos(context)
     lateinit var Settings: DataStore<Preferences>
 
@@ -94,11 +96,8 @@ class SharedModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    suspend fun fetchPassword(): LoginData {
-        val job = viewModelScope.async(Dispatchers.IO) {
-            repos.fetchPassword()
-        }
-        return job.await()
+    fun fetchPassword(): String {
+        return userSession.getUserPassword()
     }
 
     fun removeLoginInfo() {
@@ -107,10 +106,8 @@ class SharedModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    suspend fun checkIfUserExist(): Boolean {
-        return viewModelScope.async(Dispatchers.IO) {
-            return@async repos.checkIfUserExist() > 0
-        }.await()
+    fun checkIfUserExist(): Boolean {
+        return userSession.getUserPassword().isNotEmpty()
     }
     //<--
 

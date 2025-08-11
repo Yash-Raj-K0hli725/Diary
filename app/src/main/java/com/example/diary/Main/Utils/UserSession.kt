@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 
-class UserData(context: Context) {
-    private val masterKey = MasterKey.Builder(context).build()
+class UserSession(context: Context) {
+    private val masterKey = MasterKey.Builder(context)
+        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+        .build()
     private val pref = EncryptedSharedPreferences.create(
         context, PREF_NAME, masterKey,
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,

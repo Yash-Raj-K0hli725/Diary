@@ -43,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7"
+        app:layout_constraintVertical_bias="0.75"
         app:strokeColor="#80FFFFFF">
 
         <eightbitlab.com.blurview.BlurView
@@ -126,6 +126,7 @@
                     android:id="@+id/inp_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:imeOptions="actionNext"
                     android:paddingVertical="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -166,6 +167,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
+                    android:imeOptions="actionDone"
                     android:paddingVertical="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -180,12 +182,27 @@
                 android:layoutDirection="rtl"
                 android:text="Start Writing"
                 android:textColor="@color/card4"
+                android:textStyle="bold"
                 app:icon="@drawable/ic_arrow_forward"
                 app:iconTint="@color/card4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/password" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:fontFamily="@font/poppins"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="6dp"
+                android:text="@string/skip"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/done_button" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
