@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.diary.DataBase.LoginData
 import com.example.diary.Main.ModelV.SharedModel
@@ -33,8 +34,7 @@ class SetPassword : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         bind.Rbutton.setOnClickListener {
-
-            CoroutineScope(Dispatchers.Main).launch {
+            lifecycleScope.launch(Dispatchers.Main) {
                 if (checkRegister()) {
                     registerUser()
 

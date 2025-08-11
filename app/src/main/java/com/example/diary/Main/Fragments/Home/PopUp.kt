@@ -27,7 +27,6 @@ class popUp : DialogFragment() {
             // Remove default background
             setBackgroundDrawableResource(android.R.color.transparent)
         }
-
         bind = DataBindingUtil.inflate(inflater, R.layout.fragment_pop_up, container, false)
 
         // Inflate the layout for this fragment
