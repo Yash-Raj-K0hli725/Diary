@@ -20,7 +20,7 @@
 
         <TextView
             android:id="@+id/date"
-            style="@style/TextAppearance.MaterialComponents.Headline6"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
@@ -51,7 +51,7 @@
             android:background="@android:color/transparent"
             android:scaleX="0.6"
             android:scaleY="0.6"
-            android:src="@drawable/ic_back"
+            android:src="@drawable/ic_arrow_back"
             app:layout_constraintBottom_toBottomOf="@id/day"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.05"
@@ -68,41 +68,50 @@
             android:hint="@string/title_hint"
             android:textColor="@color/white"
             android:textColorHint="#B3FFFFFF"
+            android:textCursorDrawable="@color/white"
             android:textSize="28sp"
-            app:layout_constraintBottom_toTopOf="@id/TextCard"
+            app:layout_constraintBottom_toTopOf="@id/card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/guide" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/TextCard"
+        <LinearLayout
+            android:id="@+id/card"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
-            app:cardCornerRadius="30dp"
-            app:cardElevation="10dp"
+            android:background="@drawable/bottom_sheet_bg"
+            android:elevation="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Title">
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/Title"
+            android:padding="17dp"
+            >
 
-            <EditText
-                android:id="@+id/Data"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/alata"
-                android:gravity="start"
-                android:hint="@string/how_s_your_day"
-                android:inputType="textMultiLine"
-                android:textColor="#252525"
-                android:textSize="20sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="How are you feeling?"
+                android:fontFamily="@font/poppins"
+                />
 
 
-        </androidx.cardview.widget.CardView>
+
+<!--            <EditText-->
+<!--                android:id="@+id/data"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:fontFamily="@font/alata"-->
+<!--                android:gravity="start"-->
+<!--                android:hint="@string/how_s_your_day"-->
+<!--                android:inputType="textMultiLine"-->
+<!--                android:textColor="#252525"-->
+<!--                android:textSize="20sp" />-->
+        </LinearLayout>
+
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide"

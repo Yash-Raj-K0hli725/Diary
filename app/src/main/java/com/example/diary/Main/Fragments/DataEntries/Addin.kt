@@ -28,7 +28,6 @@ class Addin : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         bind = DataBindingUtil.inflate(inflater, R.layout.fragment_addin, container, false)
-//        bind.Timern.text = Date().toString()
         val cal = Calendar.getInstance()
         bind.apply {
             val cDate = cal.get(Calendar.DATE).toString()
@@ -62,14 +61,14 @@ class Addin : Fragment() {
     }
 
     private fun checkInputs(): Boolean {
-        return (bind.Data.text.isNotEmpty() || bind.Title.text.isNotEmpty())
+        return (bind.data.text.isNotEmpty() || bind.Title.text.isNotEmpty())
     }
 
     private fun confirmDairyEntry() {
         val navController = requireActivity().findNavController(R.id.hoster)
         val data = if (checkInputs()) {
             val title = bind.Title.text.toString()
-            val text = bind.Data.text.toString()
+            val text = bind.data.text.toString()
             DataCC(0, title, text, Date())
         } else {
             null
