@@ -36,4 +36,7 @@
     <string name="welcome_subtitle">Give your diary a name and secure it with a password</string>
     <string name="name">Diary Name</string>
     <string name="password">Password</string>
+    <string name="register_subtitle">Start your personal journey today</string>
+    <string name="register_footer">Your thoughts, your space, your story</string>
+    <string name="register_title">Create Your Diary</string>
 </resources>

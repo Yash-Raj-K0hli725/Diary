@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/tertiary"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/tertiary">
 
     <ImageView
         android:layout_width="match_parent"
@@ -165,6 +165,7 @@
                     android:id="@+id/inp_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:inputType="textPassword"
                     android:paddingVertical="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -189,25 +190,37 @@
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
+        android:id="@+id/header"
+        style="@style/TextAppearance.MaterialComponents.Headline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/alata"
-        android:text="Create Your Diary"
-        android:textColor="@color/card4"
         android:elevation="10dp"
+        android:fontFamily="@font/poppins"
+        android:text="@string/register_title"
+        android:textColor="@color/card4"
         android:textStyle="bold"
-        style="@style/TextAppearance.MaterialComponents.Headline5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.15" />
+
+    <TextView
+        style="@style/TextAppearance.MaterialComponents.Body2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:text="@string/register_subtitle"
+        android:textColor="@color/card4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alata"
-        android:text="Your thoughts, your space, your story"
+        android:text="@string/register_footer"
         android:textColor="#CCFFFFFF"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
