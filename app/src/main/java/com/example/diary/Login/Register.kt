@@ -7,22 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.diary.DataBase.LoginData
-import com.example.diary.Main.ModelV.MainVM
+import com.example.diary.Main.ModelV.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.FragmentRegisterBinding
 
 class Register : Fragment() {
-    lateinit var bind:FragmentRegisterBinding
-    lateinit var sharedVM:MainVM
+    lateinit var bind: FragmentRegisterBinding
+    private val sharedVM: SharedModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bind = DataBindingUtil.inflate(inflater,R.layout.fragment_register,container,false)
-        sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
+        bind = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
         bind.regInpPassword.hint = "Password"
         bind.regInpDiaryName.hint = "Name your diary"
         // Inflate the layout for this fragment
@@ -31,28 +31,27 @@ class Register : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bind.btnDone.setOnClickListener{
-            if(fieldCheck()){
+        bind.btnDone.setOnClickListener {
+            if (fieldCheck()) {
                 registerUser()
                 findNavController().navigate(RegisterDirections.actionRegisterToLogin())
-            }
-            else{
+            } else {
                 bind.regPasswordLayout.apply {
                     error = "Fields cannot be empty"
-                    Handler().postDelayed({error = null},2000)
+                    Handler().postDelayed({ error = null }, 2000)
                 }
             }
         }
     }
 
-    private fun registerUser(){
-            val name = bind.regInpDiaryName.text.toString().trim()
-            val password = bind.regInpPassword.text.toString().trim()
-            val registerDetails = LoginData(password,name,Math.random().toInt())
-            sharedVM.signUpUser(registerDetails)
+    private fun registerUser() {
+        val name = bind.regInpDiaryName.text.toString().trim()
+        val password = bind.regInpPassword.text.toString().trim()
+        val registerDetails = LoginData(password, name, Math.random().toInt())
+        sharedVM.signUpUser(registerDetails)
     }
 
-    private fun fieldCheck():Boolean{
+    private fun fieldCheck(): Boolean {
         return bind.regInpPassword.text!!.isNotEmpty() && bind.regInpDiaryName.text!!.isNotEmpty()
     }
 

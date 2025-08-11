@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diary.DataBase.DataCC
 import com.example.diary.Main.Fragments.Home.MainFrameListDirections
-import com.example.diary.Main.ModelV.MainVM
+import com.example.diary.Main.ModelV.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.EntriesImageHeaderBinding
 import com.example.diary.databinding.EntryItemsBinding
 import com.google.android.material.snackbar.Snackbar
 
-class EntriesListAdapter(private val sharedVM: MainVM) :
+class EntriesListAdapter(private val sharedVM: SharedModel) :
     ListAdapter<DataCC, RecyclerView.ViewHolder>(UtilClass()) {
         lateinit var view: View
     override fun getItemViewType(position: Int): Int {
@@ -89,8 +89,8 @@ class EntriesListAdapter(private val sharedVM: MainVM) :
 
     inner class ItemsViewHolder(private val bind: EntryItemsBinding) :
         RecyclerView.ViewHolder(bind.root) {
-        lateinit var vModel: MainVM
-        fun bind(currentItem: DataCC, vModel: MainVM) {
+        lateinit var vModel: SharedModel
+        fun bind(currentItem: DataCC, vModel: SharedModel) {
             this.vModel = vModel
             bind.apply {
                 Title.text = currentItem.Title

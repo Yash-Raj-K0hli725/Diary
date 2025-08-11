@@ -1,16 +1,16 @@
 package com.example.diary.Login
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.diary.DataBase.LoginData
-import com.example.diary.Main.ModelV.MainVM
+import com.example.diary.Main.ModelV.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.FragmentSetPasswordBinding
 import kotlinx.coroutines.CoroutineScope
@@ -19,14 +19,12 @@ import kotlinx.coroutines.launch
 
 class SetPassword : Fragment() {
     lateinit var bind: FragmentSetPasswordBinding
-    lateinit var sharedVM: MainVM
+     private val sharedVM: SharedModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         bind = DataBindingUtil.inflate(inflater, R.layout.fragment_set_password, container, false)
-        sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
-
         // Inflate the layout for this fragment
         return bind.root
     }

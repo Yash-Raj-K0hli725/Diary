@@ -6,22 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.diary.Main.ModelV.MainVM
+import com.example.diary.Main.ModelV.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.FragmentDiaryEntriesBinding
 
 class DiaryFrag : Fragment() {
     private lateinit var bind: FragmentDiaryEntriesBinding
-    private lateinit var sharedVM: MainVM
+    private  val sharedVM: SharedModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         //Instances
-        sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
-        bind = DataBindingUtil.inflate(inflater, R.layout.fragment_diary_entries, container, false)
+        bind = FragmentDiaryEntriesBinding.inflate(inflater,container,false)
         val entriesAdapter = EntriesListAdapter(sharedVM)
         //RecycleView
         val manager = LinearLayoutManager(requireContext())

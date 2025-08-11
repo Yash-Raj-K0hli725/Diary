@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.diary.DataBase.DataCC
-import com.example.diary.Main.ModelV.MainVM
+import com.example.diary.Main.ModelV.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.FragmentAddinBinding
 import java.util.Date
@@ -19,13 +20,12 @@ import java.util.Date
 
 class Addin : Fragment() {
     lateinit var bind: FragmentAddinBinding
-    lateinit var sharedVM: MainVM
+     private val sharedVM: SharedModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         bind = DataBindingUtil.inflate(inflater, R.layout.fragment_addin, container, false)
-        sharedVM = ViewModelProvider(requireActivity())[MainVM::class.java]
         bind.Timern.text = Date().toString()
         return bind.root
     }
