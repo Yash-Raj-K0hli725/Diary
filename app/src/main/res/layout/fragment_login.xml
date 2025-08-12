@@ -118,8 +118,8 @@
                 app:boxCornerRadiusTopEnd="20dp"
                 app:boxCornerRadiusTopStart="20dp"
                 app:boxStrokeColor="@color/trans_white"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:cursorColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/name_header">
 
@@ -130,9 +130,9 @@
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:textColor="@color/white"
                     android:paddingVertical="12dp"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
@@ -195,4 +195,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.99" />
+<!--todo add animation if want to-->
+<!--    <FrameLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+
+<!--        ><ImageView-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="100dp" />-->
+<!--    </FrameLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
