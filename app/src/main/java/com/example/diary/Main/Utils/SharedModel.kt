@@ -21,31 +21,10 @@ import kotlinx.coroutines.launch
 class SharedModel(application: Application) : AndroidViewModel(application) {
     @SuppressLint("StaticFieldLeak")
     private val context = application.applicationContext
-    private val userSession: UserSession by lazy {
+    val userSession: UserSession by lazy {
         UserSession(context)
     }
     val repos = Repos(context)
-    lateinit var Settings: DataStore<Preferences>
-
-    //<--LiveData-->
-    val liveSkip = MutableLiveData<Boolean>()
-    //<---->
-
-    //<--DataStore-->
-    suspend fun skipBtn(value: Boolean) {
-        val isSkip = preferencesKey<Boolean>("skip")
-        Settings.edit {
-            it[isSkip] = value
-        }
-    }
-
-    suspend fun isSkipped(): Boolean {
-        val dataKey = preferencesKey<Boolean>("skip")
-        val preference = Settings.data.first()
-        liveSkip.value = preference[dataKey] ?: false
-        return preference[dataKey] ?: false
-    }
-
     //<--Notes-->
     fun createNotes(notes: DataCC) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -85,29 +64,6 @@ class SharedModel(application: Application) : AndroidViewModel(application) {
 
     fun readReminder(): LiveData<List<DataOO>> {
         return repos.readReminder()
-    }
-    //<--
-
-    //LoginInfo-->
-
-    fun signUpUser(signUpDetails: LoginData) {
-        viewModelScope.launch {
-            repos.signUp(signUpDetails)
-        }
-    }
-
-    fun fetchPassword(): String {
-        return userSession.getUserPassword()
-    }
-
-    fun removeLoginInfo() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repos.removeLogin()
-        }
-    }
-
-    fun checkIfUserExist(): Boolean {
-        return userSession.getUserPassword().isNotEmpty()
     }
     //<--
 

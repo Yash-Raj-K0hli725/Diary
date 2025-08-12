@@ -38,12 +38,7 @@ class MainActivity : AppCompatActivity() {
             bind.main.updatePadding(bottom = navBar)
             inset
         }
-
-        //Initialization of ViewModel
-        sharedVM.Settings = createDataStore(name = "Settings")
-        //setting Navigation StartDestination_Programmatically
         navFinder = findNavController(R.id.hoster)
-        //Creating DataStore
 
         lifecycleScope.launch {
             checkNavGraph()
@@ -65,12 +60,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkNavGraph() {
+        //setting Navigation StartDestination_Programmatically
         val navGraph = navFinder.navInflater.inflate(R.navigation.navo)
-//        if (sharedVM.isSkipped()) {
-//            navGraph.setStartDestination(R.id.mainFrameList)
-//        } else
-        if (sharedVM.checkIfUserExist()) {
-            navGraph.setStartDestination(R.id.login)
+        if (sharedVM.userSession.isLoggedIn()) {
+            if (sharedVM.userSession.isPasswordRequired()) {
+                navGraph.setStartDestination(R.id.login)
+            } else {
+                navGraph.setStartDestination(R.id.mainFrameList)
+            }
         }
         navFinder.setGraph(navGraph, null)
     }

@@ -36,22 +36,22 @@ class popUp : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         bind.confirmAction.setOnClickListener {
             lifecycleScope.launch{
-                removePassword()
+//                removePassword()
             }
         }
     }
 
     private suspend fun removePassword() {
-        val loggedDetail = sharedVM.fetchPassword()
-        val inputPassword = bind.removePassInput.text.toString()
-        if (inputPassword == loggedDetail.Pass) {
-            sharedVM.removeLoginInfo()
-            sharedVM.skipBtn(true)
-            sharedVM.liveSkip.value = true
-            dismiss()
-        } else {
-            //wrongPassword
-        }
+//        val loggedDetail = sharedVM.fetchPassword()
+//        val inputPassword = bind.removePassInput.text.toString()
+//        if (inputPassword == loggedDetail.Pass) {
+//            sharedVM.removeLoginInfo()
+//            sharedVM.skipBtn(true)
+//            sharedVM.liveSkip.value = true
+//            dismiss()
+//        } else {
+//            //wrongPassword
+//        }
     }
 
     companion object {

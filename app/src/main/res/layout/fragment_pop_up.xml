@@ -35,7 +35,7 @@
                     android:background="@drawable/pass_back"
                     android:textColor="@color/white"
                     android:fontFamily="@font/alata"
-                    android:hint="@string/pass"
+                    android:hint="@string/password"
                     android:textColorHint="@color/white"
                     android:textStyle="italic|bold"
                     android:paddingStart="17dp"

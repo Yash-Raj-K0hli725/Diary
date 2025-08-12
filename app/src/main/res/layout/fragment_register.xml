@@ -118,6 +118,7 @@
                 app:boxCornerRadiusTopEnd="20dp"
                 app:boxCornerRadiusTopStart="20dp"
                 app:boxStrokeColor="@color/trans_white"
+                app:cursorColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/name_header">
@@ -127,7 +128,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:imeOptions="actionNext"
-                    android:paddingVertical="12dp" />
+                    android:maxLines="1"
+                    android:paddingVertical="12dp"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -156,6 +159,7 @@
                 app:boxCornerRadiusTopEnd="20dp"
                 app:boxCornerRadiusTopStart="20dp"
                 app:boxStrokeColor="@color/trans_white"
+                app:cursorColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/password_header"
@@ -166,9 +170,11 @@
                     android:id="@+id/inp_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textPassword"
                     android:imeOptions="actionDone"
-                    android:paddingVertical="12dp" />
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:paddingVertical="12dp"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
@@ -191,6 +197,7 @@
                 app:layout_constraintTop_toBottomOf="@id/password" />
 
             <TextView
+                android:id="@+id/skip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="17dp"

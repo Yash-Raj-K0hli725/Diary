@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_17sdp"
                 android:fontFamily="@font/alata"
-                android:text="PIN"
+                android:text="@string/password"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -119,6 +119,7 @@
                 app:boxCornerRadiusTopStart="20dp"
                 app:boxStrokeColor="@color/trans_white"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:cursorColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/name_header">
 
@@ -127,11 +128,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:imeOptions="actionDone"
-                    android:paddingVertical="12dp" />
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:paddingVertical="12dp"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/done_button"
+                android:id="@+id/btn_done"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"

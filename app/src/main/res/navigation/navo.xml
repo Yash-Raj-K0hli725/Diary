@@ -80,6 +80,9 @@
             app:destination="@id/login"
             app:popUpTo="@id/register"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_register_to_mainFrameList"
+            app:destination="@id/mainFrameList" />
     </fragment>
     <dialog
         android:id="@+id/popUp"

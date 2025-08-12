@@ -5,11 +5,12 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 
 class UserSession(context: Context) {
-    private val masterKey = MasterKey.Builder(context)
-        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-        .build()
+    private val masterKey =
+        MasterKey.Builder(context).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
     private val pref = EncryptedSharedPreferences.create(
-        context, PREF_NAME, masterKey,
+        context,
+        PREF_NAME,
+        masterKey,
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
@@ -44,7 +45,18 @@ class UserSession(context: Context) {
     }
 
     fun isPasswordRequired(): Boolean {
-        return pref.getBoolean(USE_PASS, false)
+        return pref.getBoolean(USE_PASS, true)
+    }
+
+    fun userLogin(isLoggedIn: Boolean) {
+        edit.apply {
+            putBoolean(IS_LOGGED_IN, isLoggedIn)
+            apply()
+        }
+    }
+
+    fun isLoggedIn(): Boolean {
+        return pref.getBoolean(IS_LOGGED_IN, false)
     }
 
 
@@ -53,5 +65,6 @@ class UserSession(context: Context) {
         private const val PASS = "PASSWORD"
         private const val USE_PASS = "USER_PASSWORD"
         private const val DIARY_NAME = "DIARY_NAME"
+        private const val IS_LOGGED_IN = "LOGGED_IN"
     }
 }

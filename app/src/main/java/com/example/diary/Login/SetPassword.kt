@@ -35,25 +35,25 @@ class SetPassword : Fragment() {
         bind.Rbutton.setOnClickListener {
             lifecycleScope.launch(Dispatchers.Main) {
                 if (checkRegister()) {
-                    registerUser()
+//                    registerUser()
                 }
             }
         }
 
     }
 
-    suspend fun registerUser() {
-        val diaryName = bind.diaryName.text.toString()
-        val password = bind.rPass.text.toString()
-        val loginInfo = LoginData(password, diaryName, 102)
-        val registerUser = CoroutineScope(Dispatchers.IO).launch {
-            sharedVM.signUpUser(loginInfo)
-            sharedVM.skipBtn(false)
-        }
-        registerUser.join()
-        view?.findNavController()?.popBackStack()
-
-    }
+//    suspend fun registerUser() {
+//        val diaryName = bind.diaryName.text.toString()
+//        val password = bind.rPass.text.toString()
+//        val loginInfo = LoginData(password, diaryName, 102)
+//        val registerUser = CoroutineScope(Dispatchers.IO).launch {
+//            sharedVM.signUpUser(loginInfo)
+//            sharedVM.skipBtn(false)
+//        }
+//        registerUser.join()
+//        view?.findNavController()?.popBackStack()
+//
+//    }
 
     fun checkRegister(): Boolean {
         return bind.rPass.text!!.isNotEmpty() && bind.diaryName.text!!.isNotEmpty()
