@@ -1,6 +1,8 @@
 package com.example.diary.Login
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -41,6 +43,8 @@ class Login : Fragment() {
                 }
                 true
             }
+            inpPassword.requestFocus()
+
         }
     }
 

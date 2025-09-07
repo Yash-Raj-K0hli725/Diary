@@ -8,7 +8,7 @@ import java.sql.Time
 
 @Parcelize
 @Entity
-data class DataOO(
+data class Reminder(
     @PrimaryKey(autoGenerate = true)
     val id:Int,
     val Title:String,

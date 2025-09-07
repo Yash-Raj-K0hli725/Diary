@@ -52,7 +52,7 @@
         tools:layout="@layout/fragment_edit">
         <argument
             android:name="Item"
-            app:argType="com.example.diary.DataBase.DataCC" />
+            app:argType="com.example.diary.DataBase.DiaryEntry" />
     </fragment>
     <dialog
         android:id="@+id/addReminder"
@@ -61,7 +61,7 @@
         tools:layout="@layout/fragment_add_reminder">
         <argument
             android:name="data"
-            app:argType="com.example.diary.DataBase.DataOO"
+            app:argType="com.example.diary.DataBase.Reminder"
             app:nullable="true" />
     </dialog>
 
@@ -86,6 +86,6 @@
     </fragment>
     <dialog
         android:id="@+id/popUp"
-        android:name="com.example.diary.Main.Fragments.Home.popUp"
+        android:name="com.example.diary.Main.Fragments.Home.PopUp"
         android:label="popUp" />
 </navigation>

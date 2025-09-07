@@ -8,23 +8,20 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.diary.DataBase.DataCC
 import com.example.diary.Main.Fragments.DiaryEntries.DiaryFrag
-import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.Main.Reminder_list.Reminders
+import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.FragmentMainFrameListBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
 import java.sql.Time
-import java.util.Calendar
 
 class MainFrameList : Fragment() {
     lateinit var bind: FragmentMainFrameListBinding
-     private val sharedVM: SharedModel by viewModels()
+    private val sharedVM: SharedModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,9 +31,8 @@ class MainFrameList : Fragment() {
             inflater, R.layout.fragment_main_frame_list, container, false
         )
 
-
         //ViewPager-->
-        val vp2Adapter = VPadapter(this, listOf(DiaryFrag(), Reminders()))
+        val vp2Adapter = VPAdapter(this, listOf(DiaryFrag(), Reminders()))
         bind.MFVP2.adapter = vp2Adapter
 
         val tabIcons = listOf(R.drawable.ic_home, R.drawable.ic_notification)
@@ -73,7 +69,6 @@ class MainFrameList : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setData()
         bind.add.setOnClickListener {
             if (bind.MFVP2.currentItem == 0) {
                 findNavController().navigate(MainFrameListDirections.actionMainFrameListToAddin())
@@ -85,20 +80,9 @@ class MainFrameList : Fragment() {
         }
     }
 
-    private fun setData() {
-        val navController = requireActivity().findNavController(R.id.hoster)
-        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<DataCC>("addin")
-            ?.observe(viewLifecycleOwner) {
-                it?.let {
-                    sharedVM.createNotes(it)
-                }
-            }
-    }
-
     private fun setGreetings() {
         val greetings = bind.txtGoodMorning
-        val calendar = Calendar.getInstance()
-        val time = Time(calendar.timeInMillis).hours
+        val time = Time(System.currentTimeMillis()).hours
         if (time > 20 || time < 4)
             greetings.setText(R.string.good_night)
         else if (time > 16)

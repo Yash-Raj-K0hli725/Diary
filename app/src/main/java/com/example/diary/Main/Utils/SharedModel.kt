@@ -2,19 +2,15 @@ package com.example.diary.Main.Utils
 
 import android.annotation.SuppressLint
 import android.app.Application
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.preferencesKey
+import android.graphics.drawable.Drawable
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.diary.DataBase.DataCC
-import com.example.diary.DataBase.DataOO
-import com.example.diary.DataBase.LoginData
+import com.example.diary.DataBase.DiaryEntry
+import com.example.diary.DataBase.Reminder
+import com.example.diary.R
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
@@ -25,24 +21,30 @@ class SharedModel(application: Application) : AndroidViewModel(application) {
         UserSession(context)
     }
     val repos = Repos(context)
+    var thumbnail: Drawable? = null
+
+    init {
+        getThumbnail()
+    }
+
     //<--Notes-->
-    fun createNotes(notes: DataCC) {
+    fun makeDiaryEntry(note: DiaryEntry) {
         viewModelScope.launch(Dispatchers.IO) {
-            repos.createNotes(notes)
+            repos.createNotes(note)
         }
     }
 
-    fun readNotes(): LiveData<List<DataCC>> {
+    fun readNotes(): LiveData<List<DiaryEntry>> {
         return repos.readNotes()
     }
 
-    fun updateNotes(notes: DataCC) {
+    fun updateNotes(notes: DiaryEntry) {
         viewModelScope.launch(Dispatchers.IO) {
             repos.updateNotes(notes)
         }
     }
 
-    fun deleteNotes(notes: DataCC) {
+    fun deleteNotes(notes: DiaryEntry) {
         viewModelScope.launch(Dispatchers.IO) {
             repos.deleteNotes(notes)
         }
@@ -50,22 +52,34 @@ class SharedModel(application: Application) : AndroidViewModel(application) {
     //<--
 
     //Reminders-->
-    fun insertReminder(reminder: DataOO) {
+    fun insertReminder(reminder: Reminder) {
         viewModelScope.launch(Dispatchers.IO) {
             repos.insertReminder(reminder)
         }
     }
 
-    fun updateReminder(reminder: DataOO) {
+    fun updateReminder(reminder: Reminder) {
         viewModelScope.launch(Dispatchers.IO) {
             repos.updateReminder(reminder)
         }
     }
 
-    fun readReminder(): LiveData<List<DataOO>> {
+    fun readReminder(): LiveData<List<Reminder>> {
         return repos.readReminder()
     }
     //<--
+
+    private fun getThumbnail() {
+        val image = listOf(
+            R.drawable.thumb1,
+            R.drawable.thumb2,
+            R.drawable.thumb3,
+            R.drawable.thumb4,
+            R.drawable.thumb5,
+            R.drawable.thumb6
+        ).random()
+        thumbnail = ContextCompat.getDrawable(context, image)!!
+    }
 
 
 }

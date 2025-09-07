@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.diary.DataBase.DataOO
+import com.example.diary.DataBase.Reminder
 import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.R
 import kotlinx.coroutines.CoroutineScope
@@ -16,16 +16,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.sql.Time
 
-class completedListAdapter:ListAdapter<DataOO,completedListAdapter.completedListVH>(completeddiffUtil()) {
-    lateinit var shareVM: SharedModel
-    inner class completedListVH(view: View):RecyclerView.ViewHolder(view)
+class CTaskAdapter :
+    ListAdapter<Reminder, CTaskAdapter.CReminderViewHolder>(DIFF_UTIL) {
+    private lateinit var shareVM: SharedModel
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): completedListVH {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.reminder_item,parent,false)
-        return completedListVH(view)
+    inner class CReminderViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CReminderViewHolder {
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.reminder_item, parent, false)
+        return CReminderViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: completedListVH, position: Int) {
+    override fun onBindViewHolder(holder: CReminderViewHolder, position: Int) {
         val currentItem = getItem(position)
         holder.itemView.apply {
             val checkBox = findViewById<CheckBox>(R.id.checkBox)
@@ -39,9 +42,10 @@ class completedListAdapter:ListAdapter<DataOO,completedListAdapter.completedList
         }
     }
 
-     fun updateCheckBox(currentItem:DataOO){
-        val condi:Boolean = !currentItem.Condition.toBoolean()
-        val reminder = DataOO(currentItem.id,currentItem.Title,condi.toString(),
+    fun updateCheckBox(currentItem: Reminder) {
+        val condi: Boolean = !currentItem.Condition.toBoolean()
+        val reminder = Reminder(
+            currentItem.id, currentItem.Title, condi.toString(),
             Time(System.currentTimeMillis())
         )
         shareVM.updateReminder(reminder)
@@ -53,12 +57,13 @@ class completedListAdapter:ListAdapter<DataOO,completedListAdapter.completedList
     }
 
 }
-class completeddiffUtil: DiffUtil.ItemCallback<DataOO>(){
-    override fun areItemsTheSame(oldItem: DataOO, newItem: DataOO): Boolean {
+
+private val DIFF_UTIL = object : DiffUtil.ItemCallback<Reminder>() {
+    override fun areItemsTheSame(oldItem: Reminder, newItem: Reminder): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: DataOO, newItem: DataOO): Boolean {
+    override fun areContentsTheSame(oldItem: Reminder, newItem: Reminder): Boolean {
         return oldItem.Condition == newItem.Condition
     }
 }

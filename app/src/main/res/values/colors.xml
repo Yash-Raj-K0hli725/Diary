@@ -18,5 +18,6 @@
     <color name="card2">#FFD787</color>
     <color name="card3">#FFA89A</color>
     <color name="card4">#CFADE8</color>
+    <color name="translucent_grey">#337E7E7E</color>
 
 </resources>

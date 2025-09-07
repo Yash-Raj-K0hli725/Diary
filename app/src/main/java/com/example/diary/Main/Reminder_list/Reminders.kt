@@ -9,28 +9,28 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.diary.DataBase.DataOO
+import com.example.diary.DataBase.Reminder
 import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.FragmentRemindersBinding
 
 class Reminders : Fragment() {
 
-    lateinit var bind:FragmentRemindersBinding
-    lateinit var shareVM:SharedModel
+    private lateinit var bind: FragmentRemindersBinding
+    private lateinit var shareVM: SharedModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bind = DataBindingUtil.inflate(inflater,R.layout.fragment_reminders,container,false)
+        bind = DataBindingUtil.inflate(inflater, R.layout.fragment_reminders, container, false)
         shareVM = ViewModelProvider(requireActivity())[SharedModel::class.java]
 
         val listAdapter = ReminderListAdapter()
         bind.incompleteReminders.adapter = listAdapter
-        bind.incompleteReminders.layoutManager = GridLayoutManager(requireContext(),2)
+        bind.incompleteReminders.layoutManager = GridLayoutManager(requireContext(), 2)
 
         //
-        val completedListAdapter = completedListAdapter()
+        val completedListAdapter = CTaskAdapter()
         bind.completeReminders.adapter = completedListAdapter
         bind.completeReminders.layoutManager = LinearLayoutManager(requireContext())
         bind.txtCompleted.visibility = View.VISIBLE
@@ -39,30 +39,30 @@ class Reminders : Fragment() {
         listAdapter.getData(shareVM)
         completedListAdapter.getData(shareVM)
 
-        shareVM.readReminder().observe(viewLifecycleOwner){reminders->
-           listAdapter.submitList(checkIncompletion(reminders))
-           completedListAdapter.submitList(checkCompletion(reminders))
+        shareVM.readReminder().observe(viewLifecycleOwner) { reminders ->
+            listAdapter.submitList(incompleteTasks(reminders))
+            completedListAdapter.submitList(completedTasks(reminders))
         }
 
         // Inflate the layout for this fragment
         return bind.root
     }
 
-    private fun checkCompletion(data:List<DataOO>): List<DataOO> {
-        var list:List<DataOO> = emptyList()
-        for (i in data){
-            if(i.Condition.toBoolean()){
-                list = list+i
+    private fun completedTasks(data: List<Reminder>): List<Reminder> {
+        var list: List<Reminder> = emptyList()
+        for (i in data) {
+            if (i.Condition.toBoolean()) {
+                list = list + i
             }
         }
         return list
     }
 
-    private fun checkIncompletion(data:List<DataOO>): List<DataOO> {
-        var list:List<DataOO> = emptyList()
-        for (i in data){
-            if(!i.Condition.toBoolean()){
-                list = list+i
+    private fun incompleteTasks(data: List<Reminder>): List<Reminder> {
+        var list: List<Reminder> = emptyList()
+        for (i in data) {
+            if (!i.Condition.toBoolean()) {
+                list = list + i
             }
         }
         return list

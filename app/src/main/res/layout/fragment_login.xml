@@ -130,6 +130,7 @@
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:maxLines="1"
+                    android:gravity="center"
                     android:paddingVertical="12dp"
                     android:singleLine="true"
                     android:textColor="@color/white" />
@@ -195,13 +196,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.99" />
-<!--todo add animation if want to-->
-<!--    <FrameLayout-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
+    <!--todo add animation if want to-->
+    <!--    <FrameLayout-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
 
-<!--        ><ImageView-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="100dp" />-->
-<!--    </FrameLayout>-->
+    <!--        ><ImageView-->
+    <!--            android:layout_width="100dp"-->
+    <!--            android:layout_height="100dp" />-->
+    <!--    </FrameLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
