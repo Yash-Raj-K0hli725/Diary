@@ -2,9 +2,7 @@ package com.example.diary.Activities
 
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
-import android.os.Build
 import android.os.Bundle
-import android.view.WindowInsets
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -13,14 +11,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
-import androidx.datastore.preferences.createDataStore
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.ActivityMainBinding
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     lateinit var navFinder: NavController
@@ -40,13 +35,7 @@ class MainActivity : AppCompatActivity() {
         }
         navFinder = findNavController(R.id.hoster)
 
-        lifecycleScope.launch {
-            checkNavGraph()
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        }
+        checkNavGraph()
 
         //BackPress_Handing
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -66,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             if (sharedVM.userSession.isPasswordRequired()) {
                 navGraph.setStartDestination(R.id.login)
             } else {
-                navGraph.setStartDestination(R.id.mainFrameList)
+                navGraph.setStartDestination(R.id.home)
             }
         }
         navFinder.setGraph(navGraph, null)

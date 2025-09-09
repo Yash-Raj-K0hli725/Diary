@@ -6,24 +6,23 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [DiaryEntry::class,Reminder::class,LoginData::class], version = 1)
+@Database(entities = [Table_Diary::class,Reminder::class,LoginData::class], version = 1)
 @TypeConverters(Converters::class)
-abstract class EdataBase : RoomDatabase() {
-    abstract fun EDBDao(): EntriesDao
+abstract class EDataBase : RoomDatabase() {
+    abstract fun eDao(): EntriesDao
 
     companion object {
         @Volatile
-        private var Instance: EdataBase? = null
+        private var Instance: EDataBase? = null
 
-        fun getData(context: Context): EdataBase {
-
+        fun getInstance(context: Context): EDataBase {
             if (Instance == null) {
                 synchronized(this)
                 {
                     if (Instance == null) {
                         Instance = Room.databaseBuilder(
-                            context.applicationContext, EdataBase::class.java, "prePOP"
-                        ).createFromAsset("prePopulated.db").build()
+                            context.applicationContext, EDataBase::class.java, "mDatabase.db"
+                        ).build()
                     }
                 }
             }

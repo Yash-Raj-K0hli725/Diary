@@ -8,7 +8,6 @@ import android.os.Looper
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.example.diary.R
 import com.example.diary.databinding.ActivitySplashScreenBinding
 

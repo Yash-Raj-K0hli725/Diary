@@ -8,11 +8,10 @@ import java.util.Date
 
 @Parcelize
 @Entity
-data class DiaryEntry(
+data class Table_Diary(
     val title: String,
     val text: String,
     val date: Date,
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0
+    @PrimaryKey(autoGenerate = true) val id: Int = 0
 ) : Parcelable
 

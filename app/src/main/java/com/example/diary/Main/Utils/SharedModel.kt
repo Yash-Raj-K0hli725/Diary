@@ -3,12 +3,14 @@ package com.example.diary.Main.Utils
 import android.annotation.SuppressLint
 import android.app.Application
 import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.diary.DataBase.DiaryEntry
 import com.example.diary.DataBase.Reminder
+import com.example.diary.DataBase.Table_Diary
 import com.example.diary.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,29 +24,37 @@ class SharedModel(application: Application) : AndroidViewModel(application) {
     }
     val repos = Repos(context)
     var thumbnail: Drawable? = null
+    private val _headerHeight = MutableLiveData<Int>()
+    val headerHeight :LiveData<Int> get() = _headerHeight
+
+    fun setHeaderHeight(height: Int) {
+        Log.e("Yash","height at sharedVM: $height")
+        _headerHeight.value = height
+    }
 
     init {
         getThumbnail()
+        _headerHeight.value = 0
     }
 
     //<--Notes-->
-    fun makeDiaryEntry(note: DiaryEntry) {
+    fun makeDiaryEntry(note: Table_Diary) {
         viewModelScope.launch(Dispatchers.IO) {
             repos.createNotes(note)
         }
     }
 
-    fun readNotes(): LiveData<List<DiaryEntry>> {
+    fun readNotes(): LiveData<List<Table_Diary>> {
         return repos.readNotes()
     }
 
-    fun updateNotes(notes: DiaryEntry) {
+    fun updateNotes(notes: Table_Diary) {
         viewModelScope.launch(Dispatchers.IO) {
             repos.updateNotes(notes)
         }
     }
 
-    fun deleteNotes(notes: DiaryEntry) {
+    fun deleteNotes(notes: Table_Diary) {
         viewModelScope.launch(Dispatchers.IO) {
             repos.deleteNotes(notes)
         }

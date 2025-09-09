@@ -2,28 +2,28 @@ package com.example.diary.Main.Utils
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.example.diary.DataBase.DiaryEntry
+import com.example.diary.DataBase.Table_Diary
 import com.example.diary.DataBase.Reminder
-import com.example.diary.DataBase.EdataBase
+import com.example.diary.DataBase.EDataBase
 import com.example.diary.DataBase.LoginData
 
 class Repos(context: Context) {
 
-    private val dataBase = EdataBase.getData(context).EDBDao()
+    private val dataBase = EDataBase.getInstance(context).eDao()
 
-    suspend fun createNotes(notes: DiaryEntry){
+    suspend fun createNotes(notes: Table_Diary){
         dataBase.InsertData(notes)
     }
 
-    fun readNotes():LiveData<List<DiaryEntry>>{
+    fun readNotes():LiveData<List<Table_Diary>>{
         return dataBase.getDataInfo()
     }
 
-    suspend fun updateNotes(notes:DiaryEntry){
+    suspend fun updateNotes(notes:Table_Diary){
         dataBase.UpdateData(notes)
     }
 
-    suspend fun deleteNotes(notes: DiaryEntry){
+    suspend fun deleteNotes(notes: Table_Diary){
         dataBase.DeleteData(notes)
     }
 

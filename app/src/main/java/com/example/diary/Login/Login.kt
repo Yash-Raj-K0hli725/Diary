@@ -56,7 +56,7 @@ class Login : Fragment() {
         }
         val password = bind.inpPassword.text.toString().trim()
         if (sharedVM.userSession.getUserPassword().equals(password, false)) {
-            findNavController().navigate(LoginDirections.actionLoginToMainFrameList())
+            findNavController().navigate(LoginDirections.actionLoginToHome())
         } else {
             Toast.makeText(requireContext(), "Wrong password", Toast.LENGTH_SHORT).show()
         }

@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.diary.DataBase.DiaryEntry
+import com.example.diary.DataBase.Table_Diary
 import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.FragmentEditBinding
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 class Edit : Fragment() {
     private lateinit var bind: FragmentEditBinding
     private val sharedVM: SharedModel by viewModels()
-    private lateinit var cItem: DiaryEntry
+    private lateinit var cItem: Table_Diary
     private lateinit var args: EditArgs
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,10 +51,10 @@ class Edit : Fragment() {
 
     override fun onDestroy() {
         if (check()) {
-            val texto = bind.Data.text.toString()
-            val titlo = bind.Titlee.text.toString()
-            val idd = cItem.id
-            val notes = DiaryEntry(titlo, texto, cItem.date,idd)
+            val mText = bind.Data.text.toString()
+            val mTitle = bind.Titlee.text.toString()
+            val mId = cItem.id
+            val notes = Table_Diary(mTitle, mText, cItem.date,mId)
             CoroutineScope(Dispatchers.IO).launch {
                 sharedVM.updateNotes(notes)
             }

@@ -7,15 +7,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.diary.DataBase.DiaryEntry
+import com.example.diary.DataBase.Table_Diary
 import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.EntriesImageHeaderBinding
 import com.example.diary.databinding.EntryItemsBinding
 import com.google.android.material.snackbar.Snackbar
 
-class EntriesListAdapter(viewModel: SharedModel, private val onEdit: (DiaryEntry) -> Unit) :
-    ListAdapter<DiaryEntry, RecyclerView.ViewHolder>(UtilClass()) {
+class EntriesListAdapter(viewModel: SharedModel, private val onEdit: (Table_Diary) -> Unit) :
+    ListAdapter<Table_Diary, RecyclerView.ViewHolder>(UtilClass()) {
     lateinit var view: View
     private val sharedModel = viewModel
 
@@ -76,7 +76,7 @@ class EntriesListAdapter(viewModel: SharedModel, private val onEdit: (DiaryEntry
 
     inner class ItemsViewHolder(private val bind: EntryItemsBinding) :
         RecyclerView.ViewHolder(bind.root) {
-        fun initView(cItem: DiaryEntry) {
+        fun initView(cItem: Table_Diary) {
             bind.apply {
                 Title.text = cItem.title
                 Date.text = cItem.date.toString()
@@ -126,7 +126,7 @@ class EntriesListAdapter(viewModel: SharedModel, private val onEdit: (DiaryEntry
             ).random()
         }
 
-        private fun confirmDelete(sItem: DiaryEntry) {
+        private fun confirmDelete(sItem: Table_Diary) {
             val title = sItem.title.ifEmpty { sItem.text }
             AlertDialog.Builder(bind.root.context).setTitle("Delete")
                 .setMessage("Are You Sure you want to delete \"$title\"")
@@ -146,12 +146,12 @@ class EntriesListAdapter(viewModel: SharedModel, private val onEdit: (DiaryEntry
 }
 
 //Comparator class
-private class UtilClass : DiffUtil.ItemCallback<DiaryEntry>() {
-    override fun areItemsTheSame(oldItem: DiaryEntry, newItem: DiaryEntry): Boolean {
+private class UtilClass : DiffUtil.ItemCallback<Table_Diary>() {
+    override fun areItemsTheSame(oldItem: Table_Diary, newItem: Table_Diary): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: DiaryEntry, newItem: DiaryEntry): Boolean {
+    override fun areContentsTheSame(oldItem: Table_Diary, newItem: Table_Diary): Boolean {
         return oldItem.text == newItem.text
     }
 }
