@@ -64,7 +64,7 @@
         app:layout_constraintTop_toBottomOf="@id/day">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inp_Title"
+            android:id="@+id/inp_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,20 +15,20 @@ import com.example.diary.databinding.EntriesImageHeaderBinding
 import com.example.diary.databinding.EntryItemsBinding
 import com.google.android.material.snackbar.Snackbar
 
-class EntriesListAdapter(viewModel: SharedModel, private val onEdit: (Table_Diary) -> Unit) :
+class DiaryAdapter(viewModel: SharedModel, private val onEdit: (Table_Diary) -> Unit) :
     ListAdapter<Table_Diary, RecyclerView.ViewHolder>(UtilClass()) {
     lateinit var view: View
     private val sharedModel = viewModel
 
     override fun getItemViewType(position: Int): Int {
         return when (position) {
-            0 -> IMAGEHEADER
+            0 -> IMAGE_HEADER
             else -> 1
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == IMAGEHEADER) {
+        return if (viewType == IMAGE_HEADER) {
             ImageHeaderViewHolder(
                 EntriesImageHeaderBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -36,7 +37,7 @@ class EntriesListAdapter(viewModel: SharedModel, private val onEdit: (Table_Diar
                 )
             )
         } else {
-            ItemsViewHolder(
+            DiaryViewHolder(
                 EntryItemsBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
@@ -45,12 +46,12 @@ class EntriesListAdapter(viewModel: SharedModel, private val onEdit: (Table_Diar
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (position == IMAGEHEADER) {
+        if (position == IMAGE_HEADER) {
             (holder as ImageHeaderViewHolder).bind()
         } else {
             view = holder.itemView
             val currentItem = getItem(position)
-            (holder as ItemsViewHolder).initView(currentItem)
+            (holder as DiaryViewHolder).initView(currentItem)
         }
 
     }
@@ -74,20 +75,20 @@ class EntriesListAdapter(viewModel: SharedModel, private val onEdit: (Table_Diar
         }
     }
 
-    inner class ItemsViewHolder(private val bind: EntryItemsBinding) :
+    inner class DiaryViewHolder(private val bind: EntryItemsBinding) :
         RecyclerView.ViewHolder(bind.root) {
         fun initView(cItem: Table_Diary) {
             bind.apply {
-                Title.text = cItem.title
-                Date.text = cItem.date.toString()
+                title.text = cItem.title
+                date.text = cItem.date.toString()
                 notesThumbnail.setBackgroundResource(randomThumbBackgroundColor())
                 notesThumbnail.setImageResource(randomNotesThumb())
                 if (cItem.text.isNotEmpty()) {
-                    bind.Data.text = cItem.text
+                    bind.data.text = cItem.text
                 }
                 card.setOnClickListener {
-                    options.apply {
-                        visibility = if (visibility == View.GONE) {
+                    optionFlow.apply {
+                        visibility = if (isGone) {
                             menu.rotation = 270f
                             View.VISIBLE
                         } else {
@@ -97,7 +98,7 @@ class EntriesListAdapter(viewModel: SharedModel, private val onEdit: (Table_Diar
                     }
                 }
                 delete.setOnClickListener { confirmDelete(cItem) }
-                edit.setOnClickListener {onEdit.invoke(cItem)}
+                edit.setOnClickListener { onEdit.invoke(cItem) }
             }
         }
 
@@ -141,7 +142,7 @@ class EntriesListAdapter(viewModel: SharedModel, private val onEdit: (Table_Diar
     }
 
     companion object {
-        private const val IMAGEHEADER = 0
+        private const val IMAGE_HEADER = 0
     }
 }
 
@@ -152,6 +153,6 @@ private class UtilClass : DiffUtil.ItemCallback<Table_Diary>() {
     }
 
     override fun areContentsTheSame(oldItem: Table_Diary, newItem: Table_Diary): Boolean {
-        return oldItem.text == newItem.text
+        return (oldItem.title == newItem.title) && (oldItem.text == newItem.text)
     }
 }

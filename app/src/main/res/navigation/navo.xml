@@ -49,7 +49,7 @@
         android:id="@+id/edit"
         android:name="com.example.diary.Main.Fragments.DataEntries.Edit"
         android:label="Edit"
-        tools:layout="@layout/fragment_edit">
+        tools:layout="@layout/fragment_addin">
         <argument
             android:name="Item"
             app:argType="com.example.diary.DataBase.Table_Diary" />

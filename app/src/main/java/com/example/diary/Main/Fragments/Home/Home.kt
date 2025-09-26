@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.diary.Main.Fragments.DiaryEntries.DiaryFrag
 import com.example.diary.Main.Reminder_list.Reminders
@@ -92,5 +93,15 @@ class Home : Fragment() {
             greetings.setText(R.string.good_afternoon)
         else
             greetings.setText(R.string.good_morning)
+    }
+}
+//<--viewpager adapter-->
+class VPAdapter(fragment: Fragment, private val fragList: List<Fragment>) : FragmentStateAdapter(fragment) {
+    override fun getItemCount(): Int {
+        return fragList.size
+    }
+
+    override fun createFragment(position: Int): Fragment {
+        return fragList[position]
     }
 }

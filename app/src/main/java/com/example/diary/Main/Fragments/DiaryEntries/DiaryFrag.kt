@@ -1,7 +1,6 @@
 package com.example.diary.Main.Fragments.DiaryEntries
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +17,8 @@ import java.util.Date
 class DiaryFrag : Fragment() {
     private lateinit var bind: FragmentDiaryEntriesBinding
     private val sharedVM: SharedModel by viewModels()
-    private val mAdapter: EntriesListAdapter by lazy {
-        EntriesListAdapter(sharedVM) { sItem ->
+    private val mAdapter: DiaryAdapter by lazy {
+        DiaryAdapter(sharedVM) { sItem ->
             findNavController().navigate(HomeDirections.actionMainFrameListToEdit(sItem))
         }
     }
