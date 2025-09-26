@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/home"
-        android:name="com.example.diary.Main.Fragments.Home.MainFrameList"
+        android:name="com.example.diary.Main.Fragments.Home.Home"
         android:label="MainFrameList"
         tools:layout="@layout/fragment_main_frame_list"
         >

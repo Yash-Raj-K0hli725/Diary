@@ -22,7 +22,7 @@ class Reminders : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bind = DataBindingUtil.inflate(inflater, R.layout.fragment_reminders, container, false)
+        bind = FragmentRemindersBinding.inflate(inflater, container, false)
         shareVM = ViewModelProvider(requireActivity())[SharedModel::class.java]
 
         val listAdapter = ReminderListAdapter()

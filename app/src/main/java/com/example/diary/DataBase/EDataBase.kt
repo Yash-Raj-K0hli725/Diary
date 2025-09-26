@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Table_Diary::class,Reminder::class,LoginData::class], version = 1)
+@Database(entities = [Table_Diary::class, Reminder::class, LoginData::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class EDataBase : RoomDatabase() {
     abstract fun eDao(): EntriesDao

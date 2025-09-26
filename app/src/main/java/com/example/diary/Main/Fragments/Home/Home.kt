@@ -1,5 +1,6 @@
 package com.example.diary.Main.Fragments.Home
 
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,9 +9,9 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -24,7 +25,7 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
 import java.sql.Time
 
-class MainFrameList : Fragment() {
+class Home : Fragment() {
     lateinit var bind: FragmentMainFrameListBinding
     private val sharedModel: SharedModel by viewModels()
     private val viewPager: ViewPager2 by lazy {
@@ -35,11 +36,8 @@ class MainFrameList : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bind = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_main_frame_list, container, false
-        )
-        //ViewPager-->
-        //<--
+        bind = FragmentMainFrameListBinding.inflate(inflater, container, false)
+        //<--ViewPager-->
         setGreetings()
 
         return bind.root
@@ -54,13 +52,7 @@ class MainFrameList : Fragment() {
             v.layoutParams = mParams
             insets
         }
-        bind.headerImage.post {
-            val headerHeight = bind.headerImage.height + 37
-            Log.e("Yash","height at post: $headerHeight")
-            sharedModel.setHeaderHeight(headerHeight)
-        }
-
-        val vp2Adapter = VPAdapter(this@MainFrameList, listOf(DiaryFrag(), Reminders()))
+        val vp2Adapter = VPAdapter(this@Home, listOf(DiaryFrag(), Reminders()))
         viewPager.adapter = vp2Adapter
 
         val tabIcons = listOf(R.drawable.ic_home, R.drawable.ic_notification)
@@ -92,10 +84,10 @@ class MainFrameList : Fragment() {
 
         bind.add.setOnClickListener {
             if (viewPager.currentItem == 0) {
-                findNavController().navigate(MainFrameListDirections.actionMainFrameListToAddin())
+                findNavController().navigate(HomeDirections.actionMainFrameListToAddin())
             } else {
                 findNavController().navigate(
-                    MainFrameListDirections.actionMainFrameListToAddReminder(null)
+                    HomeDirections.actionMainFrameListToAddReminder(null)
                 )
             }
         }
@@ -103,7 +95,7 @@ class MainFrameList : Fragment() {
 
     private fun setGreetings() {
         val greetings = bind.greetings
-        val time = Time(System.currentTimeMillis()).hours
+        val time = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
         if (time > 20 || time < 4)
             greetings.setText(R.string.good_night)
         else if (time > 16)
@@ -114,5 +106,3 @@ class MainFrameList : Fragment() {
             greetings.setText(R.string.good_morning)
     }
 }
-
-const val HEADER_HEIGHT = "HEADER_HEIGHT"

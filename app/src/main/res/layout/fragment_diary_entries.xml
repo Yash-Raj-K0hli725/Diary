@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,10 +11,10 @@
             android:id="@+id/notes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="17dp"
             android:clipToPadding="false"
-            android:paddingBottom="100dp"
-            />
+            android:paddingHorizontal="17dp"
+            android:paddingTop="60dp"
+            android:paddingBottom="100dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

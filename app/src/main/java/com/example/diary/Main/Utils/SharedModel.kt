@@ -24,17 +24,9 @@ class SharedModel(application: Application) : AndroidViewModel(application) {
     }
     val repos = Repos(context)
     var thumbnail: Drawable? = null
-    private val _headerHeight = MutableLiveData<Int>()
-    val headerHeight :LiveData<Int> get() = _headerHeight
-
-    fun setHeaderHeight(height: Int) {
-        Log.e("Yash","height at sharedVM: $height")
-        _headerHeight.value = height
-    }
 
     init {
         getThumbnail()
-        _headerHeight.value = 0
     }
 
     //<--Notes-->
@@ -43,7 +35,6 @@ class SharedModel(application: Application) : AndroidViewModel(application) {
             repos.createNotes(note)
         }
     }
-
     fun readNotes(): LiveData<List<Table_Diary>> {
         return repos.readNotes()
     }
