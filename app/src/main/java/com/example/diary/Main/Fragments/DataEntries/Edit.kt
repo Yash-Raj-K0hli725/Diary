@@ -29,20 +29,23 @@ class Edit : Fragment() {
         bind = DataBindingUtil.inflate(inflater, R.layout.fragment_edit, container, false)
         args = EditArgs.fromBundle(requireArguments())
         cItem = args.item
-
-        //setData
-        bind.Data.setText(cItem.text)
-        bind.Titlee.setText(cItem.title)
-        bind.Time.text = cItem.date.toString()
         //end
         return bind.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bind.Update.setOnClickListener {
-            findNavController().popBackStack()
+        //setData
+        bind.apply {
+            Data.setText(cItem.text)
+            Titlee.setText(cItem.title)
+            Time.text = cItem.date.toString()
+            
+            Update.setOnClickListener {
+                findNavController().popBackStack()
+            }
         }
+
     }
 
     fun check(): Boolean {
@@ -54,7 +57,7 @@ class Edit : Fragment() {
             val mText = bind.Data.text.toString()
             val mTitle = bind.Titlee.text.toString()
             val mId = cItem.id
-            val notes = Table_Diary(mTitle, mText, cItem.date,mId)
+            val notes = Table_Diary(mTitle, mText, cItem.date, mId)
             CoroutineScope(Dispatchers.IO).launch {
                 sharedVM.updateNotes(notes)
             }

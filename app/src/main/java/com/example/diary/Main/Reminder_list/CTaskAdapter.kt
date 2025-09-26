@@ -53,7 +53,6 @@ class CTaskAdapter :
 
     fun getData(vm: SharedModel) {
         this.shareVM = vm
-
     }
 
 }

@@ -17,12 +17,12 @@ import java.util.Date
 
 class DiaryFrag : Fragment() {
     private lateinit var bind: FragmentDiaryEntriesBinding
+    private val sharedVM: SharedModel by viewModels()
     private val mAdapter: EntriesListAdapter by lazy {
         EntriesListAdapter(sharedVM) { sItem ->
             findNavController().navigate(HomeDirections.actionMainFrameListToEdit(sItem))
         }
     }
-    private val sharedVM: SharedModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,10 +34,6 @@ class DiaryFrag : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        val entriesAdapter = EntriesListAdapter(sharedVM) { sItem ->
-//            findNavController().navigate(HomeDirections.actionMainFrameListToEdit(sItem))
-//        }
         bind.notes.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -45,7 +41,6 @@ class DiaryFrag : Fragment() {
         sharedVM.readNotes().observe(viewLifecycleOwner) {
             val entries = mutableListOf(Table_Diary("none", "none", Date()))
             entries.addAll(it)
-            Log.e("Yash", "idk->$it")
             mAdapter.submitList(entries)
         }
     }

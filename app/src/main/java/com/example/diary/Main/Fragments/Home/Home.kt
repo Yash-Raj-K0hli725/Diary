@@ -2,15 +2,12 @@ package com.example.diary.Main.Fragments.Home
 
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -23,28 +20,17 @@ import com.example.diary.databinding.FragmentMainFrameListBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
-import java.sql.Time
 
 class Home : Fragment() {
     lateinit var bind: FragmentMainFrameListBinding
     private val sharedModel: SharedModel by viewModels()
-    private val viewPager: ViewPager2 by lazy {
-        bind.MFVP2
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         bind = FragmentMainFrameListBinding.inflate(inflater, container, false)
-        //<--ViewPager-->
-        setGreetings()
-
-        return bind.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        //<--sets viewCompat according to screen size-->
         ViewCompat.setOnApplyWindowInsetsListener(bind.headerFlow) { v, insets ->
             val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars())
             val mParams = v.layoutParams as ViewGroup.MarginLayoutParams
@@ -53,11 +39,15 @@ class Home : Fragment() {
             insets
         }
         val vp2Adapter = VPAdapter(this@Home, listOf(DiaryFrag(), Reminders()))
-        viewPager.adapter = vp2Adapter
+        bind.viewpager.adapter = vp2Adapter
+        setGreetings()
+        return bind.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val tabIcons = listOf(R.drawable.ic_home, R.drawable.ic_notification)
-
-        TabLayoutMediator(bind.tab, viewPager) { tabs, position ->
+        TabLayoutMediator(bind.tab, bind.viewpager) { tabs, position ->
             tabs.icon = ContextCompat.getDrawable(requireContext(), tabIcons[position])
         }.attach()
         bind.tab.addOnTabSelectedListener(object : OnTabSelectedListener {
@@ -74,16 +64,14 @@ class Home : Fragment() {
                 }
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-
-            }
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
         })
 
         bind.add.setOnClickListener {
-            if (viewPager.currentItem == 0) {
+            if (bind.viewpager.currentItem == 0) {
                 findNavController().navigate(HomeDirections.actionMainFrameListToAddin())
             } else {
                 findNavController().navigate(
@@ -95,12 +83,12 @@ class Home : Fragment() {
 
     private fun setGreetings() {
         val greetings = bind.greetings
-        val time = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-        if (time > 20 || time < 4)
+        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        if (hour > 20 || hour < 4)
             greetings.setText(R.string.good_night)
-        else if (time > 16)
+        else if (hour > 16)
             greetings.setText(R.string.good_evening)
-        else if (time > 12)
+        else if (hour > 12)
             greetings.setText(R.string.good_afternoon)
         else
             greetings.setText(R.string.good_morning)
