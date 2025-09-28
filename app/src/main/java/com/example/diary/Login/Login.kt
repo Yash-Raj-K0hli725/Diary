@@ -3,6 +3,7 @@ package com.example.diary.Login
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.method.PasswordTransformationMethod
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -37,14 +38,52 @@ class Login : Fragment() {
             btnDone.setOnClickListener {
                 loginUser()
             }
-            inpPassword.setOnEditorActionListener { v, actionId, event ->
-                if (actionId == EditorInfo.IME_ACTION_DONE || event.keyCode == KeyEvent.KEYCODE_ENTER) {
-                    loginUser()
+            inpPassword.apply {
+                setOnEditorActionListener { v, actionId, event ->
+                    if (actionId == EditorInfo.IME_ACTION_DONE || event.keyCode == KeyEvent.KEYCODE_ENTER) {
+                        loginUser()
+                    }
+                    true
                 }
-                true
+                onFocusChangeListener = View.OnFocusChangeListener { p0, focus ->
+                    if (focus) {
+                        bear.progress = 0.5f
+                        bear.pauseAnimation()
+                    } else {
+                        bear.resumeAnimation()
+                    }
+                }
             }
-            inpPassword.requestFocus()
 
+//            val editText = lay.editText
+//            val isPasswordVisible =
+//                editText?.transformationMethod !is PasswordTransformationMethod
+//            if (isPasswordVisible) {
+//                bear.resumeAnimation()
+//            } else {
+//                bear.progress = 0.5f
+//                bear.pauseAnimation()
+//            }
+            val et = inpPassword
+            password.setEndIconOnClickListener {
+                if (et.transformationMethod is PasswordTransformationMethod) {
+                    bear.resumeAnimation()
+                    et.transformationMethod = null
+                } else {
+                    if (et.hasFocus()) {
+                        bear.apply {
+                            progress = 0.4f
+                            Handler(Looper.getMainLooper()).postDelayed(
+                                { bear.pauseAnimation() }, 400
+                            )
+                        }
+                    }
+                    // Hide password
+                    et.transformationMethod = PasswordTransformationMethod.getInstance()
+                }
+                // Move cursor to end after transformation
+                et.setSelection(et.text?.length ?: 0)
+            }
         }
     }
 
@@ -56,7 +95,17 @@ class Login : Fragment() {
         }
         val password = bind.inpPassword.text.toString().trim()
         if (sharedVM.userSession.getUserPassword().equals(password, false)) {
-            findNavController().navigate(LoginDirections.actionLoginToHome())
+            bind.bear.apply {
+                setAnimation("bear_happy.lottie")
+                setMinProgress(0.4f)
+                setMaxProgress(0.5f)
+                resumeAnimation()
+            }
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().navigate(
+                    LoginDirections.actionLoginToHome()
+                )
+            }, 2000)
         } else {
             Toast.makeText(requireContext(), "Wrong password", Toast.LENGTH_SHORT).show()
         }

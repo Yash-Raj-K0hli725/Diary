@@ -49,8 +49,7 @@ class Edit : Fragment() {
             inpTitle.setText(cItem.title)
             data.setText(cItem.text)
             back.setOnClickListener {
-                saveProgress()
-                findNavController().popBackStack()
+                performBackPress()
             }
         }
 
@@ -62,8 +61,7 @@ class Edit : Fragment() {
 
     private val onBackSave = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            saveProgress()
-            findNavController().popBackStack()
+            performBackPress()
         }
     }
 
@@ -77,5 +75,10 @@ class Edit : Fragment() {
                 sharedVM.updateNotes(notes)
             }
         }
+    }
+
+    private fun performBackPress() {
+        saveProgress()
+        findNavController().popBackStack()
     }
 }
