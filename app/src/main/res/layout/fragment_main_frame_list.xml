@@ -8,58 +8,57 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/tertiary"
-        tools:context=".Main.Fragments.Home.MainFrameList">
+        tools:context=".Main.Fragments.Home.Home">
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/MF_VP2"
-            android:layout_width="0dp"
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="-40dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header_image" />
+
+        <ImageView
+            android:id="@+id/header_image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="-17dp"
+            android:background="@drawable/profile_banner"
+            app:layout_constraintBottom_toBottomOf="@id/header_flow"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/greetingLay"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@drawable/profile_banner"
-            app:layout_constraintBottom_toBottomOf="@id/bannerBottom"
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/header_flow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:constraint_referenced_ids="msg,greetings"
+            app:flow_horizontalAlign="start"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/ll_greetings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alata"
+            android:gravity="start"
+            android:text="@string/hi"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/alata"
-                    android:text="@string/hi"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/txt_goodMorning"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/alata"
-                    android:text="@string/good_morning"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/greetings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alata"
+            android:text="@string/good_morning"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/profileCard"
@@ -68,26 +67,17 @@
             android:layout_marginTop="17dp"
             android:layout_marginBottom="17dp"
             app:cardCornerRadius="100dp"
-            app:layout_constraintBottom_toTopOf="@id/bannerBottom"
+            app:layout_constraintBottom_toBottomOf="@id/header_flow"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.9"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@id/header_flow">
 
             <ImageView
                 android:id="@+id/profileImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
-
         </androidx.cardview.widget.CardView>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/bannerBottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.1" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/nu_bottomAppBarBackLay"

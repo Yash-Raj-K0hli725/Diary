@@ -43,6 +43,8 @@ android {
 dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    //blurview
+    implementation("com.github.Dimezis:BlurView:version-2.0.5")
 
     //DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0-alpha04")
@@ -53,19 +55,22 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
     implementation ("com.intuit.sdp:sdp-android:1.1.1")
-
     //<--ViewModel-->
     val lifecycle_version = "2.8.6"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     implementation("it.xabaras.android:recyclerview-swipedecorator:1.4")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
-    //<----->
+    //<--GIF-->
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.17")
     //<----->
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.lottie)
     //<----->
+//    <--Encrypted shared pref-->
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+    implementation("androidx.biometric:biometric:1.1.0")
+//    <---->
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

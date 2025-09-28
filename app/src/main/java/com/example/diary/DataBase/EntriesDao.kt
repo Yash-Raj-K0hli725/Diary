@@ -12,30 +12,30 @@ interface EntriesDao {
 
     //notesList-->
     @Insert
-    suspend fun InsertData(data: DataCC)
+    suspend fun InsertData(data: Table_Diary)
 
     @Update
-    suspend fun UpdateData(data: DataCC)
+    suspend fun UpdateData(data: Table_Diary)
 
     @Delete
-    suspend fun DeleteData(data: DataCC)
+    suspend fun DeleteData(data: Table_Diary)
 
-    @Query("SELECT * FROM DataCC")
-    fun getDataInfo(): LiveData<List<DataCC>>
+    @Query("SELECT * FROM Table_Diary")
+    fun getDataInfo(): LiveData<List<Table_Diary>>
     //<--
 
     //remindersList-->
     @Insert
-    suspend fun insertReminders(reminder: DataOO)
+    suspend fun insertReminders(reminder: Reminder)
 
     @Update
-    suspend fun updateReminders(reminder: DataOO)
+    suspend fun updateReminders(reminder: Reminder)
 
     @Delete
-    suspend fun delete(reminder: DataOO)
+    suspend fun delete(reminder: Reminder)
 
-    @Query("SELECT * FROM DataOO")
-    fun getReminderInfo(): LiveData<List<DataOO>>
+    @Query("SELECT * FROM Reminder")
+    fun getReminderInfo(): LiveData<List<Reminder>>
     //<--
 
     //LoginInfo-->

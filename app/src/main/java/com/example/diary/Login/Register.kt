@@ -1,58 +1,60 @@
 package com.example.diary.Login
 
 import android.os.Bundle
-import android.os.Handler
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.diary.DataBase.LoginData
-import com.example.diary.Main.ModelV.SharedModel
-import com.example.diary.R
+import com.example.diary.Main.Utils.SharedModel
+import com.example.diary.Main.Utils.UserSession
 import com.example.diary.databinding.FragmentRegisterBinding
 
 class Register : Fragment() {
-    lateinit var bind: FragmentRegisterBinding
-    private val sharedVM: SharedModel by viewModels()
+    private lateinit var bind: FragmentRegisterBinding
+    private val sharedVM: SharedModel by activityViewModels()
+    private val userData: UserSession by lazy {
+        UserSession(requireContext())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bind = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
-        bind.regInpPassword.hint = "Password"
-        bind.regInpDiaryName.hint = "Name your diary"
+        bind = FragmentRegisterBinding.inflate(inflater, container, false)
+        bind.apply {
+            blurView.setupWith(requireActivity().findViewById(android.R.id.content))
+                .setBlurRadius(5f).setBlurAutoUpdate(true)
+        }
         // Inflate the layout for this fragment
         return bind.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bind.btnDone.setOnClickListener {
-            if (fieldCheck()) {
-                registerUser()
-                findNavController().navigate(RegisterDirections.actionRegisterToLogin())
-            } else {
-                bind.regPasswordLayout.apply {
-                    error = "Fields cannot be empty"
-                    Handler().postDelayed({ error = null }, 2000)
-                }
+        bind.apply {
+            doneButton.setOnClickListener {
+                sharedVM.userSession.userLogin(true)
+                saveUserInfo(inpName.text.toString().trim(), inpPassword.text.toString().trim())
+            }
+            skip.setOnClickListener {
+                sharedVM.userSession.userLogin(true)
+                sharedVM.userSession.usePassword(false)
+                findNavController().navigate(RegisterDirections.actionRegisterToMainFrameList())
             }
         }
     }
 
-    private fun registerUser() {
-        val name = bind.regInpDiaryName.text.toString().trim()
-        val password = bind.regInpPassword.text.toString().trim()
-        val registerDetails = LoginData(password, name, Math.random().toInt())
-        sharedVM.signUpUser(registerDetails)
-    }
-
-    private fun fieldCheck(): Boolean {
-        return bind.regInpPassword.text!!.isNotEmpty() && bind.regInpDiaryName.text!!.isNotEmpty()
+    private fun saveUserInfo(name: String, password: String) {
+        if (name.isEmpty() || password.isEmpty()) {
+            Toast.makeText(requireContext(), "Fields cannot be empty", Toast.LENGTH_SHORT).show()
+            return
+        }
+        userData.saveUserPassword(password)
+        userData.saveDiaryName(name)
+        findNavController().navigate(RegisterDirections.actionRegisterToLogin())
     }
 
 }

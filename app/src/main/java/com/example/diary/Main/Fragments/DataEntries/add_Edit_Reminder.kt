@@ -8,9 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import com.example.diary.DataBase.DataOO
-import com.example.diary.Main.ModelV.SharedModel
+import com.example.diary.DataBase.Reminder
+import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.R
 import com.example.diary.databinding.FragmentAddReminderBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -24,7 +23,7 @@ import java.util.Calendar
 class add_Edit_Reminder : BottomSheetDialogFragment() {
     lateinit var bind: FragmentAddReminderBinding
      private val sharedVM: SharedModel by viewModels()
-    var data: DataOO? = null
+    var data: Reminder? = null
     private var updatePermission = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -82,7 +81,7 @@ class add_Edit_Reminder : BottomSheetDialogFragment() {
         if (checkInputs()) {
             val checkBox = bind.checked.isChecked
             val txt = bind.task.text.toString()
-            val addTask = DataOO(0, txt, checkBox.toString(), Time(System.currentTimeMillis()))
+            val addTask = Reminder(0, txt, checkBox.toString(), Time(System.currentTimeMillis()))
             sharedVM.insertReminder(addTask)
             dismiss()
         }
@@ -92,7 +91,7 @@ class add_Edit_Reminder : BottomSheetDialogFragment() {
         if (updatesCheck()) {
             val checkBox = bind.checked.isChecked
             val txt = bind.task.text.toString()
-            val updateTask = DataOO(
+            val updateTask = Reminder(
                 data!!.id,
                 txt,
                 checkBox.toString(),

@@ -1,115 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addin_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    tools:context=".Main.Fragments.DataEntries.Addin">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/date"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <TextView
+        android:id="@+id/day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/date" />
+
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@android:color/transparent"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@id/day"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/date" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#252525"
-        tools:context=".Main.Fragments.DataEntries.Addin">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="17dp"
+        app:boxBackgroundMode="none"
+        app:cursorColor="@color/white"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/day">
 
-        <LinearLayout
-            android:id="@+id/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleX="1.4"
-                android:scaleY="1.4"
-                android:padding="2dp"
-                android:src="@drawable/ic_back"
-                 />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
-                android:text="@string/back"
-                android:textColor="@color/white"
-                android:layout_gravity="center_vertical"
-                android:textSize="17sp"
-                />
-
-        </LinearLayout>
-
-
-
-        <TextView
-            android:id="@+id/Timern"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
-            android:layout_marginTop="40dp"
-            android:textColor="@color/white"
-            android:fontFamily="@font/alata"
-            android:textSize="20sp"
-            android:maxLength="11"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/Title"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inp_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="17dp"
+            android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:fontFamily="@font/alata"
-            android:hint="@string/title"
+            android:maxLength="200"
+            android:paddingVertical="8dp"
             android:textColor="@color/white"
-            android:textColorHint="#BDBCBC"
-            android:textSize="28sp"
+            android:textColorHint="#B3FFFFFF"
+            android:textSize="28sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            app:layout_constraintBottom_toTopOf="@id/TextCard"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/bottom_sheet_bg"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:padding="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title">
+
+        <TextView
+            android:id="@+id/feelings_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:text="How are you feeling?"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/loved_bg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/round_cornered_rect"
+            android:backgroundTint="@color/translucent_grey"
+            app:layout_constraintBottom_toBottomOf="@id/loved_lottie"
+            app:layout_constraintEnd_toEndOf="@id/loved_lottie"
+            app:layout_constraintStart_toStartOf="@id/loved_lottie"
+            app:layout_constraintTop_toTopOf="@id/loved_lottie" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loved_lottie"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@id/happy_lottie"
+            app:layout_constraintHorizontal_bias="0.8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/feelings_header"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="loved.lottie"
+            app:lottie_loop="false"
+            app:lottie_progress="0.2" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/happy_lottie"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/round_cornered_rect"
+            android:backgroundTint="#337E7E7E"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guide" />
+            app:layout_constraintTop_toBottomOf="@id/feelings_header"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="happy.lottie"
+            app:lottie_loop="false" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/TextCard"
+        <ImageView
+            android:id="@+id/sad_bg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/round_cornered_rect"
+            android:backgroundTint="#337E7E7E"
+            app:layout_constraintBottom_toBottomOf="@id/sad_lottie"
+            app:layout_constraintEnd_toEndOf="@id/sad_lottie"
+            app:layout_constraintStart_toStartOf="@id/sad_lottie"
+            app:layout_constraintTop_toTopOf="@id/sad_lottie" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/sad_lottie"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toEndOf="@id/happy_lottie"
+            app:layout_constraintTop_toBottomOf="@id/feelings_header"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="sad.lottie"
+            app:lottie_loop="false" />
+
+        <EditText
+            android:id="@+id/data"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
-            app:cardCornerRadius="30dp"
-
-            app:cardElevation="10dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/alata"
+            android:gravity="start"
+            android:hint="@string/how_s_your_day"
+            android:inputType="textMultiLine|textCapSentences"
+            android:lineSpacingExtra="4dp"
+            android:textColor="#252525"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/Title">
-
-            <EditText
-                android:id="@+id/Data"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/alata"
-                android:gravity="start"
-                android:hint="@string/how_s_your_day"
-                android:inputType="textMultiLine"
-                android:textColor="#252525"
-                android:textSize="20sp" />
-
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.12" />
+            app:layout_constraintTop_toBottomOf="@id/happy_lottie" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,17 +8,17 @@ import android.os.Looper
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.example.diary.R
 import com.example.diary.databinding.ActivitySplashScreenBinding
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity:AppCompatActivity() {
-   lateinit var bind:ActivitySplashScreenBinding
+   private lateinit var bind:ActivitySplashScreenBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        bind = DataBindingUtil.setContentView(this,R.layout.activity_splash_screen)
+        bind = ActivitySplashScreenBinding.inflate(layoutInflater)
+        setContentView(bind.root)
         val dayFadeOut = android.view.animation.AnimationUtils.loadAnimation(this,R.anim.splash_day)
         bind.splashDay.startAnimation(dayFadeOut)
         Handler(Looper.getMainLooper()).postDelayed({

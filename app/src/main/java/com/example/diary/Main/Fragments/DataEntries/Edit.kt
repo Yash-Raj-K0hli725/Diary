@@ -1,65 +1,84 @@
 package com.example.diary.Main.Fragments.DataEntries
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.diary.DataBase.DataCC
-import com.example.diary.Main.ModelV.SharedModel
-import com.example.diary.R
-import com.example.diary.databinding.FragmentEditBinding
+import com.example.diary.DataBase.Table_Diary
+import com.example.diary.Main.Utils.SharedModel
+import com.example.diary.databinding.FragmentAddinBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class Edit : Fragment() {
-    private lateinit var bind: FragmentEditBinding
+    private lateinit var bind: FragmentAddinBinding
     private val sharedVM: SharedModel by viewModels()
-    private lateinit var currentItem: DataCC
+    private lateinit var cItem: Table_Diary
     private lateinit var args: EditArgs
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         //Instances
-        bind = DataBindingUtil.inflate(inflater, R.layout.fragment_edit, container, false)
+        bind = FragmentAddinBinding.inflate(inflater, container, false)
         args = EditArgs.fromBundle(requireArguments())
-        currentItem = args.item
-
-        //setData
-        bind.Data.setText(currentItem.Text)
-        bind.Titlee.setText(currentItem.Title)
-        bind.Time.text = currentItem.Date.toString()
+        cItem = args.item
+        requireActivity().onBackPressedDispatcher.addCallback(onBackSave)
         //end
         return bind.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bind.Update.setOnClickListener {
-            findNavController().popBackStack()
+        //setData
+        bind.apply {
+            val cDate = Calendar.getInstance().get(Calendar.DATE).toString()
+            val cMonth = SimpleDateFormat("MMMM", Locale.getDefault()).format(cItem.date)
+            date.text = "$cMonth $cDate"
+            day.text = SimpleDateFormat("EEEE", Locale.getDefault()).format(cItem.date)
+            inpTitle.setText(cItem.title)
+            data.setText(cItem.text)
+            back.setOnClickListener {
+                performBackPress()
+            }
         }
+
     }
 
     fun check(): Boolean {
-        return bind.Data.text.toString() != args.item.Text || bind.Titlee.text.toString() != args.item.Title
+        return bind.data.text.toString() != args.item.text || bind.inpTitle.text.toString() != args.item.title
     }
 
-    override fun onDestroy() {
+    private val onBackSave = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            performBackPress()
+        }
+    }
+
+    private fun saveProgress() {
         if (check()) {
-            val texto = bind.Data.text.toString()
-            val titlo = bind.Titlee.text.toString()
-            val idd = currentItem.id
-            val notes = DataCC(idd, titlo, texto, currentItem.Date)
+            val mText = bind.data.text.toString()
+            val mTitle = bind.inpTitle.text.toString()
+            val mId = cItem.id
+            val notes = Table_Diary(mTitle, mText, cItem.date, mId)
             CoroutineScope(Dispatchers.IO).launch {
                 sharedVM.updateNotes(notes)
             }
         }
-        super.onDestroy()
+    }
+
+    private fun performBackPress() {
+        saveProgress()
+        findNavController().popBackStack()
     }
 }

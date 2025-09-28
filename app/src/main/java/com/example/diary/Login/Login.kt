@@ -1,27 +1,20 @@
 package com.example.diary.Login
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.text.method.PasswordTransformationMethod
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
-import android.widget.TextView.OnEditorActionListener
-import androidx.databinding.DataBindingUtil
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.diary.Main.ModelV.SharedModel
-import com.example.diary.R
+import com.example.diary.Main.Utils.SharedModel
 import com.example.diary.databinding.FragmentLoginBinding
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 class Login : Fragment() {
     lateinit var bind: FragmentLoginBinding
@@ -31,57 +24,91 @@ class Login : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bind = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-        // Inflate the layout for this fragment
+        bind = FragmentLoginBinding.inflate(inflater, container, false)
+        bind.apply {
+            blurView.setupWith(requireActivity().findViewById(android.R.id.content))
+                .setBlurRadius(5f).setBlurAutoUpdate(true)
+        }
         return bind.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bindingViews()
-    }
-
-    private suspend fun passCheck() {
-        val checkFlag = lifecycleScope.async(Dispatchers.IO) {
-            sharedVM.fetchPassword().Pass == bind.password.text.toString()
-        }
-        //
-        if (checkFlag.await()) {
-            findNavController().navigate(R.id.action_login_to_mainFrameList)
-
-        } else if (bind.password.text!!.isEmpty()) {
-            Snackbar.make(
-                requireView(),
-                "Password field cannot be empty",
-                Snackbar.LENGTH_SHORT
-            ).show()
-        } else {
-            Snackbar.make(
-                requireView(),
-                "Incorrect Password",
-                Snackbar.LENGTH_SHORT
-            )
-                .show()
-        }
-    }
-
-    private fun bindingViews() {
-
-        bind.confirm.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch {
-                passCheck()
+        bind.apply {
+            btnDone.setOnClickListener {
+                loginUser()
             }
-        }
-        bind.main.animate().alpha(1f).setDuration(400).start()
-
-        bind.password.setOnEditorActionListener(object : OnEditorActionListener {
-            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
-                if (v!!.text!!.isNotEmpty() && actionId == EditorInfo.IME_ACTION_DONE){
-                    findNavController().navigate(R.id.action_login_to_mainFrameList)
+            inpPassword.apply {
+                setOnEditorActionListener { v, actionId, event ->
+                    if (actionId == EditorInfo.IME_ACTION_DONE || event.keyCode == KeyEvent.KEYCODE_ENTER) {
+                        loginUser()
+                    }
+                    true
                 }
-                return true
+                onFocusChangeListener = View.OnFocusChangeListener { p0, focus ->
+                    if (focus) {
+                        bear.progress = 0.5f
+                        bear.pauseAnimation()
+                    } else {
+                        bear.resumeAnimation()
+                    }
+                }
             }
-        })
+
+//            val editText = lay.editText
+//            val isPasswordVisible =
+//                editText?.transformationMethod !is PasswordTransformationMethod
+//            if (isPasswordVisible) {
+//                bear.resumeAnimation()
+//            } else {
+//                bear.progress = 0.5f
+//                bear.pauseAnimation()
+//            }
+            val et = inpPassword
+            password.setEndIconOnClickListener {
+                if (et.transformationMethod is PasswordTransformationMethod) {
+                    bear.resumeAnimation()
+                    et.transformationMethod = null
+                } else {
+                    if (et.hasFocus()) {
+                        bear.apply {
+                            progress = 0.4f
+                            Handler(Looper.getMainLooper()).postDelayed(
+                                { bear.pauseAnimation() }, 400
+                            )
+                        }
+                    }
+                    // Hide password
+                    et.transformationMethod = PasswordTransformationMethod.getInstance()
+                }
+                // Move cursor to end after transformation
+                et.setSelection(et.text?.length ?: 0)
+            }
+        }
     }
 
+    private fun loginUser() {
+        if (bind.inpPassword.text.isNullOrEmpty()) {
+            //todo give error message
+            Toast.makeText(requireContext(), "Field cannot be empty", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val password = bind.inpPassword.text.toString().trim()
+        if (sharedVM.userSession.getUserPassword().equals(password, false)) {
+            bind.bear.apply {
+                setAnimation("bear_happy.lottie")
+                setMinProgress(0.4f)
+                setMaxProgress(0.5f)
+                resumeAnimation()
+            }
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().navigate(
+                    LoginDirections.actionLoginToHome()
+                )
+            }, 2000)
+        } else {
+            Toast.makeText(requireContext(), "Wrong password", Toast.LENGTH_SHORT).show()
+        }
+
+    }
 }

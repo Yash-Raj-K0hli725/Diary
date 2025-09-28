@@ -3,18 +3,16 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dodo">dodo</string>
-    <string name="title">Title</string>
     <string name="how_s_your_day">How\'s your Day…</string>
     <string name="completed">Completed</string>
     <string name="icon">ICON</string>
-    <string name="pass">Password</string>
     <string name="verify">Verify</string>
     <string name="forget_password">\tForget password</string>
     <string name="name_your_diary">\tName your Diary</string>
     <string name="register">Register</string>
     <string name="having_trouble">Having trouble?</string>
     <string name="set_a_password">Set a Password</string>
-    <string name="skip"><![CDATA[SKIP >>>]]></string>
+    <string name="skip">Skip...</string>
     <string name="set_reminder">set reminder</string>
     <string name="done">DONE</string>
     <string name="back">Back</string>
@@ -32,4 +30,15 @@
     <string name="last_notes">Last notes</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
+    <string name="welcome">Welcome</string>
+    <string name="welcome_subtitle">Give your diary a name and secure it with a password</string>
+    <string name="name">Diary Name</string>
+    <string name="password">Password</string>
+    <string name="register_subtitle">Start your personal journey today</string>
+    <string name="register_footer">Your thoughts, your space, your story</string>
+    <string name="register_title">Create Your Diary</string>
+    <string name="title_hint">Today\'s story..</string>
+    <string name="login_welcome">Welcome Back</string>
+    <string name="unlock_diary">Unlock Diary</string>
+    <string name="enter_your_pin_to_continue_writing">Enter your PIN to continue writing</string>
 </resources>
