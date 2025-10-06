@@ -28,6 +28,7 @@ class Login : Fragment() {
         bind.apply {
             blurView.setupWith(requireActivity().findViewById(android.R.id.content))
                 .setBlurRadius(5f).setBlurAutoUpdate(true)
+            bear.setMaxProgress(0.3f)
         }
         return bind.root
     }
@@ -47,23 +48,18 @@ class Login : Fragment() {
                 }
                 onFocusChangeListener = View.OnFocusChangeListener { p0, focus ->
                     if (focus) {
-                        bear.progress = 0.5f
-                        bear.pauseAnimation()
+                        bear.apply {
+                            progress = 0.13f
+                            Handler(Looper.getMainLooper()).postDelayed(
+                                { bear.pauseAnimation() }, 500
+                            )
+                        }
                     } else {
                         bear.resumeAnimation()
                     }
                 }
             }
 
-//            val editText = lay.editText
-//            val isPasswordVisible =
-//                editText?.transformationMethod !is PasswordTransformationMethod
-//            if (isPasswordVisible) {
-//                bear.resumeAnimation()
-//            } else {
-//                bear.progress = 0.5f
-//                bear.pauseAnimation()
-//            }
             val et = inpPassword
             password.setEndIconOnClickListener {
                 if (et.transformationMethod is PasswordTransformationMethod) {
@@ -72,9 +68,9 @@ class Login : Fragment() {
                 } else {
                     if (et.hasFocus()) {
                         bear.apply {
-                            progress = 0.4f
+                            progress = 0.13f
                             Handler(Looper.getMainLooper()).postDelayed(
-                                { bear.pauseAnimation() }, 400
+                                { bear.pauseAnimation() }, 500
                             )
                         }
                     }
@@ -89,24 +85,58 @@ class Login : Fragment() {
 
     private fun loginUser() {
         if (bind.inpPassword.text.isNullOrEmpty()) {
-            //todo give error message
+            bind.bear.apply {
+                resumeAnimation()
+                setMaxProgress(0.68f)
+                setMinProgress(0.3f)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    if (bind.inpPassword.transformationMethod is PasswordTransformationMethod) {
+                        setMaxProgress(1f); setMinProgress(0f)
+                        progress = 0.13f
+                        Handler(Looper.getMainLooper()).postDelayed(
+                            { pauseAnimation() }, 500
+                        )
+                    } else {
+                        setMaxProgress(0.3f)
+                        setMinProgress(0f)
+                    }
+                }, 2500)
+            }
             Toast.makeText(requireContext(), "Field cannot be empty", Toast.LENGTH_SHORT).show()
             return
         }
         val password = bind.inpPassword.text.toString().trim()
         if (sharedVM.userSession.getUserPassword().equals(password, false)) {
-            bind.bear.apply {
-                setAnimation("bear_happy.lottie")
-                setMinProgress(0.4f)
-                setMaxProgress(0.5f)
-                resumeAnimation()
+            bind.apply {
+                bear.apply {
+                    resumeAnimation()
+                    setMaxProgress(0.87f)
+                    setMinProgress(0.84f)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        findNavController().navigate(LoginDirections.actionLoginToHome())
+                    }, 2000)
+                }
+                btnDone.isEnabled = false
             }
-            Handler(Looper.getMainLooper()).postDelayed({
-                findNavController().navigate(
-                    LoginDirections.actionLoginToHome()
-                )
-            }, 2000)
         } else {
+            bind.bear.apply {
+                resumeAnimation()
+                setMaxProgress(0.68f)
+                setMinProgress(0.3f)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    if (bind.inpPassword.transformationMethod is PasswordTransformationMethod) {
+                        setMaxProgress(1f); setMinProgress(0f)
+                        progress = 0.13f
+                        Handler(Looper.getMainLooper()).postDelayed(
+                            { pauseAnimation() }, 500
+                        )
+
+                    } else {
+                        setMaxProgress(0.3f)
+                        setMinProgress(0f)
+                    }
+                }, 2500)
+            }
             Toast.makeText(requireContext(), "Wrong password", Toast.LENGTH_SHORT).show()
         }
 
